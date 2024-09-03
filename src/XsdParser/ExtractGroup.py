@@ -14,7 +14,7 @@ def extractGroup(root):
         # 处理 sequence 标签中的元素
         sequence = group.find("./{http://www.w3.org/2001/XMLSchema}sequence")
         if sequence is not None:
-            elements, inner_classes = process_elements(root, sequence)
+            elements, inner_classes = process_elements(root, sequence)#这里要传入max，传none或者1？
             groups[group_name] = {
                 'elements': elements,  # 存储群组中的字段信息
                 'innerClasses': inner_classes  # 存储群组中的内部类信息
@@ -23,7 +23,7 @@ def extractGroup(root):
     return groups  # 返回群组信息字典
 
 
-def process_elements(root, sequence):
+def process_elements(root, sequence, maxOccurs):
     # 这里把内部类里面的element也提取出来了
     elements = []
     inner_classes = []
@@ -32,12 +32,21 @@ def process_elements(root, sequence):
         element_type = element.get('type')  # 获取元素类型
 
         if element_type:
-            element_type = mapXsdTypeToJava(element_type.split(':')[-1], context='group')  # 将类型映射为Java类型
-            elements.append({
-                'name': to_camel_case(element_name),
-                'type': element_type,
-                'annotation': '@XmlElement(name="{}")'.format(element_name)
-            })
+            if maxOccurs == '1':
+                element_type = mapXsdTypeToJava(element_type.split(':')[-1], context='group')  # 将类型映射为Java类型
+                elements.append({
+                    'name': to_camel_case(element_name),
+                    'type': element_type,
+                    'annotation': '@XmlElement(name="{}")'.format(element_name)
+                })
+            else:
+                element_type = mapXsdTypeToJava(element_type.split(':')[-1], context='group')  # 将类型映射为Java类型
+                elements.append({
+                    'name': to_camel_case(element_name),
+                    'type': element_type,
+                    'annotation': '@XmlElement(name="{}")'.format(element_name)
+                    #这里还要把上面的element的name传进来当wrapper的name，或者在外面choice的地方判断然后修改anno
+                })
         else:
             # 这里就是生成内部类对应的字段
             elements.append({

@@ -20,10 +20,9 @@ def process_group_inner_complex_type(root, element):
         # 处理 complexType 中的 choice 标签------->嵌套内部类要继续返回出去，要根据maxoccurs处理element
         for choice in complex_type.findall("./{http://www.w3.org/2001/XMLSchema}choice"):
             choice_elements, innerInnerClass, maxOccurs = process_choice(root, choice)
-            attributes.extend(choice_elements)
-            # if maxOccurs != '1':
-
-
+            if maxOccurs == '1':
+                attributes.extend(choice_elements)
+            # elif:  ------->可以不在这里处理，在element那里处理注解，把max参数传到模板处理list
 
         # 处理simpleContent
         simple_content = complex_type.find("./{http://www.w3.org/2001/XMLSchema}simpleContent")
@@ -71,7 +70,7 @@ def process_choice(root, choice):
 
     for child in choice:
         if child.tag.endswith('element'):
-            elements, innerClass = (process_elements(root, choice))  # 处理choice中的元素
+            elements, innerClass = (process_elements(root, choice, maxOccurs))  # 处理choice中的元素
         elif child.tag.endswith('group'):  # 这要再过一遍逻辑
             group_name = child.get('name')
             elements.append({

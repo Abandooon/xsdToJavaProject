@@ -43,7 +43,7 @@ def process_group_inner_complex_type(root, element, element_wrapper):
                         })
             for attr in extension.findall("./{http://www.w3.org/2001/XMLSchema}attribute"):
                 attr_name = attr.get('name')  # 获取属性名称
-                attr_type = mapXsdTypeToJava(attr.get('type').split(':')[-1], context='group')  # 将属性类型映射为Java类型
+                attr_type = mapXsdTypeToJava(attr.get('type').split(':')[-1], context='attribute_group')  # 将属性类型映射为Java类型
                 attributes.append({
                     'name': to_camel_case(attr_name),
                     'type': attr_type,
@@ -65,6 +65,7 @@ def process_choice(root, choice, element_name, element_wrapper):
 
     elements = []  # 初始化列表，用于存储choice中的元素
     innerClass = []
+    groups = {}
     maxOccurs = choice.get('maxOccurs')   # --------->当前choice对应的maxoccurs，在这里获取的不是传进来的
 
     for child in choice:
@@ -72,7 +73,7 @@ def process_choice(root, choice, element_name, element_wrapper):
             elements, innerClass = (process_elements(root, choice, maxOccurs, element_name, element_wrapper))  # 处理choice中的元素，传入当前choice的maxoccurs和父element的name（wrapper注解名）
         elif child.tag.endswith('group'):  # 这要再过一遍逻辑
             refName = child.get('ref').split(':')[-1]
-            groups = extractGroup(root, element_wrapper)  # 获取引用的群组
+            # groups = extractGroup(root, element_wrapper)  # 获取引用的群组-------》这里不能这么处理，会导致无线地递归，直接把处理group的element逻辑复制到这里
 
     return elements, innerClass, maxOccurs  # 返回元素列表
 

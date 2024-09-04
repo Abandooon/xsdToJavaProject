@@ -83,4 +83,4 @@ if __name__ == "__main__":
     package_name = config.get('package_name')
     element_wrapper = config.get('element_wrapper')
 
-    generateJavaClass(input_dir=input_dir, output_dir=output_dir, package_name=package_name, element_wrapper=element_wrapper)
+    generateJavaClass(input_dir=input_dir, output_dir=output_dir, package_name=package_name, element_wrapper= element_wrapper)

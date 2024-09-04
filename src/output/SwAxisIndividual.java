@@ -12,6 +12,8 @@ public class SwAxisIndividual {
     
     protected java.lang.String t;
     
+    protected SwVariableRefs swVariableRefs;
+    
     protected CompuMethodRef compuMethodRef;
     
 
@@ -34,6 +36,15 @@ public class SwAxisIndividual {
         this.t = value;
     }
     
+    @XmlElement(name="SW-VARIABLE-REFS")
+    public SwVariableRefs getSwVariableRefs() {
+        return this.swVariableRefs;
+    }
+
+    public void setSwVariableRefs(SwVariableRefs value) {
+        this.swVariableRefs = value;
+    }
+    
     @XmlElement(name="COMPU-METHOD-REF")
     public CompuMethodRef getCompuMethodRef() {
         return this.compuMethodRef;
@@ -44,6 +55,14 @@ public class SwAxisIndividual {
     }
     
 
+    
+    public static class SwVariableRefs {
+        
+
+        
+
+        
+    }
     
     public static class CompuMethodRef extends Ref {
         

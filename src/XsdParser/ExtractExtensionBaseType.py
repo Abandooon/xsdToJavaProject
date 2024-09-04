@@ -21,12 +21,13 @@ def extractBaseType(root, baseName):
                 baseTypeInfo['type'] = mapXsdTypeToJava(simpleType['base'], context='base_type')  # 否则使用类型映射
                 baseTypeInfo['annotation'] = '@XmlValue'
             return baseTypeInfo  # 返回基类型信息
+        else:
+            # 查找所有复杂类型，并匹配基类型名称----------->不是简单类型就是复杂类型----》ref----》后面可以改xsd来添加其他的
+            for complexType in root.findall(".//{http://www.w3.org/2001/XMLSchema}complexType"):
+                if complexType.get('name') == baseName:
+                    baseTypeInfo['extendsClass'] = to_pascal_case(baseName)
+                    return baseTypeInfo  # 返回基类型信息
 
-        # 查找所有复杂类型，并匹配基类型名称
-        for complexType in root.findall(".//{http://www.w3.org/2001/XMLSchema}complexType"):
-            if complexType.get('name') == baseName:
-                baseTypeInfo['extendsClass'] = to_pascal_case(baseName)
-                return baseTypeInfo  # 返回基类型信息
 
     return baseTypeInfo  # 返回基类型信息
 

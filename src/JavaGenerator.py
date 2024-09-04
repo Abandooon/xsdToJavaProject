@@ -11,7 +11,7 @@ from src.XsdParser.ExtractSimpleType import extractSimpleType
 from src.XsdParser.GroupInnerComplexType import to_camel_case, to_pascal_case
 
 
-def generateJavaClass(input_dir, output_dir, package_name):
+def generateJavaClass(input_dir, output_dir, package_name, element_wrapper):
     # 配置模板环境
     env = Environment(loader=FileSystemLoader('templates'))  # 加载模板文件夹
     complexTypeClassTemplate = env.get_template('ComplexTypeClassTemplate.j2')  # 获取指定模板文件
@@ -23,7 +23,7 @@ def generateJavaClass(input_dir, output_dir, package_name):
     root = tree.getroot()  # 获取XML的根节点
 
     # 提取信息
-    complexTypes = extractComplexType(root)  # 提取复杂类型信息
+    complexTypes = extractComplexType(root, element_wrapper)  # 提取复杂类型信息
     simpleTypes = extractSimpleType(root)  # 提取简单类型信息
 
     for simpleType in simpleTypes:
@@ -81,5 +81,6 @@ if __name__ == "__main__":
     input_dir = config.get('input_dir')
     output_dir = config.get('output_dir')
     package_name = config.get('package_name')
+    element_wrapper = config.get('element_wrapper')
 
-    generateJavaClass(input_dir=input_dir, output_dir=output_dir, package_name=package_name)
+    generateJavaClass(input_dir=input_dir, output_dir=output_dir, package_name=package_name, element_wrapper=element_wrapper)

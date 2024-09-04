@@ -13,11 +13,11 @@ public class {{ className }}{% if extends %} extends {{ extends }}{% endif %} {
 
     {% for attribute in attributes %}
     {{ attribute.annotation }}
-    public {{ attribute.type }} get{{ attribute.name | capitalize }}() {
+    public {{ attribute.type }} get{{ attribute.name[0] | upper + attribute.name[1:] }}() {
         return this.{{ attribute.name }};
     }
 
-    public void set{{ attribute.name | capitalize }}({{ attribute.type }} value) {
+    public void set{{ attribute.name[0] | upper + attribute.name[1:] }}({{ attribute.type }} value) {
         this.{{ attribute.name }} = value;
     }
     {% endfor %}
@@ -30,11 +30,11 @@ public class {{ className }}{% if extends %} extends {{ extends }}{% endif %} {
 
         {% for innerAttr in innerClass.InnerClassAttributes %}
         {{ innerAttr.annotation }}
-        public {{ innerAttr.type }} get{{ innerAttr.name | capitalize }}() {
+        public {{ innerAttr.type }} get{{ innerAttr.name[0] | upper + innerAttr.name[1:] }}() {
             return this.{{ innerAttr.name }};
         }
 
-        public void set{{ innerAttr.name | capitalize }}({{ innerAttr.type }} value) {
+        public void set{{ innerAttr.name[0] | upper + innerAttr.name[1:] }}({{ innerAttr.type }} value) {
             this.{{ innerAttr.name }} = value;
         }
         {% endfor %}
@@ -48,11 +48,11 @@ public class {{ className }}{% if extends %} extends {{ extends }}{% endif %} {
 
             {% for nestedAttr in nestedClass.InnerClassAttributes %}
             {{ nestedAttr.annotation }}
-            public {{ nestedAttr.type }} get{{ nestedAttr.name | capitalize }}() {
+            public {{ nestedAttr.type }} get{{ nestedAttr.name[0] | upper + nestedAttr.name[1:] }}() {
                 return this.{{ nestedAttr.name }};
             }
 
-            public void set{{ nestedAttr.name | capitalize }}({{ nestedAttr.type }} value) {
+            public void set{{  nestedAttr.name[0] | upper + nestedAttr.name[1:]  }}({{ nestedAttr.type }} value) {
                 this.{{ nestedAttr.name }} = value;
             }
             {% endfor %}

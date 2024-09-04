@@ -41,38 +41,38 @@ public class BswModuleClientServerEntry {
     }
     
     @XmlElement(name="ENCAPSULATED-ENTRY-REF")
-    public EncapsulatedEntryRef getEncapsulatedentryref() {
+    public EncapsulatedEntryRef getEncapsulatedEntryRef() {
         return this.encapsulatedEntryRef;
     }
 
-    public void setEncapsulatedentryref(EncapsulatedEntryRef value) {
+    public void setEncapsulatedEntryRef(EncapsulatedEntryRef value) {
         this.encapsulatedEntryRef = value;
     }
     
     @XmlElement(name="IS-REENTRANT")
-    public Boolean getIsreentrant() {
+    public Boolean getIsReentrant() {
         return this.isReentrant;
     }
 
-    public void setIsreentrant(Boolean value) {
+    public void setIsReentrant(Boolean value) {
         this.isReentrant = value;
     }
     
     @XmlElement(name="IS-SYNCHRONOUS")
-    public Boolean getIssynchronous() {
+    public Boolean getIsSynchronous() {
         return this.isSynchronous;
     }
 
-    public void setIssynchronous(Boolean value) {
+    public void setIsSynchronous(Boolean value) {
         this.isSynchronous = value;
     }
     
     @XmlElement(name="ALL-CHANNELS-REFS")
-    public AllChannelsRefs getAllchannelsrefs() {
+    public AllChannelsRefs getAllChannelsRefs() {
         return this.allChannelsRefs;
     }
 
-    public void setAllchannelsrefs(AllChannelsRefs value) {
+    public void setAllChannelsRefs(AllChannelsRefs value) {
         this.allChannelsRefs = value;
     }
     
@@ -99,16 +99,16 @@ public class BswModuleClientServerEntry {
     
     public static class AllChannelsRefs {
         
-        protected AllChannelsRef allChannelsRef;
+        protected ArrayList<AllChannelsRef> allChannelsRef;
         
 
         
         @XmlElement(name="ALL-CHANNELS-REF")
-        public AllChannelsRef getAllchannelsref() {
+        public ArrayList<AllChannelsRef> getAllChannelsRef() {
             return this.allChannelsRef;
         }
 
-        public void setAllchannelsref(AllChannelsRef value) {
+        public void setAllChannelsRef(ArrayList<AllChannelsRef> value) {
             this.allChannelsRef = value;
         }
         

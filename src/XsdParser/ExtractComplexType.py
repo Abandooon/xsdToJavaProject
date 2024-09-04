@@ -4,7 +4,7 @@ from src.XsdParser.ExtractGroup import extractGroup
 from src.XsdParser.GroupInnerComplexType import to_camel_case
 
 
-def extractComplexType(root):
+def extractComplexType(root, element_wrapper):
     complexTypes = []  # 初始化一个列表，用于存储复杂类型的信息
     # 查找所有的复杂类型元素-------》可以改并行吗
     for complexType in root.findall(".//{http://www.w3.org/2001/XMLSchema}complexType"):
@@ -60,7 +60,7 @@ def extractComplexType(root):
         if sequence is not None:
             for groupRef in sequence.findall("./{http://www.w3.org/2001/XMLSchema}group"):
                 refName = groupRef.get('ref').split(':')[-1]
-                groups = extractGroup(root)  # 获取引用的群组
+                groups = extractGroup(root, element_wrapper)  # 获取引用的群组
                 if refName in groups:
                     for element in groups[refName]['elements']:
                         attributes.append({
@@ -79,7 +79,7 @@ def extractComplexType(root):
             # if maxOccurs != '1':
             for groupRef in choice.findall("./{http://www.w3.org/2001/XMLSchema}group"):
                 refName = groupRef.get('ref').split(':')[-1]
-                groups = extractGroup(root)  # 获取引用的群组
+                groups = extractGroup(root, element_wrapper)  # 获取引用的群组
                 if refName in groups:
                     for element in groups[refName]['elements']:
                         attributes.append({

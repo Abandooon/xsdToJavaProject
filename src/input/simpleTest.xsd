@@ -94,6 +94,51 @@
       </xsd:element>
     </xsd:sequence>
   </xsd:group>
+
+  <xsd:group name="SW-VARIABLE-REF-PROXY">
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="0" name="MC-DATA-INSTANCE-VAR-REF">
+        <xsd:complexType>
+          <xsd:simpleContent>
+            <xsd:extension base="AR:REF">
+              <xsd:attribute name="DEST" type="AR:MC-DATA-INSTANCE--SUBTYPES-ENUM" use="required"/>
+            </xsd:extension>
+          </xsd:simpleContent>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+
+ <xsd:group name="SW-AXIS-INDIVIDUAL">
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="0" name="SW-VARIABLE-REFS">
+        <xsd:complexType>
+          <xsd:choice maxOccurs="unbounded" minOccurs="0">
+            <xsd:group ref="AR:SW-VARIABLE-REF-PROXY"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element maxOccurs="1" minOccurs="0" name="COMPU-METHOD-REF">
+        <xsd:complexType>
+          <xsd:simpleContent>
+            <xsd:extension base="AR:REF">
+              <xsd:attribute name="DEST" type="AR:COMPU-METHOD--SUBTYPES-ENUM" use="required"/>
+            </xsd:extension>
+          </xsd:simpleContent>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+
+  <!-- complex type for class BswInterfaces::BswModuleClientServerEntry -->
+  <xsd:complexType abstract="false" mixed="false" name="SW-AXIS-INDIVIDUAL">
+    <xsd:sequence>
+      <xsd:group ref="AR:AR-OBJECT"/>
+      <xsd:group ref="AR:SW-AXIS-INDIVIDUAL"/>
+    </xsd:sequence>
+    <xsd:attributeGroup ref="AR:AR-OBJECT"/>
+  </xsd:complexType>
+
   <!-- complex type for class BswInterfaces::BswModuleClientServerEntry -->
   <xsd:complexType abstract="false" mixed="false" name="BSW-MODULE-CLIENT-SERVER-ENTRY">
     <xsd:sequence>
@@ -122,4 +167,15 @@
       <xsd:pattern value="0|1|true|false"/>
     </xsd:restriction>
   </xsd:simpleType>
+  <xsd:simpleType name="MC-DATA-INSTANCE--SUBTYPES-ENUM">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="MC-DATA-INSTANCE"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="COMPU-METHOD--SUBTYPES-ENUM">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="COMPU-METHOD"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
 </xsd:schema>

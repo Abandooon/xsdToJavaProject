@@ -3,14 +3,14 @@ from src.XsdParser.ExtractExtensionBaseType import extractBaseType
 from src.XsdParser.TypeMapping import mapXsdTypeToJava
 
 
-def process_group_inner_complex_type(root, element):
+def process_group_inner_complex_type(root, element, element_wrapper):
     inner_complex_types = []  # 初始化列表，用于存储内部复杂类型信息
 
     # 查找 group 中的所有 element 标签
     complex_type = element.find("./{http://www.w3.org/2001/XMLSchema}complexType")
     # 可能有内部类的内部类，最多嵌套两层
     if complex_type is not None:
-        element_name = element.get('name')  # 获取元素名称
+        element_name = element.get('name')  # 获取元素名称----->父element
         inner_class_name = to_pascal_case(element_name)  # 将元素名称转换为PascalCase，用作内部类的名称
 
         attributes = []  # 初始化列表，用于存储属性信息
@@ -19,9 +19,9 @@ def process_group_inner_complex_type(root, element):
 
         # 处理 complexType 中的 choice 标签------->嵌套内部类要继续返回出去，要根据maxoccurs处理element
         for choice in complex_type.findall("./{http://www.w3.org/2001/XMLSchema}choice"):
-            choice_elements, innerInnerClass, maxOccurs = process_choice(root, choice)
-            if maxOccurs == '1':
-                attributes.extend(choice_elements)
+            choice_elements, innerInnerClass, maxOccurs = process_choice(root, choice, element_name, element_wrapper)
+            # if maxOccurs == '1':
+            attributes.extend(choice_elements)
             # elif:  ------->可以不在这里处理，在element那里处理注解，把max参数传到模板处理list
 
         # 处理simpleContent
@@ -60,29 +60,20 @@ def process_group_inner_complex_type(root, element):
 
     return inner_complex_types  # 返回内部复杂类型信息列表
 
-
-def process_choice(root, choice):
+def process_choice(root, choice, element_name, element_wrapper):
     from src.XsdParser.ExtractGroup import process_elements, extractGroup  # 在函数内部导入，避免循环依赖
 
     elements = []  # 初始化列表，用于存储choice中的元素
     innerClass = []
-    maxOccurs = choice.get('maxOccurs')
+    maxOccurs = choice.get('maxOccurs')   # --------->当前choice对应的maxoccurs，在这里获取的不是传进来的
 
     for child in choice:
         if child.tag.endswith('element'):
-            elements, innerClass = (process_elements(root, choice, maxOccurs))  # 处理choice中的元素
+            elements, innerClass = (process_elements(root, choice, maxOccurs, element_name, element_wrapper))  # 处理choice中的元素，传入当前choice的maxoccurs和父element的name（wrapper注解名）
         elif child.tag.endswith('group'):  # 这要再过一遍逻辑
-            group_name = child.get('name')
-            elements.append({
-                'name': group_name,
-                'type': 'GroupType',
-                'annotation': 'XmlElement'  # 为群组生成@XmlElement注解------->不需要吧，只要里面的element即可
-            })
-            nested_group = extractGroup(child)  # 递归处理嵌套的群组
-            if nested_group:
-                elements.extend(nested_group.get(group_name, []))
-        # elif child.tag.endswith('choice'):
-        #     elements.extend(process_choice(child))  # 递归处理嵌套的choice
+            refName = child.get('ref').split(':')[-1]
+            groups = extractGroup(root, element_wrapper)  # 获取引用的群组
+
     return elements, innerClass, maxOccurs  # 返回元素列表
 
 

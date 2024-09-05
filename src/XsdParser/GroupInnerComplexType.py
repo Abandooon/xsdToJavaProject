@@ -73,10 +73,63 @@ def process_choice(root, choice, element_name, element_wrapper):
             elements, innerClass = (process_elements(root, choice, maxOccurs, element_name, element_wrapper))  # 处理choice中的元素，传入当前choice的maxoccurs和父element的name（wrapper注解名）
         elif child.tag.endswith('group'):  # 这要再过一遍逻辑
             refName = child.get('ref').split(':')[-1]
-            # groups = extractGroup(root, element_wrapper)  # 获取引用的群组-------》这里不能这么处理，会导致无线地递归，直接把处理group的element逻辑复制到这里
+            elements, innerClass = process_choiceRef(root, refName, maxOccurs, element_wrapper, element_name)
 
     return elements, innerClass, maxOccurs  # 返回元素列表
 
+#处理choice下的group ref，不能直接调用extract_group，否则会无限递归
+def process_choiceRef(root, refName, maxOccurs, element_wrapper, element_name):
+    for group in root.findall(".//{http://www.w3.org/2001/XMLSchema}group"):
+        if group.get('name') == refName:
+            elements = []
+            inner_classes = []
+            sequence = group.find("./{http://www.w3.org/2001/XMLSchema}sequence")
+            elements = []
+            inner_classes = []
+            for element in sequence.findall("./{http://www.w3.org/2001/XMLSchema}element"):
+                element_name = element.get('name')  # 获取元素名称
+                element_type = element.get('type')  # 获取元素类型-----》没有就是内部类
+
+                if element_wrapper == 'false':
+                    if element_type:
+                        if maxOccurs == '1':
+                            element_type = mapXsdTypeToJava(element_type.split(':')[-1],
+                                                            context='group')  # 将类型映射为Java类型
+                            elements.append({
+                                'name': to_camel_case(element_name),
+                                'type': element_type,
+                                'annotation': '@XmlElement(name="{}")'.format(element_name)
+                            })
+                        else:
+                            element_type = mapXsdTypeToJava(element_type.split(':')[-1],
+                                                            context='group')  # 将类型映射为Java类型
+                            elements.append({
+                                'name': to_camel_case(element_name),
+                                'type': 'ArrayList<{}>'.format(element_type),
+                                'annotation': '@XmlElement(name="{}")'.format(element_name)
+                                # 'annotation': '@XmlElementWrapper(name="{}")\n@XmlElement(name="{}")'.format(fatherElementName, element_name)
+                            })
+                    else:
+                        # 这里就是生成内部类对应的字段------》嵌套内部类也要考虑list
+                        if maxOccurs == '1':
+                            elements.append({
+                                'name': to_camel_case(element_name),
+                                'type': to_pascal_case(element_name),
+                                'annotation': '@XmlElement(name="{}")'.format(element_name)
+                            })
+                        else:
+                            elements.append({
+                                'name': to_camel_case(element_name),
+                                'type': 'ArrayList<{}>'.format(to_pascal_case(element_name)),
+                                'annotation': '@XmlElement(name="{}")'.format(element_name)
+                                # 'annotation': '@XmlElementWrapper(name="{}")\n@XmlElement(name="{}")'.format(fatherElementName, element_name)
+                            })
+                        # 处理内部的 complexType 并生成内部类
+                        inner_complex_types = process_group_inner_complex_type(root, element,
+                                                                               element_wrapper)  # 处理群组中的复杂类型，生成内部类
+                        for inner_type in inner_complex_types:
+                            inner_classes.append(inner_type)  # 将内部类信息单独存储
+    return elements, inner_classes
 
 def to_pascal_case(snake_str):
     components = snake_str.split('-')

@@ -1,7 +1,7 @@
 from src.XsdParser.ExtractExtensionBaseType import extractBaseType
 from src.XsdParser.ExtractAttributeGroup import extractAttributeGroup
 from src.XsdParser.ExtractGroup import extractGroup
-from src.XsdParser.GroupInnerComplexType import to_camel_case
+from src.XsdParser.GroupInnerComplexType import to_camel_case, to_pascal_case
 
 
 def extractComplexType(root, element_wrapper):
@@ -72,6 +72,8 @@ def extractComplexType(root, element_wrapper):
                     inner_classes.extend(groups[refName]['innerClasses'])
 
         # 处理choice下的group------------------------》这里逻辑要重写！！！！！！
+        #mixed标签需要特殊处理，jaxb解析的不对----》参考artop模型用的是FeatureMap------》是否用list、是否用@elementRef注解
+        #用list、xmlelements试试---》测试用例xml
         choice = complexType.find("./{http://www.w3.org/2001/XMLSchema}choice")
         if choice is not None:
             maxOccurs = choice.get('maxOccurs')
@@ -81,13 +83,23 @@ def extractComplexType(root, element_wrapper):
                 refName = groupRef.get('ref').split(':')[-1]
                 groups = extractGroup(root, element_wrapper)  # 获取引用的群组
                 if refName in groups:
-                    for element in groups[refName]['elements']:
-                        attributes.append({
-                            'name': element['name'],
-                            'type': element['type'],
-                            'annotation': element['annotation'],
-                        })
-                    inner_classes.extend(groups[refName]['innerClasses'])
+                    if maxOccurs == '1':
+                        for element in groups[refName]['elements']:
+                            attributes.append({
+                                'name': element['name'],
+                                'type': element['type'],
+                                'annotation': element['annotation'],
+                            })
+                        inner_classes.extend(groups[refName]['innerClasses'])
+                    else:
+                        for element in groups[refName]['elements']:
+                            attributes.append({
+                                'name': element['name'],
+                                'type': 'ArrayList<{}>'.format(to_pascal_case(element['name'])),
+                                'annotation': element['annotation'],
+                            })
+                        inner_classes.extend(groups[refName]['innerClasses'])
+
 
         # 将复杂类型的信息存储到字典中，并添加到 complexTypes 列表中
         complexTypes.append({

@@ -58,9 +58,39 @@ public class SwAxisIndividual {
     
     public static class SwVariableRefs {
         
-
+        protected ArrayList<McDataInstanceVarRef> mcDataInstanceVarRef;
         
 
+        
+        @XmlElement(name="MC-DATA-INSTANCE-VAR-REF")
+        public ArrayList<McDataInstanceVarRef> getMcDataInstanceVarRef() {
+            return this.mcDataInstanceVarRef;
+        }
+
+        public void setMcDataInstanceVarRef(ArrayList<McDataInstanceVarRef> value) {
+            this.mcDataInstanceVarRef = value;
+        }
+        
+
+        
+        
+        public static class McDataInstanceVarRef extends Ref {
+            
+            protected McDataInstanceSubtypesEnum dest;
+            
+
+            
+            @XmlAttribute(name="DEST")
+            public McDataInstanceSubtypesEnum getDest() {
+                return this.dest;
+            }
+
+            public void setDest(McDataInstanceSubtypesEnum value) {
+                this.dest = value;
+            }
+            
+        }
+        
         
     }
     

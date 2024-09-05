@@ -1,5 +1,5 @@
-当前任务：choice标签对应的list
-  
+
+
 ## 标签含义
 
 - <xsd:group>不会被解析为类，定义了一个元素组，里面的<xsd:element>定义了组里的元素,
@@ -91,6 +91,7 @@
   ```
 
   
+
 
 attributeGroup里面是<xsd:attribute >,应该编辑为@xmlAttribute注解
 
@@ -263,4 +264,50 @@ SUBTYPES-ENUM列出当前父类的子类，------>提取出不重复的成员放
 
 
 
-跳过![image-20240822144603219](C:\Users\User\AppData\Roaming\Typora\typora-user-images\image-20240822144603219.png)
+test.xsd跳过![image-20240822144603219](C:\Users\User\AppData\Roaming\Typora\typora-user-images\image-20240822144603219.png)
+
+## mixed标签
+
+@mixed标签jaxb解析为Serializable和@XmlElementRefs，应该改为object和@xmlElements，
+
+```
+<xsd:complexType abstract="false" mixed="true" name="FM-CONDITION-BY-FEATURES-AND-ATTRIBUTES">
+```
+
+```
+@XmlMixed
+@XmlElements({
+    @XmlElement(name = "CONFIG-ELEMENT-DEF-GLOBAL-REF", type = ConfigElementDefGlobalRef.class),
+    @XmlElement(name = "CONFIG-ELEMENT-DEF-LOCAL-REF", type = ConfigElementDefLocalRef.class)
+})
+protected List<Object> mixed;
+
+```
+
+解析后的 Java 对象中的 `mixed` 列表可能会包含：
+
+- `"Some text"`：作为 `String` 类型。
+- 一个 `ConfigElementDefGlobalRef` 对象。
+- `"More text"`：作为 `String` 类型。
+- 一个 `ConfigElementDefLocalRef` 对象。
+
+遍历mixed列表来访问里面的内容
+
+```
+for (Object obj : ecucQueryExpression.getMixed()) {
+    if (obj instanceof String) {
+        // 处理文本
+        System.out.println("Text: " + (String) obj);
+    } else if (obj instanceof ConfigElementDefGlobalRef) {
+        // 处理 CONFIG-ELEMENT-DEF-GLOBAL-REF
+        ConfigElementDefGlobalRef globalRef = (ConfigElementDefGlobalRef) obj;
+        System.out.println("Global Ref DEST: " + globalRef.getDest());
+    } else if (obj instanceof ConfigElementDefLocalRef) {
+        // 处理 CONFIG-ELEMENT-DEF-LOCAL-REF
+        ConfigElementDefLocalRef localRef = (ConfigElementDefLocalRef) obj;
+        System.out.println("Local Ref DEST: " + localRef.getDest());
+    }
+}
+
+```
+

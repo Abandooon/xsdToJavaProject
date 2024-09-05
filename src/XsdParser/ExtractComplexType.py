@@ -30,17 +30,17 @@ def extractComplexType(root, element_wrapper):
                         'annotation': '@XmlValue'
                     })
                 # 处理extension下的attributegroup
-                for attributeGroupRef in simpleContent.findall("./{http://www.w3.org/2001/XMLSchema}attributeGroup"):
-                    refName = attributeGroupRef.get('ref').split(':')[-1]
-                    attributeGroups = extractAttributeGroup(root)  # 获取引用的属性组
-                    if refName in attributeGroups:
-                        for attr in attributeGroups[refName]:
-                            attributes.append({
-                                'name': to_camel_case(attr['name']),
-                                'type': attr['type'],
-                                'annotation': '@XmlAttribute(name="{}")'.format(attr['name'])
-                                # 属性组中的属性生成@XmlAttribute注解
-                            })
+            for attributeGroupRef in simpleContent.findall("./{http://www.w3.org/2001/XMLSchema}attributeGroup"):
+                refName = attributeGroupRef.get('ref').split(':')[-1]
+                attributeGroups = extractAttributeGroup(root)  # 获取引用的属性组
+                if refName in attributeGroups:
+                    for attr in attributeGroups[refName]:
+                        attributes.append({
+                            'name': to_camel_case(attr['name']),
+                            'type': attr['type'],
+                            'annotation': '@XmlAttribute(name="{}")'.format(attr['name'])
+                            # 属性组中的属性生成@XmlAttribute注解
+                        })
 
         # 处理complex下第一级attributeGroup
         for attributeGroupRef in complexType.findall("./{http://www.w3.org/2001/XMLSchema}attributeGroup"):
@@ -71,9 +71,8 @@ def extractComplexType(root, element_wrapper):
                     # 将群组中的内部类添加到 inner_classes 列表中
                     inner_classes.extend(groups[refName]['innerClasses'])
 
-        # 处理choice下的group------------------------》这里逻辑要重写！！！！！！
-        #mixed标签需要特殊处理，jaxb解析的不对----》参考artop模型用的是FeatureMap------》是否用list、是否用@elementRef注解
-        #用list、xmlelements试试---》测试用例xml
+        # 处理choice下的group
+        #unbounded处理为list，不止一个element的要object和@mlelements，mixed为true加上@xmlMixed,
         choice = complexType.find("./{http://www.w3.org/2001/XMLSchema}choice")
         if choice is not None:
             maxOccurs = choice.get('maxOccurs')
@@ -82,7 +81,7 @@ def extractComplexType(root, element_wrapper):
             for groupRef in choice.findall("./{http://www.w3.org/2001/XMLSchema}group"):
                 refName = groupRef.get('ref').split(':')[-1]
                 groups = extractGroup(root, element_wrapper)  # 获取引用的群组
-                if refName in groups:
+                if refName in groups:                      #--------------------------if mixed==true--->加上@XmlMixed注解
                     if maxOccurs == '1':
                         for element in groups[refName]['elements']:
                             attributes.append({

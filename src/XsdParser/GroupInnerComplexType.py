@@ -71,7 +71,7 @@ def process_choice(root, choice, element_name, element_wrapper):
     for child in choice:
         if child.tag.endswith('element'):
             elements, innerClass = (process_elements(root, choice, maxOccurs, element_name, element_wrapper))  # 处理choice中的元素，传入当前choice的maxoccurs和父element的name（wrapper注解名）
-        elif child.tag.endswith('group'):  # 这要再过一遍逻辑
+        elif child.tag.endswith('group'):  # element和group没有同时存在，choice下为group的只有两个
             refName = child.get('ref').split(':')[-1]
             elements, innerClass = process_choiceRef(root, refName, maxOccurs, element_wrapper, element_name)
 

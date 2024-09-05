@@ -177,5 +177,33 @@
       <xsd:enumeration value="COMPU-METHOD"/>
     </xsd:restriction>
   </xsd:simpleType>
-
+  <!-- element group for class SpecialData::SdgContents -->
+  <xsd:group name="SDG-CONTENTS">
+    <xsd:choice>
+      <xsd:choice maxOccurs="unbounded" minOccurs="0">
+        <xsd:element name="SDX-REF">
+          <xsd:complexType>
+            <xsd:simpleContent>
+              <xsd:extension base="AR:REF">
+                <xsd:attribute name="DEST" type="AR:REFERRABLE--SUBTYPES-ENUM" use="required"/>
+              </xsd:extension>
+            </xsd:simpleContent>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="SDXF" type="AR:REFERRABLE-REF-CONDITIONAL"/>
+        <xsd:element name="SD" type="AR:SD"/>
+        <xsd:element name="SDG" type="AR:SDG"/>
+        <xsd:element name="SDF" type="AR:SDF"/>
+      </xsd:choice>
+    </xsd:choice>
+  </xsd:group>
+  <!-- complex type for class SpecialData::SdgContents -->
+  <xsd:complexType abstract="false" mixed="false" name="SDG-CONTENTS">
+    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+      <xsd:group ref="AR:AR-OBJECT"/>
+      <xsd:group ref="AR:SDG-CONTENTS"/>
+    </xsd:choice>
+    <xsd:attributeGroup ref="AR:AR-OBJECT"/>
+  </xsd:complexType>
+  
 </xsd:schema>

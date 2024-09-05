@@ -1,5 +1,6 @@
 from src.XsdParser.TypeMapping import mapXsdTypeToJava
 from src.XsdParser.GroupInnerComplexType import process_group_inner_complex_type, to_camel_case, to_pascal_case
+from src.XsdParser.GroupInnerComplexType import process_choiceRef
 
 
 def extractGroup(root, element_wrapper):
@@ -11,14 +12,42 @@ def extractGroup(root, element_wrapper):
         elements = []  # 初始化列表，用于存储群组的元素
         inner_classes = []
 
-        # 处理 sequence 标签中的元素
-        sequence = group.find("./{http://www.w3.org/2001/XMLSchema}sequence")
-        if sequence is not None:
-            elements, inner_classes = process_elements(root, sequence, '1', None, element_wrapper)  #这里要传入max，传none或者1？
-            groups[group_name] = {
-                'elements': elements,  # 存储群组中的字段信息
-                'innerClasses': inner_classes  # 存储群组中的内部类信息
-            }
+        accumulated_elements = []
+        accumulated_inner_classes = []
+        for child in group:
+            if child.tag.endswith('sequence'):
+                # 处理 sequence 标签中的元素
+                sequence = group.find("./{http://www.w3.org/2001/XMLSchema}sequence")
+                if sequence is not None:
+                    elements, inner_classes = process_elements(root, sequence, '1', None,
+                                                               element_wrapper)
+                    accumulated_elements.extend(elements)
+                    accumulated_inner_classes.extend(inner_classes)
+                    # groups[group_name] = {
+                    #     'elements': elements,  # 存储群组中的字段信息
+                    #     'innerClasses': inner_classes  # 存储群组中的内部类信息
+                    # }
+            elif child.tag.endswith('choice'):
+                choice = group.find("./{http://www.w3.org/2001/XMLSchema}choice")
+                innerChoice = choice.find("./{http://www.w3.org/2001/XMLSchema}choice")
+                maxOccurs = innerChoice.get('maxOccurs')
+                elements, inner_classes = process_elements(root, innerChoice, maxOccurs, None, element_wrapper)
+                accumulated_elements.extend(elements)
+                accumulated_inner_classes.extend(inner_classes)
+
+                innerInnerChoices = innerChoice.findall("./{http://www.w3.org/2001/XMLSchema}choice")
+                for innerInnerChoice in innerInnerChoices:
+                    innerMaxOccurs = innerInnerChoice.get('maxOccurs')
+                    group = innerInnerChoice.find("./{http://www.w3.org/2001/XMLSchema}group")
+                    refName = group.get('ref').split(':')[-1]
+                    elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs, element_wrapper, 'None')
+                    accumulated_elements.extend(elements)
+                    accumulated_inner_classes.extend(inner_classes)
+        groups[group_name] = {
+            'elements': accumulated_elements,  # 累积的 elements
+            'innerClasses': accumulated_inner_classes  # 累积的 inner classes
+        }
+
     return groups  # 返回群组信息字典
 
 
@@ -67,3 +96,9 @@ def process_elements(root, sequenceOrChoice, maxOccurs, fatherElementName, eleme
                     inner_classes.append(inner_type)  # 将内部类信息单独存储
 
     return elements, inner_classes  # 返回元素列表
+def get_max_occurs(choice):
+    max_occurs = choice.get('maxOccurs')
+    if max_occurs is None:
+        return '1'  # 默认值为 1
+    return max_occurs
+

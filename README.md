@@ -1,4 +1,7 @@
-
+task：Boolean类中没有s、t，没走到for attributeGroupRef in simpleContent.findall("./{http://www.w3.org/2001/XMLSchema}attributeGroup")里面
+-----看下gpt给的代码
+测试autosar.xsd的时候报错，添加打印信息
+没必要list<object>，直接拆开，以前就是这么写的
 
 ## 标签含义
 

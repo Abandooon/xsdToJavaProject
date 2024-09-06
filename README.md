@@ -1,4 +1,5 @@
-task：传的参数有问题？
+task：传的参数有问题？测试用例改为simpleTest，注掉了choiceref
+task：重新捋一遍逻辑，看为什么一直调用它
 一直处理group: SW-VARIABLE-REF-PROXY，这个是choice下的group ref，考虑把所有逻辑抽出来单独放在这个类，不调用其他函数
 没必要list<object>，直接拆开，以前就是这么写的
 

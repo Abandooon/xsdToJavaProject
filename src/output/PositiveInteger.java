@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.XmlRootElement;
 
-public class Boolean {
+public class PositiveInteger {
 
     
     protected java.lang.String value;

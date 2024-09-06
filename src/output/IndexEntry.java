@@ -5,29 +5,18 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.XmlRootElement;
 
-public class Ref {
+public class IndexEntry {
 
-    
-    protected java.lang.String value;
     
     protected java.lang.String s;
     
     protected java.lang.String t;
     
-    protected java.lang.String base;
+    protected ArrayList<Sup> sup;
     
-    protected java.lang.String index;
+    protected ArrayList<Sub> sub;
     
 
-    
-    @XmlValue
-    public java.lang.String getValue() {
-        return this.value;
-    }
-
-    public void setValue(java.lang.String value) {
-        this.value = value;
-    }
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -47,22 +36,22 @@ public class Ref {
         this.t = value;
     }
     
-    @XmlAttribute(name="BASE")
-    public java.lang.String getBase() {
-        return this.base;
+    @XmlElement(name="SUP")
+    public ArrayList<Sup> getSup() {
+        return this.sup;
     }
 
-    public void setBase(java.lang.String value) {
-        this.base = value;
+    public void setSup(ArrayList<Sup> value) {
+        this.sup = value;
     }
     
-    @XmlAttribute(name="INDEX")
-    public java.lang.String getIndex() {
-        return this.index;
+    @XmlElement(name="SUB")
+    public ArrayList<Sub> getSub() {
+        return this.sub;
     }
 
-    public void setIndex(java.lang.String value) {
-        this.index = value;
+    public void setSub(ArrayList<Sub> value) {
+        this.sub = value;
     }
     
 

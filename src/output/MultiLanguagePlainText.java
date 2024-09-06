@@ -5,25 +5,16 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.XmlRootElement;
 
-public class ViewTokens {
+public class MultiLanguagePlainText {
 
-    
-    protected java.lang.String value;
     
     protected java.lang.String s;
     
     protected java.lang.String t;
     
-
+    protected LPlainText l10;
     
-    @XmlValue
-    public java.lang.String getValue() {
-        return this.value;
-    }
 
-    public void setValue(java.lang.String value) {
-        this.value = value;
-    }
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -41,6 +32,15 @@ public class ViewTokens {
 
     public void setT(java.lang.String value) {
         this.t = value;
+    }
+    
+    @XmlElement(name="L-10")
+    public LPlainText getL10() {
+        return this.l10;
+    }
+
+    public void setL10(LPlainText value) {
+        this.l10 = value;
     }
     
 

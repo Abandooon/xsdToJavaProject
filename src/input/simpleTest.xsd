@@ -97,6 +97,7 @@
 
   <xsd:group name="SW-VARIABLE-REF-PROXY">
     <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="0" name="AUTOSAR-VARIABLE" type="AR:AUTOSAR-VARIABLE-REF"/>
       <xsd:element maxOccurs="1" minOccurs="0" name="MC-DATA-INSTANCE-VAR-REF">
         <xsd:complexType>
           <xsd:simpleContent>
@@ -205,5 +206,5 @@
     </xsd:choice>
     <xsd:attributeGroup ref="AR:AR-OBJECT"/>
   </xsd:complexType>
-  
+
 </xsd:schema>

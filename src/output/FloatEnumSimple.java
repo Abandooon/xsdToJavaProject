@@ -4,18 +4,21 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType(name="MC-DATA-INSTANCE--SUBTYPES-ENUM")
+@XmlType(name="FLOAT-ENUM--SIMPLE")
 @XmlEnum
-public enum McDataInstanceSubtypesEnum {
+public enum FloatEnumSimple {
 
     
-    @XmlEnumValue("MC-DATA-INSTANCE")
-    MC_DATA_INSTANCE("MC-DATA-INSTANCE");
+    @XmlEnumValue("FLOAT")
+    FLOAT("FLOAT"),;
+    
+    @XmlEnumValue("NO-FLOAT")
+    NO_FLOAT("NO-FLOAT");
     
 
     private final java.lang.String value;
 
-    McDataInstanceSubtypesEnum(java.lang.String v) {
+    FloatEnumSimple(java.lang.String v) {
         value = v;
     }
 
@@ -23,8 +26,8 @@ public enum McDataInstanceSubtypesEnum {
         return value;
     }
 
-    public static McDataInstanceSubtypesEnum fromValue(java.lang.String v) {
-        for (McDataInstanceSubtypesEnum c: McDataInstanceSubtypesEnum.values()) {
+    public static FloatEnumSimple fromValue(java.lang.String v) {
+        for (FloatEnumSimple c: FloatEnumSimple.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

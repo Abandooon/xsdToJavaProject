@@ -1,6 +1,5 @@
-task：Boolean类中没有s、t，没走到for attributeGroupRef in simpleContent.findall("./{http://www.w3.org/2001/XMLSchema}attributeGroup")里面
------看下gpt给的代码
-测试autosar.xsd的时候报错，添加打印信息
+task：传的参数有问题？
+一直处理group: SW-VARIABLE-REF-PROXY，这个是choice下的group ref，考虑把所有逻辑抽出来单独放在这个类，不调用其他函数
 没必要list<object>，直接拆开，以前就是这么写的
 
 ## 标签含义
@@ -27,7 +26,7 @@ task：Boolean类中没有s、t，没走到for attributeGroupRef in simpleConten
 
 - <xsd:choice>用于指定一组可选的子元素
 
-- type="AR:STRING"/>, AR:STRING会映射为定义的STRING类， <xsd:restriction base="xsd:string"/>,xsd:string会映射为java.lang.string
+- <type="AR:STRING"/>, AR:STRING会映射为定义的STRING类， <xsd:restriction base="xsd:string"/>,xsd:string会映射为java.lang.string
 
   
 

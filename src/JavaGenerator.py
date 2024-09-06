@@ -18,16 +18,16 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper):
     simpleTypeClassTemplate = env.get_template('SimpleTypeClassTemplate.j2')
 
     # 解析XSD文件
-    xsdFile = os.path.join(input_dir, 'simpleTest.xsd')  # 指定XSD文件路径
+    xsdFile = os.path.join(input_dir, 'test.xsd')  # 指定XSD文件路径
     tree = etree.parse(xsdFile)  # 解析XSD文件为树结构
     root = tree.getroot()  # 获取XML的根节点
 
     # 提取信息
     complexTypes = extractComplexType(root, element_wrapper)  # 提取复杂类型信息
+    print(f"提取了 {len(complexTypes)} 个复杂类型")
     simpleTypes = extractSimpleType(root)  # 提取简单类型信息
 
     for simpleType in simpleTypes:
-        print(f"simpleType#######     {simpleType}")
         # 含enumeration标签的需解析为类，应用simpleType模版
         if simpleType['enumerations']:
             javaCode = simpleTypeClassTemplate.render(
@@ -50,7 +50,7 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper):
 
     # 生成Java代码
     for complexType in complexTypes:
-        print(f"complexType#######     {complexType}")
+        print(f"开始生成复杂类型类: {complexType['name']}")
         # 渲染Java类模板
         javaCode = complexTypeClassTemplate.render(
             packageName=package_name,

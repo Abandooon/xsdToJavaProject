@@ -4,51 +4,54 @@ from src.XsdParser.GroupInnerComplexType import process_choiceRef
 
 
 def extractGroup(root, element_wrapper):
-    groups = {}  # 初始化一个字典，用于存储群组信息
+    groups = {}
 
     # 查找所有群组元素
     for group in root.findall(".//{http://www.w3.org/2001/XMLSchema}group"):
-        group_name = group.get('name')  # 获取群组名称
-        elements = []  # 初始化列表，用于存储群组的元素
+        group_name = group.get('name')
+        elements = []
         inner_classes = []
 
         accumulated_elements = []
         accumulated_inner_classes = []
+
         for child in group:
             if child.tag.endswith('sequence'):
-                # 处理 sequence 标签中的元素
                 sequence = group.find("./{http://www.w3.org/2001/XMLSchema}sequence")
                 if sequence is not None:
-                    elements, inner_classes = process_elements(root, sequence, '1', None,
-                                                               element_wrapper)
+                    elements, inner_classes = process_elements(root, sequence, '1', None, element_wrapper)
                     accumulated_elements.extend(elements)
                     accumulated_inner_classes.extend(inner_classes)
-                    # groups[group_name] = {
-                    #     'elements': elements,  # 存储群组中的字段信息
-                    #     'innerClasses': inner_classes  # 存储群组中的内部类信息
-                    # }
             elif child.tag.endswith('choice'):
                 choice = group.find("./{http://www.w3.org/2001/XMLSchema}choice")
                 innerChoice = choice.find("./{http://www.w3.org/2001/XMLSchema}choice")
                 maxOccurs = innerChoice.get('maxOccurs')
-                elements, inner_classes = process_elements(root, innerChoice, maxOccurs, None, element_wrapper)
-                accumulated_elements.extend(elements)
-                accumulated_inner_classes.extend(inner_classes)
 
-                innerInnerChoices = innerChoice.findall("./{http://www.w3.org/2001/XMLSchema}choice")
-                for innerInnerChoice in innerInnerChoices:
-                    innerMaxOccurs = innerInnerChoice.get('maxOccurs')
-                    group = innerInnerChoice.find("./{http://www.w3.org/2001/XMLSchema}group")
-                    refName = group.get('ref').split(':')[-1]
-                    elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs, element_wrapper, 'None')
+                elementsObj = innerChoice.findall("./{http://www.w3.org/2001/XMLSchema}element")
+                if elementsObj is not None:
+                    elements, inner_classes = process_elements(root, innerChoice, maxOccurs, None, element_wrapper)
                     accumulated_elements.extend(elements)
                     accumulated_inner_classes.extend(inner_classes)
+
+                innerInnerChoices = innerChoice.findall("./{http://www.w3.org/2001/XMLSchema}choice")
+                if innerInnerChoices is not None:
+                    for innerInnerChoice in innerInnerChoices:
+                        innerMaxOccurs = innerInnerChoice.get('maxOccurs')
+                        group = innerInnerChoice.find("./{http://www.w3.org/2001/XMLSchema}group")
+                        refName = group.get('ref').split(':')[-1]
+                        #添加打印，另一个调用的地方也打印，找到是哪个地方循环引用
+                        print(f"group------process_choiceRef {group_name}")
+                        elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs, element_wrapper,
+                                                                    'None', depth=1)
+                        accumulated_elements.extend(elements)
+                        accumulated_inner_classes.extend(inner_classes)
+
         groups[group_name] = {
-            'elements': accumulated_elements,  # 累积的 elements
-            'innerClasses': accumulated_inner_classes  # 累积的 inner classes
+            'elements': accumulated_elements,
+            'innerClasses': accumulated_inner_classes
         }
 
-    return groups  # 返回群组信息字典
+    return groups
 
 
 def process_elements(root, sequenceOrChoice, maxOccurs, fatherElementName, element_wrapper):

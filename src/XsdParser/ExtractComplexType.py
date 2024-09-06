@@ -29,8 +29,8 @@ def extractComplexType(root, element_wrapper):
                         'type': baseTypeInfo['type'],
                         'annotation': '@XmlValue'
                     })
-                # 处理extension下的attributegroup
-            for attributeGroupRef in simpleContent.findall("./{http://www.w3.org/2001/XMLSchema}attributeGroup"):
+            # 处理extension下的attributegroup
+            for attributeGroupRef in base.findall("./{http://www.w3.org/2001/XMLSchema}attributeGroup"):
                 refName = attributeGroupRef.get('ref').split(':')[-1]
                 attributeGroups = extractAttributeGroup(root)  # 获取引用的属性组
                 if refName in attributeGroups:

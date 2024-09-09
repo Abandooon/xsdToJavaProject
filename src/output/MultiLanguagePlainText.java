@@ -8,13 +8,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class MultiLanguagePlainText {
 
     
+    
     protected java.lang.String s;
+    
+    
     
     protected java.lang.String t;
     
+    
+    
     protected LPlainText l10;
     
+    
 
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -25,6 +32,8 @@ public class MultiLanguagePlainText {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -33,6 +42,8 @@ public class MultiLanguagePlainText {
     public void setT(java.lang.String value) {
         this.t = value;
     }
+    
+    
     
     @XmlElement(name="L-10")
     public LPlainText getL10() {
@@ -43,6 +54,8 @@ public class MultiLanguagePlainText {
         this.l10 = value;
     }
     
+    
+
 
     
 }

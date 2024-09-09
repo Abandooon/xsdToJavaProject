@@ -8,11 +8,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Map {
 
     
+    
     protected java.lang.String s;
+    
+    
     
     protected java.lang.String t;
     
+    
 
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -23,6 +28,8 @@ public class Map {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -32,6 +39,8 @@ public class Map {
         this.t = value;
     }
     
+    
+
 
     
 }

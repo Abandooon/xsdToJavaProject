@@ -5,25 +5,34 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.XmlRootElement;
 
-public class ViewTokens {
+public class ShowResourceLongNameEnum {
 
     
-    protected java.lang.String value;
+    
+    protected ShowResourceLongNameEnumSimple value;
+    
+    
     
     protected java.lang.String s;
     
+    
+    
     protected java.lang.String t;
+    
     
 
     
+    
     @XmlValue
-    public java.lang.String getValue() {
+    public ShowResourceLongNameEnumSimple getValue() {
         return this.value;
     }
 
-    public void setValue(java.lang.String value) {
+    public void setValue(ShowResourceLongNameEnumSimple value) {
         this.value = value;
     }
+    
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -34,6 +43,8 @@ public class ViewTokens {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -43,6 +54,8 @@ public class ViewTokens {
         this.t = value;
     }
     
+    
+
 
     
 }

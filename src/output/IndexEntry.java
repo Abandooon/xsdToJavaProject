@@ -8,15 +8,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class IndexEntry {
 
     
+    
     protected java.lang.String s;
+    
+    
     
     protected java.lang.String t;
     
+    
+    
     protected ArrayList<Sup> sup;
+    
+    
     
     protected ArrayList<Sub> sub;
     
+    
 
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -27,6 +36,8 @@ public class IndexEntry {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -35,6 +46,8 @@ public class IndexEntry {
     public void setT(java.lang.String value) {
         this.t = value;
     }
+    
+    
     
     @XmlElement(name="SUP")
     public ArrayList<Sup> getSup() {
@@ -45,6 +58,8 @@ public class IndexEntry {
         this.sup = value;
     }
     
+    
+    
     @XmlElement(name="SUB")
     public ArrayList<Sub> getSub() {
         return this.sub;
@@ -54,6 +69,8 @@ public class IndexEntry {
         this.sub = value;
     }
     
+    
+
 
     
 }

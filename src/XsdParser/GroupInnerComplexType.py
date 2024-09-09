@@ -76,6 +76,7 @@ def process_choice(root, choice, element_name, element_wrapper):
             elements, innerClass = (process_elements(root, choice, maxOccurs, element_name, element_wrapper))  # 处理choice中的元素，传入当前choice的maxoccurs和父element的name（wrapper注解名）
         elif child.tag.endswith('group'):  # element和group没有同时存在，choice下为group的只有两个
             refName = child.get('ref').split(':')[-1]
+            #判断条件？参数有问题？怎么一直传element-----process_choiceRef SW-COMPARISON-VARIABLES
             print(f"element-----process_choiceRef {element_name}")
             elements, innerClass = process_choiceRef(root, refName, maxOccurs, element_wrapper, element_name)
 

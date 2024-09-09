@@ -8,41 +8,76 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ImplementationDataTypeElement {
 
     
+    
     protected java.lang.String s;
+    
+    
     
     protected java.lang.String t;
     
+    
+    
     protected java.lang.String uuid;
+    
+    
     
     protected Identifier shortName;
     
+    
+    
     protected ShortNameFragments shortNameFragments;
+    
+    
     
     protected MultilanguageLongName longName;
     
+    
+    
     protected MultiLanguageOverviewParagraph desc;
+    
+    
     
     protected CategoryString category;
     
+    
+    
     protected AdminData adminData;
+    
+    
     
     protected DocumentationBlock introduction;
     
+    
+    
     protected Annotations annotations;
+    
+    
     
     protected PositiveIntegerValueVariationPoint arraySize;
     
+    
+    
     protected ArraySizeHandlingEnum arraySizeHandling;
+    
+    
     
     protected ArraySizeSemanticsEnum arraySizeSemantics;
     
+    
+    
     protected SubElements subElements;
+    
+    
     
     protected SwDataDefProps swDataDefProps;
     
+    
+    
     protected VariationPoint variationPoint;
     
+    
 
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -53,6 +88,8 @@ public class ImplementationDataTypeElement {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -61,6 +98,8 @@ public class ImplementationDataTypeElement {
     public void setT(java.lang.String value) {
         this.t = value;
     }
+    
+    
     
     @XmlAttribute(name="UUID")
     public java.lang.String getUuid() {
@@ -71,6 +110,8 @@ public class ImplementationDataTypeElement {
         this.uuid = value;
     }
     
+    
+    
     @XmlElement(name="SHORT-NAME")
     public Identifier getShortName() {
         return this.shortName;
@@ -79,6 +120,8 @@ public class ImplementationDataTypeElement {
     public void setShortName(Identifier value) {
         this.shortName = value;
     }
+    
+    
     
     @XmlElement(name="SHORT-NAME-FRAGMENTS")
     public ShortNameFragments getShortNameFragments() {
@@ -89,6 +132,8 @@ public class ImplementationDataTypeElement {
         this.shortNameFragments = value;
     }
     
+    
+    
     @XmlElement(name="LONG-NAME")
     public MultilanguageLongName getLongName() {
         return this.longName;
@@ -97,6 +142,8 @@ public class ImplementationDataTypeElement {
     public void setLongName(MultilanguageLongName value) {
         this.longName = value;
     }
+    
+    
     
     @XmlElement(name="DESC")
     public MultiLanguageOverviewParagraph getDesc() {
@@ -107,6 +154,8 @@ public class ImplementationDataTypeElement {
         this.desc = value;
     }
     
+    
+    
     @XmlElement(name="CATEGORY")
     public CategoryString getCategory() {
         return this.category;
@@ -115,6 +164,8 @@ public class ImplementationDataTypeElement {
     public void setCategory(CategoryString value) {
         this.category = value;
     }
+    
+    
     
     @XmlElement(name="ADMIN-DATA")
     public AdminData getAdminData() {
@@ -125,6 +176,8 @@ public class ImplementationDataTypeElement {
         this.adminData = value;
     }
     
+    
+    
     @XmlElement(name="INTRODUCTION")
     public DocumentationBlock getIntroduction() {
         return this.introduction;
@@ -133,6 +186,8 @@ public class ImplementationDataTypeElement {
     public void setIntroduction(DocumentationBlock value) {
         this.introduction = value;
     }
+    
+    
     
     @XmlElement(name="ANNOTATIONS")
     public Annotations getAnnotations() {
@@ -143,6 +198,8 @@ public class ImplementationDataTypeElement {
         this.annotations = value;
     }
     
+    
+    
     @XmlElement(name="ARRAY-SIZE")
     public PositiveIntegerValueVariationPoint getArraySize() {
         return this.arraySize;
@@ -151,6 +208,8 @@ public class ImplementationDataTypeElement {
     public void setArraySize(PositiveIntegerValueVariationPoint value) {
         this.arraySize = value;
     }
+    
+    
     
     @XmlElement(name="ARRAY-SIZE-HANDLING")
     public ArraySizeHandlingEnum getArraySizeHandling() {
@@ -161,6 +220,8 @@ public class ImplementationDataTypeElement {
         this.arraySizeHandling = value;
     }
     
+    
+    
     @XmlElement(name="ARRAY-SIZE-SEMANTICS")
     public ArraySizeSemanticsEnum getArraySizeSemantics() {
         return this.arraySizeSemantics;
@@ -169,6 +230,8 @@ public class ImplementationDataTypeElement {
     public void setArraySizeSemantics(ArraySizeSemanticsEnum value) {
         this.arraySizeSemantics = value;
     }
+    
+    
     
     @XmlElement(name="SUB-ELEMENTS")
     public SubElements getSubElements() {
@@ -179,6 +242,8 @@ public class ImplementationDataTypeElement {
         this.subElements = value;
     }
     
+    
+    
     @XmlElement(name="SW-DATA-DEF-PROPS")
     public SwDataDefProps getSwDataDefProps() {
         return this.swDataDefProps;
@@ -187,6 +252,8 @@ public class ImplementationDataTypeElement {
     public void setSwDataDefProps(SwDataDefProps value) {
         this.swDataDefProps = value;
     }
+    
+    
     
     @XmlElement(name="VARIATION-POINT")
     public VariationPoint getVariationPoint() {
@@ -197,6 +264,8 @@ public class ImplementationDataTypeElement {
         this.variationPoint = value;
     }
     
+    
+
 
     
     public static class ShortNameFragments {

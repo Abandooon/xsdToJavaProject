@@ -8,19 +8,32 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class HwElementConnector {
 
     
+    
     protected java.lang.String s;
+    
+    
     
     protected java.lang.String t;
     
+    
+    
     protected HwElementRefs hwElementRefs;
+    
+    
     
     protected HwPinGroupConnections hwPinGroupConnections;
     
+    
+    
     protected HwPinConnections hwPinConnections;
+    
+    
     
     protected VariationPoint variationPoint;
     
+    
 
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -31,6 +44,8 @@ public class HwElementConnector {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -39,6 +54,8 @@ public class HwElementConnector {
     public void setT(java.lang.String value) {
         this.t = value;
     }
+    
+    
     
     @XmlElement(name="HW-ELEMENT-REFS")
     public HwElementRefs getHwElementRefs() {
@@ -49,6 +66,8 @@ public class HwElementConnector {
         this.hwElementRefs = value;
     }
     
+    
+    
     @XmlElement(name="HW-PIN-GROUP-CONNECTIONS")
     public HwPinGroupConnections getHwPinGroupConnections() {
         return this.hwPinGroupConnections;
@@ -57,6 +76,8 @@ public class HwElementConnector {
     public void setHwPinGroupConnections(HwPinGroupConnections value) {
         this.hwPinGroupConnections = value;
     }
+    
+    
     
     @XmlElement(name="HW-PIN-CONNECTIONS")
     public HwPinConnections getHwPinConnections() {
@@ -67,6 +88,8 @@ public class HwElementConnector {
         this.hwPinConnections = value;
     }
     
+    
+    
     @XmlElement(name="VARIATION-POINT")
     public VariationPoint getVariationPoint() {
         return this.variationPoint;
@@ -76,6 +99,8 @@ public class HwElementConnector {
         this.variationPoint = value;
     }
     
+    
+
 
     
     public static class HwElementRefs {

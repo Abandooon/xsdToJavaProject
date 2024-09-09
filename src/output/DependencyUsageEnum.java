@@ -8,13 +8,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class DependencyUsageEnum {
 
     
+    
     protected DependencyUsageEnumSimple value;
+    
+    
     
     protected java.lang.String s;
     
+    
+    
     protected java.lang.String t;
     
+    
 
+    
     
     @XmlValue
     public DependencyUsageEnumSimple getValue() {
@@ -25,6 +32,8 @@ public class DependencyUsageEnum {
         this.value = value;
     }
     
+    
+    
     @XmlAttribute(name="S")
     public java.lang.String getS() {
         return this.s;
@@ -33,6 +42,8 @@ public class DependencyUsageEnum {
     public void setS(java.lang.String value) {
         this.s = value;
     }
+    
+    
     
     @XmlAttribute(name="T")
     public java.lang.String getT() {
@@ -43,6 +54,8 @@ public class DependencyUsageEnum {
         this.t = value;
     }
     
+    
+
 
     
 }

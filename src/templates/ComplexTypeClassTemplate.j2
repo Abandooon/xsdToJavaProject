@@ -8,10 +8,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class {{ className }}{% if extends %} extends {{ extends }}{% endif %} {
 
     {% for attribute in attributes %}
+    {% if attribute.name and attribute.type %}
     protected {{ attribute.type }} {{ attribute.name }};
+    {% endif %}
     {% endfor %}
 
     {% for attribute in attributes %}
+    {% if attribute.name and attribute.type %}
     {{ attribute.annotation }}
     public {{ attribute.type }} get{{ attribute.name[0] | upper + attribute.name[1:] }}() {
         return this.{{ attribute.name }};
@@ -20,7 +23,9 @@ public class {{ className }}{% if extends %} extends {{ extends }}{% endif %} {
     public void set{{ attribute.name[0] | upper + attribute.name[1:] }}({{ attribute.type }} value) {
         this.{{ attribute.name }} = value;
     }
+    {% endif %}
     {% endfor %}
+
 
     {% for innerClass in innerClasses %}
     public static class {{ innerClass.InnerClassName }}{% if innerClass.extendsClass %} extends {{ innerClass.extendsClass }}{% endif %} {

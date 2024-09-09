@@ -8,37 +8,68 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Compiler {
 
     
+    
     protected java.lang.String s;
+    
+    
     
     protected java.lang.String t;
     
+    
+    
     protected java.lang.String uuid;
+    
+    
     
     protected Identifier shortName;
     
+    
+    
     protected ShortNameFragments shortNameFragments;
+    
+    
     
     protected MultilanguageLongName longName;
     
+    
+    
     protected MultiLanguageOverviewParagraph desc;
+    
+    
     
     protected CategoryString category;
     
+    
+    
     protected AdminData adminData;
+    
+    
     
     protected DocumentationBlock introduction;
     
+    
+    
     protected Annotations annotations;
+    
+    
     
     protected String name;
     
+    
+    
     protected String options;
+    
+    
     
     protected String vendor;
     
+    
+    
     protected String version;
     
+    
 
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -49,6 +80,8 @@ public class Compiler {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -57,6 +90,8 @@ public class Compiler {
     public void setT(java.lang.String value) {
         this.t = value;
     }
+    
+    
     
     @XmlAttribute(name="UUID")
     public java.lang.String getUuid() {
@@ -67,6 +102,8 @@ public class Compiler {
         this.uuid = value;
     }
     
+    
+    
     @XmlElement(name="SHORT-NAME")
     public Identifier getShortName() {
         return this.shortName;
@@ -75,6 +112,8 @@ public class Compiler {
     public void setShortName(Identifier value) {
         this.shortName = value;
     }
+    
+    
     
     @XmlElement(name="SHORT-NAME-FRAGMENTS")
     public ShortNameFragments getShortNameFragments() {
@@ -85,6 +124,8 @@ public class Compiler {
         this.shortNameFragments = value;
     }
     
+    
+    
     @XmlElement(name="LONG-NAME")
     public MultilanguageLongName getLongName() {
         return this.longName;
@@ -93,6 +134,8 @@ public class Compiler {
     public void setLongName(MultilanguageLongName value) {
         this.longName = value;
     }
+    
+    
     
     @XmlElement(name="DESC")
     public MultiLanguageOverviewParagraph getDesc() {
@@ -103,6 +146,8 @@ public class Compiler {
         this.desc = value;
     }
     
+    
+    
     @XmlElement(name="CATEGORY")
     public CategoryString getCategory() {
         return this.category;
@@ -111,6 +156,8 @@ public class Compiler {
     public void setCategory(CategoryString value) {
         this.category = value;
     }
+    
+    
     
     @XmlElement(name="ADMIN-DATA")
     public AdminData getAdminData() {
@@ -121,6 +168,8 @@ public class Compiler {
         this.adminData = value;
     }
     
+    
+    
     @XmlElement(name="INTRODUCTION")
     public DocumentationBlock getIntroduction() {
         return this.introduction;
@@ -129,6 +178,8 @@ public class Compiler {
     public void setIntroduction(DocumentationBlock value) {
         this.introduction = value;
     }
+    
+    
     
     @XmlElement(name="ANNOTATIONS")
     public Annotations getAnnotations() {
@@ -139,6 +190,8 @@ public class Compiler {
         this.annotations = value;
     }
     
+    
+    
     @XmlElement(name="NAME")
     public String getName() {
         return this.name;
@@ -147,6 +200,8 @@ public class Compiler {
     public void setName(String value) {
         this.name = value;
     }
+    
+    
     
     @XmlElement(name="OPTIONS")
     public String getOptions() {
@@ -157,6 +212,8 @@ public class Compiler {
         this.options = value;
     }
     
+    
+    
     @XmlElement(name="VENDOR")
     public String getVendor() {
         return this.vendor;
@@ -165,6 +222,8 @@ public class Compiler {
     public void setVendor(String value) {
         this.vendor = value;
     }
+    
+    
     
     @XmlElement(name="VERSION")
     public String getVersion() {
@@ -175,6 +234,8 @@ public class Compiler {
         this.version = value;
     }
     
+    
+
 
     
     public static class ShortNameFragments {

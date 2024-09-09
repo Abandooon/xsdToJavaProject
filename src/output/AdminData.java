@@ -8,19 +8,32 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class AdminData {
 
     
+    
     protected java.lang.String s;
+    
+    
     
     protected java.lang.String t;
     
+    
+    
     protected LEnum language;
+    
+    
     
     protected MultiLanguagePlainText usedLanguages;
     
+    
+    
     protected DocRevisions docRevisions;
+    
+    
     
     protected Sdgs sdgs;
     
+    
 
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -31,6 +44,8 @@ public class AdminData {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -39,6 +54,8 @@ public class AdminData {
     public void setT(java.lang.String value) {
         this.t = value;
     }
+    
+    
     
     @XmlElement(name="LANGUAGE")
     public LEnum getLanguage() {
@@ -49,6 +66,8 @@ public class AdminData {
         this.language = value;
     }
     
+    
+    
     @XmlElement(name="USED-LANGUAGES")
     public MultiLanguagePlainText getUsedLanguages() {
         return this.usedLanguages;
@@ -57,6 +76,8 @@ public class AdminData {
     public void setUsedLanguages(MultiLanguagePlainText value) {
         this.usedLanguages = value;
     }
+    
+    
     
     @XmlElement(name="DOC-REVISIONS")
     public DocRevisions getDocRevisions() {
@@ -67,6 +88,8 @@ public class AdminData {
         this.docRevisions = value;
     }
     
+    
+    
     @XmlElement(name="SDGS")
     public Sdgs getSdgs() {
         return this.sdgs;
@@ -76,6 +99,8 @@ public class AdminData {
         this.sdgs = value;
     }
     
+    
+
 
     
     public static class DocRevisions {

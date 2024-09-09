@@ -8,23 +8,40 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class LLongName {
 
     
+    
     protected java.lang.String s;
+    
+    
     
     protected java.lang.String t;
     
+    
+    
     protected LEnumSimple l;
+    
+    
     
     protected ArrayList<Tt> tt;
     
+    
+    
     protected ArrayList<E> e;
+    
+    
     
     protected ArrayList<Sup> sup;
     
+    
+    
     protected ArrayList<Sub> sub;
+    
+    
     
     protected ArrayList<Ie> ie;
     
+    
 
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -35,6 +52,8 @@ public class LLongName {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -43,6 +62,8 @@ public class LLongName {
     public void setT(java.lang.String value) {
         this.t = value;
     }
+    
+    
     
     @XmlAttribute(name="L")
     public LEnumSimple getL() {
@@ -53,6 +74,8 @@ public class LLongName {
         this.l = value;
     }
     
+    
+    
     @XmlElement(name="TT")
     public ArrayList<Tt> getTt() {
         return this.tt;
@@ -61,6 +84,8 @@ public class LLongName {
     public void setTt(ArrayList<Tt> value) {
         this.tt = value;
     }
+    
+    
     
     @XmlElement(name="E")
     public ArrayList<E> getE() {
@@ -71,6 +96,8 @@ public class LLongName {
         this.e = value;
     }
     
+    
+    
     @XmlElement(name="SUP")
     public ArrayList<Sup> getSup() {
         return this.sup;
@@ -79,6 +106,8 @@ public class LLongName {
     public void setSup(ArrayList<Sup> value) {
         this.sup = value;
     }
+    
+    
     
     @XmlElement(name="SUB")
     public ArrayList<Sub> getSub() {
@@ -89,6 +118,8 @@ public class LLongName {
         this.sub = value;
     }
     
+    
+    
     @XmlElement(name="IE")
     public ArrayList<Ie> getIe() {
         return this.ie;
@@ -98,6 +129,8 @@ public class LLongName {
         this.ie = value;
     }
     
+    
+
 
     
 }

@@ -8,35 +8,64 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class HwAttributeDef {
 
     
+    
     protected java.lang.String s;
+    
+    
     
     protected java.lang.String t;
     
+    
+    
     protected java.lang.String uuid;
+    
+    
     
     protected Identifier shortName;
     
+    
+    
     protected ShortNameFragments shortNameFragments;
+    
+    
     
     protected MultilanguageLongName longName;
     
+    
+    
     protected MultiLanguageOverviewParagraph desc;
+    
+    
     
     protected CategoryString category;
     
+    
+    
     protected AdminData adminData;
+    
+    
     
     protected DocumentationBlock introduction;
     
+    
+    
     protected Annotations annotations;
+    
+    
     
     protected HwAttributeLiterals hwAttributeLiterals;
     
+    
+    
     protected Boolean isRequired;
+    
+    
     
     protected UnitRef unitRef;
     
+    
 
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -47,6 +76,8 @@ public class HwAttributeDef {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -55,6 +86,8 @@ public class HwAttributeDef {
     public void setT(java.lang.String value) {
         this.t = value;
     }
+    
+    
     
     @XmlAttribute(name="UUID")
     public java.lang.String getUuid() {
@@ -65,6 +98,8 @@ public class HwAttributeDef {
         this.uuid = value;
     }
     
+    
+    
     @XmlElement(name="SHORT-NAME")
     public Identifier getShortName() {
         return this.shortName;
@@ -73,6 +108,8 @@ public class HwAttributeDef {
     public void setShortName(Identifier value) {
         this.shortName = value;
     }
+    
+    
     
     @XmlElement(name="SHORT-NAME-FRAGMENTS")
     public ShortNameFragments getShortNameFragments() {
@@ -83,6 +120,8 @@ public class HwAttributeDef {
         this.shortNameFragments = value;
     }
     
+    
+    
     @XmlElement(name="LONG-NAME")
     public MultilanguageLongName getLongName() {
         return this.longName;
@@ -91,6 +130,8 @@ public class HwAttributeDef {
     public void setLongName(MultilanguageLongName value) {
         this.longName = value;
     }
+    
+    
     
     @XmlElement(name="DESC")
     public MultiLanguageOverviewParagraph getDesc() {
@@ -101,6 +142,8 @@ public class HwAttributeDef {
         this.desc = value;
     }
     
+    
+    
     @XmlElement(name="CATEGORY")
     public CategoryString getCategory() {
         return this.category;
@@ -109,6 +152,8 @@ public class HwAttributeDef {
     public void setCategory(CategoryString value) {
         this.category = value;
     }
+    
+    
     
     @XmlElement(name="ADMIN-DATA")
     public AdminData getAdminData() {
@@ -119,6 +164,8 @@ public class HwAttributeDef {
         this.adminData = value;
     }
     
+    
+    
     @XmlElement(name="INTRODUCTION")
     public DocumentationBlock getIntroduction() {
         return this.introduction;
@@ -127,6 +174,8 @@ public class HwAttributeDef {
     public void setIntroduction(DocumentationBlock value) {
         this.introduction = value;
     }
+    
+    
     
     @XmlElement(name="ANNOTATIONS")
     public Annotations getAnnotations() {
@@ -137,6 +186,8 @@ public class HwAttributeDef {
         this.annotations = value;
     }
     
+    
+    
     @XmlElement(name="HW-ATTRIBUTE-LITERALS")
     public HwAttributeLiterals getHwAttributeLiterals() {
         return this.hwAttributeLiterals;
@@ -145,6 +196,8 @@ public class HwAttributeDef {
     public void setHwAttributeLiterals(HwAttributeLiterals value) {
         this.hwAttributeLiterals = value;
     }
+    
+    
     
     @XmlElement(name="IS-REQUIRED")
     public Boolean getIsRequired() {
@@ -155,6 +208,8 @@ public class HwAttributeDef {
         this.isRequired = value;
     }
     
+    
+    
     @XmlElement(name="UNIT-REF")
     public UnitRef getUnitRef() {
         return this.unitRef;
@@ -164,6 +219,8 @@ public class HwAttributeDef {
         this.unitRef = value;
     }
     
+    
+
 
     
     public static class ShortNameFragments {

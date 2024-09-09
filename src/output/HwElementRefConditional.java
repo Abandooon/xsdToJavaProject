@@ -8,15 +8,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class HwElementRefConditional {
 
     
+    
     protected java.lang.String s;
+    
+    
     
     protected java.lang.String t;
     
+    
+    
     protected HwElementRef hwElementRef;
+    
+    
     
     protected VariationPoint variationPoint;
     
+    
 
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -27,6 +36,8 @@ public class HwElementRefConditional {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -35,6 +46,8 @@ public class HwElementRefConditional {
     public void setT(java.lang.String value) {
         this.t = value;
     }
+    
+    
     
     @XmlElement(name="HW-ELEMENT-REF")
     public HwElementRef getHwElementRef() {
@@ -45,6 +58,8 @@ public class HwElementRefConditional {
         this.hwElementRef = value;
     }
     
+    
+    
     @XmlElement(name="VARIATION-POINT")
     public VariationPoint getVariationPoint() {
         return this.variationPoint;
@@ -54,6 +69,8 @@ public class HwElementRefConditional {
         this.variationPoint = value;
     }
     
+    
+
 
     
     public static class HwElementRef extends Ref {

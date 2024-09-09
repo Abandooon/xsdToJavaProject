@@ -8,17 +8,28 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Ref {
 
     
+    
     protected java.lang.String value;
+    
+    
     
     protected java.lang.String s;
     
+    
+    
     protected java.lang.String t;
+    
+    
     
     protected java.lang.String base;
     
+    
+    
     protected java.lang.String index;
     
+    
 
+    
     
     @XmlValue
     public java.lang.String getValue() {
@@ -29,6 +40,8 @@ public class Ref {
         this.value = value;
     }
     
+    
+    
     @XmlAttribute(name="S")
     public java.lang.String getS() {
         return this.s;
@@ -37,6 +50,8 @@ public class Ref {
     public void setS(java.lang.String value) {
         this.s = value;
     }
+    
+    
     
     @XmlAttribute(name="T")
     public java.lang.String getT() {
@@ -47,6 +62,8 @@ public class Ref {
         this.t = value;
     }
     
+    
+    
     @XmlAttribute(name="BASE")
     public java.lang.String getBase() {
         return this.base;
@@ -55,6 +72,8 @@ public class Ref {
     public void setBase(java.lang.String value) {
         this.base = value;
     }
+    
+    
     
     @XmlAttribute(name="INDEX")
     public java.lang.String getIndex() {
@@ -65,6 +84,8 @@ public class Ref {
         this.index = value;
     }
     
+    
+
 
     
 }

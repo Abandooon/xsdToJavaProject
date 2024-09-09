@@ -50,7 +50,13 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper):
 
     # 生成Java代码
     for complexType in complexTypes:
-        print(f"开始生成复杂类型类: {complexType['name']}")
+        print(
+            f"正在渲染复杂类型类: {complexType['name']}，属性: {complexType['attributes']}, 内部类: {complexType['innerClasses']}")
+
+        # 检查属性是否为空，避免传递None
+        for attr in complexType['attributes']:
+            if attr['name'] is None or attr['type'] is None:
+                print(f"属性无效: {attr}")
         # 渲染Java类模板
         javaCode = complexTypeClassTemplate.render(
             packageName=package_name,

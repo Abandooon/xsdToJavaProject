@@ -8,13 +8,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class MultilanguageLongName {
 
     
+    
     protected java.lang.String s;
+    
+    
     
     protected java.lang.String t;
     
+    
+    
     protected LLongName l4;
     
+    
 
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -25,6 +32,8 @@ public class MultilanguageLongName {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -33,6 +42,8 @@ public class MultilanguageLongName {
     public void setT(java.lang.String value) {
         this.t = value;
     }
+    
+    
     
     @XmlElement(name="L-4")
     public LLongName getL4() {
@@ -43,6 +54,8 @@ public class MultilanguageLongName {
         this.l4 = value;
     }
     
+    
+
 
     
 }

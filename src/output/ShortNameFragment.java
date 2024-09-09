@@ -8,15 +8,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ShortNameFragment {
 
     
+    
     protected java.lang.String s;
+    
+    
     
     protected java.lang.String t;
     
+    
+    
     protected String role;
+    
+    
     
     protected Identifier fragment;
     
+    
 
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -27,6 +36,8 @@ public class ShortNameFragment {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -35,6 +46,8 @@ public class ShortNameFragment {
     public void setT(java.lang.String value) {
         this.t = value;
     }
+    
+    
     
     @XmlElement(name="ROLE")
     public String getRole() {
@@ -45,6 +58,8 @@ public class ShortNameFragment {
         this.role = value;
     }
     
+    
+    
     @XmlElement(name="FRAGMENT")
     public Identifier getFragment() {
         return this.fragment;
@@ -54,6 +69,8 @@ public class ShortNameFragment {
         this.fragment = value;
     }
     
+    
+
 
     
 }

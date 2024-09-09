@@ -8,23 +8,40 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class EmphasisText {
 
     
+    
     protected java.lang.String s;
+    
+    
     
     protected java.lang.String t;
     
+    
+    
     protected java.lang.String color;
+    
+    
     
     protected EEnumFontSimple font;
     
+    
+    
     protected EEnumSimple type;
+    
+    
     
     protected ArrayList<Sub> sub;
     
+    
+    
     protected ArrayList<Sup> sup;
+    
+    
     
     protected ArrayList<Tt> tt;
     
+    
 
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -35,6 +52,8 @@ public class EmphasisText {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -43,6 +62,8 @@ public class EmphasisText {
     public void setT(java.lang.String value) {
         this.t = value;
     }
+    
+    
     
     @XmlAttribute(name="COLOR")
     public java.lang.String getColor() {
@@ -53,6 +74,8 @@ public class EmphasisText {
         this.color = value;
     }
     
+    
+    
     @XmlAttribute(name="FONT")
     public EEnumFontSimple getFont() {
         return this.font;
@@ -61,6 +84,8 @@ public class EmphasisText {
     public void setFont(EEnumFontSimple value) {
         this.font = value;
     }
+    
+    
     
     @XmlAttribute(name="TYPE")
     public EEnumSimple getType() {
@@ -71,6 +96,8 @@ public class EmphasisText {
         this.type = value;
     }
     
+    
+    
     @XmlElement(name="SUB")
     public ArrayList<Sub> getSub() {
         return this.sub;
@@ -79,6 +106,8 @@ public class EmphasisText {
     public void setSub(ArrayList<Sub> value) {
         this.sub = value;
     }
+    
+    
     
     @XmlElement(name="SUP")
     public ArrayList<Sup> getSup() {
@@ -89,6 +118,8 @@ public class EmphasisText {
         this.sup = value;
     }
     
+    
+    
     @XmlElement(name="TT")
     public ArrayList<Tt> getTt() {
         return this.tt;
@@ -98,6 +129,8 @@ public class EmphasisText {
         this.tt = value;
     }
     
+    
+
 
     
 }

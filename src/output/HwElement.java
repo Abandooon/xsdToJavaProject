@@ -8,43 +8,80 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class HwElement {
 
     
+    
     protected java.lang.String s;
+    
+    
     
     protected java.lang.String t;
     
+    
+    
     protected java.lang.String uuid;
+    
+    
     
     protected Identifier shortName;
     
+    
+    
     protected ShortNameFragments shortNameFragments;
+    
+    
     
     protected MultilanguageLongName longName;
     
+    
+    
     protected MultiLanguageOverviewParagraph desc;
+    
+    
     
     protected CategoryString category;
     
+    
+    
     protected AdminData adminData;
+    
+    
     
     protected DocumentationBlock introduction;
     
+    
+    
     protected Annotations annotations;
+    
+    
     
     protected VariationPoint variationPoint;
     
+    
+    
     protected HwTypeRef hwTypeRef;
+    
+    
     
     protected HwCategoryRefs hwCategoryRefs;
     
+    
+    
     protected HwAttributeValues hwAttributeValues;
+    
+    
     
     protected NestedElements nestedElements;
     
+    
+    
     protected HwPinGroups hwPinGroups;
+    
+    
     
     protected HwElementConnections hwElementConnections;
     
+    
 
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -55,6 +92,8 @@ public class HwElement {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -63,6 +102,8 @@ public class HwElement {
     public void setT(java.lang.String value) {
         this.t = value;
     }
+    
+    
     
     @XmlAttribute(name="UUID")
     public java.lang.String getUuid() {
@@ -73,6 +114,8 @@ public class HwElement {
         this.uuid = value;
     }
     
+    
+    
     @XmlElement(name="SHORT-NAME")
     public Identifier getShortName() {
         return this.shortName;
@@ -81,6 +124,8 @@ public class HwElement {
     public void setShortName(Identifier value) {
         this.shortName = value;
     }
+    
+    
     
     @XmlElement(name="SHORT-NAME-FRAGMENTS")
     public ShortNameFragments getShortNameFragments() {
@@ -91,6 +136,8 @@ public class HwElement {
         this.shortNameFragments = value;
     }
     
+    
+    
     @XmlElement(name="LONG-NAME")
     public MultilanguageLongName getLongName() {
         return this.longName;
@@ -99,6 +146,8 @@ public class HwElement {
     public void setLongName(MultilanguageLongName value) {
         this.longName = value;
     }
+    
+    
     
     @XmlElement(name="DESC")
     public MultiLanguageOverviewParagraph getDesc() {
@@ -109,6 +158,8 @@ public class HwElement {
         this.desc = value;
     }
     
+    
+    
     @XmlElement(name="CATEGORY")
     public CategoryString getCategory() {
         return this.category;
@@ -117,6 +168,8 @@ public class HwElement {
     public void setCategory(CategoryString value) {
         this.category = value;
     }
+    
+    
     
     @XmlElement(name="ADMIN-DATA")
     public AdminData getAdminData() {
@@ -127,6 +180,8 @@ public class HwElement {
         this.adminData = value;
     }
     
+    
+    
     @XmlElement(name="INTRODUCTION")
     public DocumentationBlock getIntroduction() {
         return this.introduction;
@@ -135,6 +190,8 @@ public class HwElement {
     public void setIntroduction(DocumentationBlock value) {
         this.introduction = value;
     }
+    
+    
     
     @XmlElement(name="ANNOTATIONS")
     public Annotations getAnnotations() {
@@ -145,6 +202,8 @@ public class HwElement {
         this.annotations = value;
     }
     
+    
+    
     @XmlElement(name="VARIATION-POINT")
     public VariationPoint getVariationPoint() {
         return this.variationPoint;
@@ -153,6 +212,8 @@ public class HwElement {
     public void setVariationPoint(VariationPoint value) {
         this.variationPoint = value;
     }
+    
+    
     
     @XmlElement(name="HW-TYPE-REF")
     public HwTypeRef getHwTypeRef() {
@@ -163,6 +224,8 @@ public class HwElement {
         this.hwTypeRef = value;
     }
     
+    
+    
     @XmlElement(name="HW-CATEGORY-REFS")
     public HwCategoryRefs getHwCategoryRefs() {
         return this.hwCategoryRefs;
@@ -171,6 +234,8 @@ public class HwElement {
     public void setHwCategoryRefs(HwCategoryRefs value) {
         this.hwCategoryRefs = value;
     }
+    
+    
     
     @XmlElement(name="HW-ATTRIBUTE-VALUES")
     public HwAttributeValues getHwAttributeValues() {
@@ -181,6 +246,8 @@ public class HwElement {
         this.hwAttributeValues = value;
     }
     
+    
+    
     @XmlElement(name="NESTED-ELEMENTS")
     public NestedElements getNestedElements() {
         return this.nestedElements;
@@ -189,6 +256,8 @@ public class HwElement {
     public void setNestedElements(NestedElements value) {
         this.nestedElements = value;
     }
+    
+    
     
     @XmlElement(name="HW-PIN-GROUPS")
     public HwPinGroups getHwPinGroups() {
@@ -199,6 +268,8 @@ public class HwElement {
         this.hwPinGroups = value;
     }
     
+    
+    
     @XmlElement(name="HW-ELEMENT-CONNECTIONS")
     public HwElementConnections getHwElementConnections() {
         return this.hwElementConnections;
@@ -208,6 +279,8 @@ public class HwElement {
         this.hwElementConnections = value;
     }
     
+    
+
 
     
     public static class ShortNameFragments {

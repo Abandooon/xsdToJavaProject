@@ -5,18 +5,23 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.XmlRootElement;
 
-public class SwAxisIndividual {
+public class PostBuildVariantCondition {
 
+    
     
     protected java.lang.String s;
     
+    
+    
     protected java.lang.String t;
     
-    protected SwVariableRefs swVariableRefs;
     
-    protected CompuMethodRef compuMethodRef;
+    
+    protected MatchingCriterionRef matchingCriterionRef;
+    
     
 
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -27,6 +32,8 @@ public class SwAxisIndividual {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -36,46 +43,33 @@ public class SwAxisIndividual {
         this.t = value;
     }
     
-    @XmlElement(name="SW-VARIABLE-REFS")
-    public SwVariableRefs getSwVariableRefs() {
-        return this.swVariableRefs;
+    
+    
+    @XmlElement(name="MATCHING-CRITERION-REF")
+    public MatchingCriterionRef getMatchingCriterionRef() {
+        return this.matchingCriterionRef;
     }
 
-    public void setSwVariableRefs(SwVariableRefs value) {
-        this.swVariableRefs = value;
+    public void setMatchingCriterionRef(MatchingCriterionRef value) {
+        this.matchingCriterionRef = value;
     }
     
-    @XmlElement(name="COMPU-METHOD-REF")
-    public CompuMethodRef getCompuMethodRef() {
-        return this.compuMethodRef;
-    }
-
-    public void setCompuMethodRef(CompuMethodRef value) {
-        this.compuMethodRef = value;
-    }
     
 
-    
-    public static class SwVariableRefs {
-        
 
-        
-
-        
-    }
     
-    public static class CompuMethodRef extends Ref {
+    public static class MatchingCriterionRef extends Ref {
         
-        protected CompuMethodSubtypesEnum dest;
+        protected PostBuildVariantCriterionSubtypesEnum dest;
         
 
         
         @XmlAttribute(name="DEST")
-        public CompuMethodSubtypesEnum getDest() {
+        public PostBuildVariantCriterionSubtypesEnum getDest() {
             return this.dest;
         }
 
-        public void setDest(CompuMethodSubtypesEnum value) {
+        public void setDest(PostBuildVariantCriterionSubtypesEnum value) {
             this.dest = value;
         }
         

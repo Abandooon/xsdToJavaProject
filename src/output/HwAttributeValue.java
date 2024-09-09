@@ -8,21 +8,36 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class HwAttributeValue {
 
     
+    
     protected java.lang.String s;
+    
+    
     
     protected java.lang.String t;
     
+    
+    
     protected Annotation annotation;
+    
+    
     
     protected HwAttributeDefRef hwAttributeDefRef;
     
+    
+    
     protected NumericalValueVariationPoint v;
+    
+    
     
     protected VerbatimString vt;
     
+    
+    
     protected VariationPoint variationPoint;
     
+    
 
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -33,6 +48,8 @@ public class HwAttributeValue {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -41,6 +58,8 @@ public class HwAttributeValue {
     public void setT(java.lang.String value) {
         this.t = value;
     }
+    
+    
     
     @XmlElement(name="ANNOTATION")
     public Annotation getAnnotation() {
@@ -51,6 +70,8 @@ public class HwAttributeValue {
         this.annotation = value;
     }
     
+    
+    
     @XmlElement(name="HW-ATTRIBUTE-DEF-REF")
     public HwAttributeDefRef getHwAttributeDefRef() {
         return this.hwAttributeDefRef;
@@ -59,6 +80,8 @@ public class HwAttributeValue {
     public void setHwAttributeDefRef(HwAttributeDefRef value) {
         this.hwAttributeDefRef = value;
     }
+    
+    
     
     @XmlElement(name="V")
     public NumericalValueVariationPoint getV() {
@@ -69,6 +92,8 @@ public class HwAttributeValue {
         this.v = value;
     }
     
+    
+    
     @XmlElement(name="VT")
     public VerbatimString getVt() {
         return this.vt;
@@ -77,6 +102,8 @@ public class HwAttributeValue {
     public void setVt(VerbatimString value) {
         this.vt = value;
     }
+    
+    
     
     @XmlElement(name="VARIATION-POINT")
     public VariationPoint getVariationPoint() {
@@ -87,6 +114,8 @@ public class HwAttributeValue {
         this.variationPoint = value;
     }
     
+    
+
 
     
     public static class HwAttributeDefRef extends Ref {

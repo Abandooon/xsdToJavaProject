@@ -17,13 +17,13 @@ def extractGroup(root, element_wrapper):
 
         for child in group:
             if child.tag.endswith('sequence'):
-                sequence = group.find("./{http://www.w3.org/2001/XMLSchema}sequence")
+                sequence = child
                 if sequence is not None:
                     elements, inner_classes = process_elements(root, sequence, '1', None, element_wrapper)
                     accumulated_elements.extend(elements)
                     accumulated_inner_classes.extend(inner_classes)
             elif child.tag.endswith('choice'):
-                choice = group.find("./{http://www.w3.org/2001/XMLSchema}choice")
+                choice = child
                 innerChoice = choice.find("./{http://www.w3.org/2001/XMLSchema}choice")
                 maxOccurs = innerChoice.get('maxOccurs')
 

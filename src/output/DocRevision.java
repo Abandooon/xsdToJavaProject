@@ -8,25 +8,44 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class DocRevision {
 
     
+    
     protected java.lang.String s;
+    
+    
     
     protected java.lang.String t;
     
+    
+    
     protected RevisionLabelString revisionLabel;
+    
+    
     
     protected RevisionLabelString revisionLabelP1;
     
+    
+    
     protected RevisionLabelString revisionLabelP2;
+    
+    
     
     protected NmtokenString state;
     
+    
+    
     protected String issuedBy;
+    
+    
     
     protected Date date;
     
+    
+    
     protected Modifications modifications;
     
+    
 
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -37,6 +56,8 @@ public class DocRevision {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -45,6 +66,8 @@ public class DocRevision {
     public void setT(java.lang.String value) {
         this.t = value;
     }
+    
+    
     
     @XmlElement(name="REVISION-LABEL")
     public RevisionLabelString getRevisionLabel() {
@@ -55,6 +78,8 @@ public class DocRevision {
         this.revisionLabel = value;
     }
     
+    
+    
     @XmlElement(name="REVISION-LABEL-P-1")
     public RevisionLabelString getRevisionLabelP1() {
         return this.revisionLabelP1;
@@ -63,6 +88,8 @@ public class DocRevision {
     public void setRevisionLabelP1(RevisionLabelString value) {
         this.revisionLabelP1 = value;
     }
+    
+    
     
     @XmlElement(name="REVISION-LABEL-P-2")
     public RevisionLabelString getRevisionLabelP2() {
@@ -73,6 +100,8 @@ public class DocRevision {
         this.revisionLabelP2 = value;
     }
     
+    
+    
     @XmlElement(name="STATE")
     public NmtokenString getState() {
         return this.state;
@@ -81,6 +110,8 @@ public class DocRevision {
     public void setState(NmtokenString value) {
         this.state = value;
     }
+    
+    
     
     @XmlElement(name="ISSUED-BY")
     public String getIssuedBy() {
@@ -91,6 +122,8 @@ public class DocRevision {
         this.issuedBy = value;
     }
     
+    
+    
     @XmlElement(name="DATE")
     public Date getDate() {
         return this.date;
@@ -99,6 +132,8 @@ public class DocRevision {
     public void setDate(Date value) {
         this.date = value;
     }
+    
+    
     
     @XmlElement(name="MODIFICATIONS")
     public Modifications getModifications() {
@@ -109,6 +144,8 @@ public class DocRevision {
         this.modifications = value;
     }
     
+    
+
 
     
     public static class Modifications {

@@ -8,19 +8,32 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class McSupportData {
 
     
+    
     protected java.lang.String s;
+    
+    
     
     protected java.lang.String t;
     
+    
+    
     protected EmulationSupports emulationSupports;
+    
+    
     
     protected McParameterInstances mcParameterInstances;
     
+    
+    
     protected McVariableInstances mcVariableInstances;
+    
+    
     
     protected MeasurableSystemConstantValuesRefs measurableSystemConstantValuesRefs;
     
+    
 
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -31,6 +44,8 @@ public class McSupportData {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -39,6 +54,8 @@ public class McSupportData {
     public void setT(java.lang.String value) {
         this.t = value;
     }
+    
+    
     
     @XmlElement(name="EMULATION-SUPPORTS")
     public EmulationSupports getEmulationSupports() {
@@ -49,6 +66,8 @@ public class McSupportData {
         this.emulationSupports = value;
     }
     
+    
+    
     @XmlElement(name="MC-PARAMETER-INSTANCES")
     public McParameterInstances getMcParameterInstances() {
         return this.mcParameterInstances;
@@ -57,6 +76,8 @@ public class McSupportData {
     public void setMcParameterInstances(McParameterInstances value) {
         this.mcParameterInstances = value;
     }
+    
+    
     
     @XmlElement(name="MC-VARIABLE-INSTANCES")
     public McVariableInstances getMcVariableInstances() {
@@ -67,6 +88,8 @@ public class McSupportData {
         this.mcVariableInstances = value;
     }
     
+    
+    
     @XmlElement(name="MEASURABLE-SYSTEM-CONSTANT-VALUES-REFS")
     public MeasurableSystemConstantValuesRefs getMeasurableSystemConstantValuesRefs() {
         return this.measurableSystemConstantValuesRefs;
@@ -76,6 +99,8 @@ public class McSupportData {
         this.measurableSystemConstantValuesRefs = value;
     }
     
+    
+
 
     
     public static class EmulationSupports {

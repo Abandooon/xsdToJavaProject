@@ -8,23 +8,40 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class VariationPoint {
 
     
+    
     protected java.lang.String s;
+    
+    
     
     protected java.lang.String t;
     
+    
+    
     protected Identifier shortLabel;
+    
+    
     
     protected MultiLanguageOverviewParagraph desc;
     
+    
+    
     protected DocumentationBlock blueprintCondition;
+    
+    
     
     protected BlueprintFormula formalBlueprintCondition;
     
+    
+    
     protected PostBuildVariantConditions postBuildVariantConditions;
+    
+    
     
     protected Sdg sdg;
     
+    
 
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -35,6 +52,8 @@ public class VariationPoint {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -43,6 +62,8 @@ public class VariationPoint {
     public void setT(java.lang.String value) {
         this.t = value;
     }
+    
+    
     
     @XmlElement(name="SHORT-LABEL")
     public Identifier getShortLabel() {
@@ -53,6 +74,8 @@ public class VariationPoint {
         this.shortLabel = value;
     }
     
+    
+    
     @XmlElement(name="DESC")
     public MultiLanguageOverviewParagraph getDesc() {
         return this.desc;
@@ -61,6 +84,8 @@ public class VariationPoint {
     public void setDesc(MultiLanguageOverviewParagraph value) {
         this.desc = value;
     }
+    
+    
     
     @XmlElement(name="BLUEPRINT-CONDITION")
     public DocumentationBlock getBlueprintCondition() {
@@ -71,6 +96,8 @@ public class VariationPoint {
         this.blueprintCondition = value;
     }
     
+    
+    
     @XmlElement(name="FORMAL-BLUEPRINT-CONDITION")
     public BlueprintFormula getFormalBlueprintCondition() {
         return this.formalBlueprintCondition;
@@ -79,6 +106,8 @@ public class VariationPoint {
     public void setFormalBlueprintCondition(BlueprintFormula value) {
         this.formalBlueprintCondition = value;
     }
+    
+    
     
     @XmlElement(name="POST-BUILD-VARIANT-CONDITIONS")
     public PostBuildVariantConditions getPostBuildVariantConditions() {
@@ -89,6 +118,8 @@ public class VariationPoint {
         this.postBuildVariantConditions = value;
     }
     
+    
+    
     @XmlElement(name="SDG")
     public Sdg getSdg() {
         return this.sdg;
@@ -98,6 +129,8 @@ public class VariationPoint {
         this.sdg = value;
     }
     
+    
+
 
     
     public static class PostBuildVariantConditions {

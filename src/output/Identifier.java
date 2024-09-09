@@ -8,15 +8,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Identifier {
 
     
+    
     protected java.lang.String value;
+    
+    
     
     protected java.lang.String s;
     
+    
+    
     protected java.lang.String t;
+    
+    
     
     protected java.lang.String namePattern;
     
+    
 
+    
     
     @XmlValue
     public java.lang.String getValue() {
@@ -27,6 +36,8 @@ public class Identifier {
         this.value = value;
     }
     
+    
+    
     @XmlAttribute(name="S")
     public java.lang.String getS() {
         return this.s;
@@ -35,6 +46,8 @@ public class Identifier {
     public void setS(java.lang.String value) {
         this.s = value;
     }
+    
+    
     
     @XmlAttribute(name="T")
     public java.lang.String getT() {
@@ -45,6 +58,8 @@ public class Identifier {
         this.t = value;
     }
     
+    
+    
     @XmlAttribute(name="NAME-PATTERN")
     public java.lang.String getNamePattern() {
         return this.namePattern;
@@ -54,6 +69,8 @@ public class Identifier {
         this.namePattern = value;
     }
     
+    
+
 
     
 }

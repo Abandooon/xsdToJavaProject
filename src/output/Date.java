@@ -8,13 +8,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Date {
 
     
+    
     protected java.lang.String value;
+    
+    
     
     protected java.lang.String s;
     
+    
+    
     protected java.lang.String t;
     
+    
 
+    
     
     @XmlValue
     public java.lang.String getValue() {
@@ -25,6 +32,8 @@ public class Date {
         this.value = value;
     }
     
+    
+    
     @XmlAttribute(name="S")
     public java.lang.String getS() {
         return this.s;
@@ -33,6 +42,8 @@ public class Date {
     public void setS(java.lang.String value) {
         this.s = value;
     }
+    
+    
     
     @XmlAttribute(name="T")
     public java.lang.String getT() {
@@ -43,6 +54,8 @@ public class Date {
         this.t = value;
     }
     
+    
+
 
     
 }

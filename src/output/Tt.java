@@ -8,15 +8,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Tt {
 
     
+    
     protected java.lang.String value;
+    
+    
     
     protected java.lang.String s;
     
+    
+    
     protected java.lang.String t;
+    
+    
     
     protected java.lang.String type;
     
+    
 
+    
     
     @XmlValue
     public java.lang.String getValue() {
@@ -27,6 +36,8 @@ public class Tt {
         this.value = value;
     }
     
+    
+    
     @XmlAttribute(name="S")
     public java.lang.String getS() {
         return this.s;
@@ -35,6 +46,8 @@ public class Tt {
     public void setS(java.lang.String value) {
         this.s = value;
     }
+    
+    
     
     @XmlAttribute(name="T")
     public java.lang.String getT() {
@@ -45,6 +58,8 @@ public class Tt {
         this.t = value;
     }
     
+    
+    
     @XmlAttribute(name="TYPE")
     public java.lang.String getType() {
         return this.type;
@@ -54,6 +69,8 @@ public class Tt {
         this.type = value;
     }
     
+    
+
 
     
 }

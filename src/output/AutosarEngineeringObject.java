@@ -8,19 +8,32 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class AutosarEngineeringObject {
 
     
+    
     protected java.lang.String s;
+    
+    
     
     protected java.lang.String t;
     
+    
+    
     protected NmtokenString shortLabel;
+    
+    
     
     protected NmtokenString category;
     
+    
+    
     protected RevisionLabels revisionLabels;
+    
+    
     
     protected NmtokenString domain;
     
+    
 
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -31,6 +44,8 @@ public class AutosarEngineeringObject {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -39,6 +54,8 @@ public class AutosarEngineeringObject {
     public void setT(java.lang.String value) {
         this.t = value;
     }
+    
+    
     
     @XmlElement(name="SHORT-LABEL")
     public NmtokenString getShortLabel() {
@@ -49,6 +66,8 @@ public class AutosarEngineeringObject {
         this.shortLabel = value;
     }
     
+    
+    
     @XmlElement(name="CATEGORY")
     public NmtokenString getCategory() {
         return this.category;
@@ -57,6 +76,8 @@ public class AutosarEngineeringObject {
     public void setCategory(NmtokenString value) {
         this.category = value;
     }
+    
+    
     
     @XmlElement(name="REVISION-LABELS")
     public RevisionLabels getRevisionLabels() {
@@ -67,6 +88,8 @@ public class AutosarEngineeringObject {
         this.revisionLabels = value;
     }
     
+    
+    
     @XmlElement(name="DOMAIN")
     public NmtokenString getDomain() {
         return this.domain;
@@ -76,6 +99,8 @@ public class AutosarEngineeringObject {
         this.domain = value;
     }
     
+    
+
 
     
     public static class RevisionLabels {

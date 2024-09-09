@@ -8,31 +8,56 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class DocumentationBlock {
 
     
+    
     protected java.lang.String s;
+    
+    
     
     protected java.lang.String t;
     
+    
+    
     protected ArrayList<Msrqueryp2> msrQueryP2;
+    
+    
     
     protected ArrayList<P> p;
     
+    
+    
     protected ArrayList<Verbatim> verbatim;
+    
+    
     
     protected ArrayList<List> list;
     
+    
+    
     protected ArrayList<Deflist> defList;
+    
+    
     
     protected ArrayList<Labeledlist> labeledList;
     
+    
+    
     protected ArrayList<Formula> formula;
+    
+    
     
     protected ArrayList<Note> note;
     
+    
+    
     protected ArrayList<Trace> trace;
+    
+    
     
     protected ArrayList<Structuredreq> structuredReq;
     
+    
 
+    
     
     @XmlAttribute(name="S")
     public java.lang.String getS() {
@@ -43,6 +68,8 @@ public class DocumentationBlock {
         this.s = value;
     }
     
+    
+    
     @XmlAttribute(name="T")
     public java.lang.String getT() {
         return this.t;
@@ -51,6 +78,8 @@ public class DocumentationBlock {
     public void setT(java.lang.String value) {
         this.t = value;
     }
+    
+    
     
     @XmlElement(name="MSR-QUERY-P-2")
     public ArrayList<Msrqueryp2> getMsrQueryP2() {
@@ -61,6 +90,8 @@ public class DocumentationBlock {
         this.msrQueryP2 = value;
     }
     
+    
+    
     @XmlElement(name="P")
     public ArrayList<P> getP() {
         return this.p;
@@ -69,6 +100,8 @@ public class DocumentationBlock {
     public void setP(ArrayList<P> value) {
         this.p = value;
     }
+    
+    
     
     @XmlElement(name="VERBATIM")
     public ArrayList<Verbatim> getVerbatim() {
@@ -79,6 +112,8 @@ public class DocumentationBlock {
         this.verbatim = value;
     }
     
+    
+    
     @XmlElement(name="LIST")
     public ArrayList<List> getList() {
         return this.list;
@@ -87,6 +122,8 @@ public class DocumentationBlock {
     public void setList(ArrayList<List> value) {
         this.list = value;
     }
+    
+    
     
     @XmlElement(name="DEF-LIST")
     public ArrayList<Deflist> getDefList() {
@@ -97,6 +134,8 @@ public class DocumentationBlock {
         this.defList = value;
     }
     
+    
+    
     @XmlElement(name="LABELED-LIST")
     public ArrayList<Labeledlist> getLabeledList() {
         return this.labeledList;
@@ -105,6 +144,8 @@ public class DocumentationBlock {
     public void setLabeledList(ArrayList<Labeledlist> value) {
         this.labeledList = value;
     }
+    
+    
     
     @XmlElement(name="FORMULA")
     public ArrayList<Formula> getFormula() {
@@ -115,6 +156,8 @@ public class DocumentationBlock {
         this.formula = value;
     }
     
+    
+    
     @XmlElement(name="NOTE")
     public ArrayList<Note> getNote() {
         return this.note;
@@ -123,6 +166,8 @@ public class DocumentationBlock {
     public void setNote(ArrayList<Note> value) {
         this.note = value;
     }
+    
+    
     
     @XmlElement(name="TRACE")
     public ArrayList<Trace> getTrace() {
@@ -133,6 +178,8 @@ public class DocumentationBlock {
         this.trace = value;
     }
     
+    
+    
     @XmlElement(name="STRUCTURED-REQ")
     public ArrayList<Structuredreq> getStructuredReq() {
         return this.structuredReq;
@@ -142,6 +189,8 @@ public class DocumentationBlock {
         this.structuredReq = value;
     }
     
+    
+
 
     
 }

@@ -1,9 +1,7 @@
 from src.XsdParser.ExtractExtensionBaseType import extractBaseType
 from src.XsdParser.ExtractAttributeGroup import extractAttributeGroup
 from src.XsdParser.ExtractGroup import extractGroup
-from src.XsdParser.GroupInnerComplexType import to_camel_case, to_pascal_case
-
-
+from src.XsdParser.Utils import to_camel_case,to_pascal_case
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 def process_complex_type(complexType, root, element_wrapper):

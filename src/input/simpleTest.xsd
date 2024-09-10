@@ -9,18 +9,6 @@
     <xsd:attribute name="S" type="AR:STRING--SIMPLE"/>
     <xsd:attribute name="T" type="AR:DATE--SIMPLE"/>
   </xsd:attributeGroup>
-  <xsd:complexType name="VIEW-TOKENS">
-    <xsd:simpleContent>
-      <xsd:extension base="AR:VIEW-TOKENS--SIMPLE">
-        <xsd:attributeGroup ref="AR:AR-OBJECT"/>
-      </xsd:extension>
-    </xsd:simpleContent>
-  </xsd:complexType>
-  <xsd:simpleType name="VIEW-TOKENS--SIMPLE">
-    <xsd:restriction base="xsd:string">
-      <xsd:pattern value="(-?[a-zA-Z_]+)(( )+-?[a-zA-Z_]+)*"/>
-    </xsd:restriction>
-  </xsd:simpleType>
   <xsd:simpleType name="STRING--SIMPLE">
     <xsd:restriction base="xsd:string"/>
   </xsd:simpleType>
@@ -156,18 +144,6 @@
     </xsd:restriction>
   </xsd:simpleType>
 
-   <xsd:complexType name="BOOLEAN">
-    <xsd:simpleContent>
-      <xsd:extension base="AR:BOOLEAN--SIMPLE">
-        <xsd:attributeGroup ref="AR:AR-OBJECT"/>
-      </xsd:extension>
-    </xsd:simpleContent>
-  </xsd:complexType>
-  <xsd:simpleType name="BOOLEAN--SIMPLE">
-    <xsd:restriction base="xsd:string">
-      <xsd:pattern value="0|1|true|false"/>
-    </xsd:restriction>
-  </xsd:simpleType>
   <xsd:simpleType name="MC-DATA-INSTANCE--SUBTYPES-ENUM">
     <xsd:restriction base="xsd:string">
       <xsd:enumeration value="MC-DATA-INSTANCE"/>

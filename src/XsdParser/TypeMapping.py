@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
+from src.XsdParser.Utils import to_camel_case,to_pascal_case
 
 
 def mapXsdTypeToJava(xsdType, context='default'):
@@ -65,12 +66,4 @@ def mapXsdTypeToJava(xsdType, context='default'):
     return mapping.get(xsdType, to_pascal_case(xsdType))
 
 
-def to_pascal_case(snake_str):
-    """
-    将字符串转换为PascalCase格式
-    """
-    if not isinstance(snake_str, str):
-        snake_str = str(snake_str)  # 将非字符串类型转换为字符串
 
-    components = re.split('[-_]', snake_str)
-    return ''.join(x.capitalize() for x in components)

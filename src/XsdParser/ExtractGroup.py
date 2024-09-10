@@ -1,6 +1,7 @@
 from src.XsdParser.TypeMapping import mapXsdTypeToJava
-from src.XsdParser.GroupInnerComplexType import process_group_inner_complex_type, to_camel_case, to_pascal_case
+from src.XsdParser.GroupInnerComplexType import process_group_inner_complex_type
 from src.XsdParser.ExtractChoiceGroup import process_choiceRef
+from src.XsdParser.Utils import to_camel_case,to_pascal_case
 
 
 def extractGroup(root, element_wrapper):

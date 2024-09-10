@@ -109,7 +109,5 @@ def process_choiceRef(root, refName, maxOccurs, element_wrapper, element_name, d
     #                         inner_classes.append(inner_type)
     #
     #         return elements, inner_classes
-
-
     print(f"Error: choiceGroupRef '{refName}' not found in the XML schema at depth {depth}.")
     return [], []

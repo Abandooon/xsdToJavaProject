@@ -2,6 +2,7 @@ import re
 from src.XsdParser.ExtractExtensionBaseType import extractBaseType
 from src.XsdParser.TypeMapping import mapXsdTypeToJava
 from src.XsdParser.ExtractChoiceGroup import process_choiceRef
+from src.XsdParser.Utils import to_camel_case,to_pascal_case
 
 
 def process_group_inner_complex_type(root, element, element_wrapper):
@@ -65,7 +66,7 @@ def process_group_inner_complex_type(root, element, element_wrapper):
 
 def process_choice(root, choice, element_name, element_wrapper):
     from src.XsdParser.ExtractGroup import process_elements, extractGroup  # 在函数内部导入，避免循环依赖
-
+    print(f"process_choice called with element_name: {element_name}")
     elements = []  # 初始化列表，用于存储choice中的元素
     innerClass = []
     groups = {}
@@ -82,15 +83,6 @@ def process_choice(root, choice, element_name, element_wrapper):
 
     return elements, innerClass, maxOccurs  # 返回元素列表
 
-#处理choice下的group ref，不能直接调用extract_group，否则会无限递归
-def to_pascal_case(snake_str):
-    components = snake_str.split('-')
-    return ''.join(x.capitalize() for x in components)  # 将每个部分首字母大写并拼接
 
-def to_camel_case(snake_str):
-    if not isinstance(snake_str, str):
-        print(f"Error: Expected string, got {type(snake_str)} with value {snake_str}")
-        return snake_str  # 如果输入不是字符串，直接返回原值或处理为默认值
 
-    components = re.split('[-_]', snake_str)
-    return components[0].lower() + ''.join(x.title() for x in components[1:])
+

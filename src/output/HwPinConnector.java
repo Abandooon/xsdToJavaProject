@@ -75,39 +75,9 @@ public class HwPinConnector {
     
     public static class HwPinRefs {
         
-        protected ArrayList<HwPinRef> hwPinRef;
-        
 
         
-        @XmlElement(name="HW-PIN-REF")
-        public ArrayList<HwPinRef> getHwPinRef() {
-            return this.hwPinRef;
-        }
 
-        public void setHwPinRef(ArrayList<HwPinRef> value) {
-            this.hwPinRef = value;
-        }
-        
-
-        
-        
-        public static class HwPinRef extends Ref {
-            
-            protected HwPinSubtypesEnum dest;
-            
-
-            
-            @XmlAttribute(name="DEST")
-            public HwPinSubtypesEnum getDest() {
-                return this.dest;
-            }
-
-            public void setDest(HwPinSubtypesEnum value) {
-                this.dest = value;
-            }
-            
-        }
-        
         
     }
     

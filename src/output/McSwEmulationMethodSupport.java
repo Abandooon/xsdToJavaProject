@@ -154,18 +154,7 @@ public class McSwEmulationMethodSupport {
     
     public static class ElementGroups {
         
-        protected ArrayList<McParameterElementGroup> mcParameterElementGroup;
-        
 
-        
-        @XmlElement(name="MC-PARAMETER-ELEMENT-GROUP")
-        public ArrayList<McParameterElementGroup> getMcParameterElementGroup() {
-            return this.mcParameterElementGroup;
-        }
-
-        public void setMcParameterElementGroup(ArrayList<McParameterElementGroup> value) {
-            this.mcParameterElementGroup = value;
-        }
         
 
         

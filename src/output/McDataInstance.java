@@ -345,18 +345,7 @@ public class McDataInstance {
     
     public static class ShortNameFragments {
         
-        protected ArrayList<ShortNameFragment> shortNameFragment;
-        
 
-        
-        @XmlElement(name="SHORT-NAME-FRAGMENT")
-        public ArrayList<ShortNameFragment> getShortNameFragment() {
-            return this.shortNameFragment;
-        }
-
-        public void setShortNameFragment(ArrayList<ShortNameFragment> value) {
-            this.shortNameFragment = value;
-        }
         
 
         
@@ -364,18 +353,7 @@ public class McDataInstance {
     
     public static class Annotations {
         
-        protected ArrayList<Annotation> annotation;
-        
 
-        
-        @XmlElement(name="ANNOTATION")
-        public ArrayList<Annotation> getAnnotation() {
-            return this.annotation;
-        }
-
-        public void setAnnotation(ArrayList<Annotation> value) {
-            this.annotation = value;
-        }
         
 
         
@@ -402,18 +380,7 @@ public class McDataInstance {
     
     public static class McDataAssignments {
         
-        protected ArrayList<RoleBasedMcDataAssignment> roleBasedMcDataAssignment;
-        
 
-        
-        @XmlElement(name="ROLE-BASED-MC-DATA-ASSIGNMENT")
-        public ArrayList<RoleBasedMcDataAssignment> getRoleBasedMcDataAssignment() {
-            return this.roleBasedMcDataAssignment;
-        }
-
-        public void setRoleBasedMcDataAssignment(ArrayList<RoleBasedMcDataAssignment> value) {
-            this.roleBasedMcDataAssignment = value;
-        }
         
 
         
@@ -421,18 +388,7 @@ public class McDataInstance {
     
     public static class SubElements {
         
-        protected ArrayList<McDataInstance> mcDataInstance;
-        
 
-        
-        @XmlElement(name="MC-DATA-INSTANCE")
-        public ArrayList<McDataInstance> getMcDataInstance() {
-            return this.mcDataInstance;
-        }
-
-        public void setMcDataInstance(ArrayList<McDataInstance> value) {
-            this.mcDataInstance = value;
-        }
         
 
         

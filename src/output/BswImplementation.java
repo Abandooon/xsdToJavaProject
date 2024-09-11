@@ -525,18 +525,7 @@ public class BswImplementation {
     
     public static class ShortNameFragments {
         
-        protected ArrayList<ShortNameFragment> shortNameFragment;
-        
 
-        
-        @XmlElement(name="SHORT-NAME-FRAGMENT")
-        public ArrayList<ShortNameFragment> getShortNameFragment() {
-            return this.shortNameFragment;
-        }
-
-        public void setShortNameFragment(ArrayList<ShortNameFragment> value) {
-            this.shortNameFragment = value;
-        }
         
 
         
@@ -544,18 +533,7 @@ public class BswImplementation {
     
     public static class Annotations {
         
-        protected ArrayList<Annotation> annotation;
-        
 
-        
-        @XmlElement(name="ANNOTATION")
-        public ArrayList<Annotation> getAnnotation() {
-            return this.annotation;
-        }
-
-        public void setAnnotation(ArrayList<Annotation> value) {
-            this.annotation = value;
-        }
         
 
         
@@ -563,18 +541,7 @@ public class BswImplementation {
     
     public static class BuildActionManifests {
         
-        protected ArrayList<BuildActionManifestRefConditional> buildActionManifestRefConditional;
-        
 
-        
-        @XmlElement(name="BUILD-ACTION-MANIFEST-REF-CONDITIONAL")
-        public ArrayList<BuildActionManifestRefConditional> getBuildActionManifestRefConditional() {
-            return this.buildActionManifestRefConditional;
-        }
-
-        public void setBuildActionManifestRefConditional(ArrayList<BuildActionManifestRefConditional> value) {
-            this.buildActionManifestRefConditional = value;
-        }
         
 
         
@@ -582,18 +549,7 @@ public class BswImplementation {
     
     public static class CodeDescriptors {
         
-        protected ArrayList<Code> code;
-        
 
-        
-        @XmlElement(name="CODE")
-        public ArrayList<Code> getCode() {
-            return this.code;
-        }
-
-        public void setCode(ArrayList<Code> value) {
-            this.code = value;
-        }
         
 
         
@@ -601,18 +557,7 @@ public class BswImplementation {
     
     public static class Compilers {
         
-        protected ArrayList<Compiler> compiler;
-        
 
-        
-        @XmlElement(name="COMPILER")
-        public ArrayList<Compiler> getCompiler() {
-            return this.compiler;
-        }
-
-        public void setCompiler(ArrayList<Compiler> value) {
-            this.compiler = value;
-        }
         
 
         
@@ -620,18 +565,7 @@ public class BswImplementation {
     
     public static class GeneratedArtifacts {
         
-        protected ArrayList<DependencyOnArtifact> dependencyOnArtifact;
-        
 
-        
-        @XmlElement(name="DEPENDENCY-ON-ARTIFACT")
-        public ArrayList<DependencyOnArtifact> getDependencyOnArtifact() {
-            return this.dependencyOnArtifact;
-        }
-
-        public void setDependencyOnArtifact(ArrayList<DependencyOnArtifact> value) {
-            this.dependencyOnArtifact = value;
-        }
         
 
         
@@ -639,56 +573,15 @@ public class BswImplementation {
     
     public static class HwElementRefs {
         
-        protected ArrayList<HwElementRef> hwElementRef;
-        
 
         
-        @XmlElement(name="HW-ELEMENT-REF")
-        public ArrayList<HwElementRef> getHwElementRef() {
-            return this.hwElementRef;
-        }
 
-        public void setHwElementRef(ArrayList<HwElementRef> value) {
-            this.hwElementRef = value;
-        }
-        
-
-        
-        
-        public static class HwElementRef extends Ref {
-            
-            protected HwElementSubtypesEnum dest;
-            
-
-            
-            @XmlAttribute(name="DEST")
-            public HwElementSubtypesEnum getDest() {
-                return this.dest;
-            }
-
-            public void setDest(HwElementSubtypesEnum value) {
-                this.dest = value;
-            }
-            
-        }
-        
         
     }
     
     public static class Linkers {
         
-        protected ArrayList<Linker> linker;
-        
 
-        
-        @XmlElement(name="LINKER")
-        public ArrayList<Linker> getLinker() {
-            return this.linker;
-        }
-
-        public void setLinker(ArrayList<Linker> value) {
-            this.linker = value;
-        }
         
 
         
@@ -696,18 +589,7 @@ public class BswImplementation {
     
     public static class RequiredArtifacts {
         
-        protected ArrayList<DependencyOnArtifact> dependencyOnArtifact;
-        
 
-        
-        @XmlElement(name="DEPENDENCY-ON-ARTIFACT")
-        public ArrayList<DependencyOnArtifact> getDependencyOnArtifact() {
-            return this.dependencyOnArtifact;
-        }
-
-        public void setDependencyOnArtifact(ArrayList<DependencyOnArtifact> value) {
-            this.dependencyOnArtifact = value;
-        }
         
 
         
@@ -715,18 +597,7 @@ public class BswImplementation {
     
     public static class RequiredGeneratorTools {
         
-        protected ArrayList<DependencyOnArtifact> dependencyOnArtifact;
-        
 
-        
-        @XmlElement(name="DEPENDENCY-ON-ARTIFACT")
-        public ArrayList<DependencyOnArtifact> getDependencyOnArtifact() {
-            return this.dependencyOnArtifact;
-        }
-
-        public void setDependencyOnArtifact(ArrayList<DependencyOnArtifact> value) {
-            this.dependencyOnArtifact = value;
-        }
         
 
         
@@ -772,18 +643,7 @@ public class BswImplementation {
     
     public static class DebugInfos {
         
-        protected ArrayList<BswDebugInfo> bswDebugInfo;
-        
 
-        
-        @XmlElement(name="BSW-DEBUG-INFO")
-        public ArrayList<BswDebugInfo> getBswDebugInfo() {
-            return this.bswDebugInfo;
-        }
-
-        public void setBswDebugInfo(ArrayList<BswDebugInfo> value) {
-            this.bswDebugInfo = value;
-        }
         
 
         
@@ -791,115 +651,25 @@ public class BswImplementation {
     
     public static class PreconfiguredConfigurationRefs {
         
-        protected ArrayList<PreconfiguredConfigurationRef> preconfiguredConfigurationRef;
-        
 
         
-        @XmlElement(name="PRECONFIGURED-CONFIGURATION-REF")
-        public ArrayList<PreconfiguredConfigurationRef> getPreconfiguredConfigurationRef() {
-            return this.preconfiguredConfigurationRef;
-        }
 
-        public void setPreconfiguredConfigurationRef(ArrayList<PreconfiguredConfigurationRef> value) {
-            this.preconfiguredConfigurationRef = value;
-        }
-        
-
-        
-        
-        public static class PreconfiguredConfigurationRef extends Ref {
-            
-            protected EcucModuleConfigurationValuesSubtypesEnum dest;
-            
-
-            
-            @XmlAttribute(name="DEST")
-            public EcucModuleConfigurationValuesSubtypesEnum getDest() {
-                return this.dest;
-            }
-
-            public void setDest(EcucModuleConfigurationValuesSubtypesEnum value) {
-                this.dest = value;
-            }
-            
-        }
-        
         
     }
     
     public static class RecommendedConfigurationRefs {
         
-        protected ArrayList<RecommendedConfigurationRef> recommendedConfigurationRef;
-        
 
         
-        @XmlElement(name="RECOMMENDED-CONFIGURATION-REF")
-        public ArrayList<RecommendedConfigurationRef> getRecommendedConfigurationRef() {
-            return this.recommendedConfigurationRef;
-        }
 
-        public void setRecommendedConfigurationRef(ArrayList<RecommendedConfigurationRef> value) {
-            this.recommendedConfigurationRef = value;
-        }
-        
-
-        
-        
-        public static class RecommendedConfigurationRef extends Ref {
-            
-            protected EcucModuleConfigurationValuesSubtypesEnum dest;
-            
-
-            
-            @XmlAttribute(name="DEST")
-            public EcucModuleConfigurationValuesSubtypesEnum getDest() {
-                return this.dest;
-            }
-
-            public void setDest(EcucModuleConfigurationValuesSubtypesEnum value) {
-                this.dest = value;
-            }
-            
-        }
-        
         
     }
     
     public static class VendorSpecificModuleDefRefs {
         
-        protected ArrayList<VendorSpecificModuleDefRef> vendorSpecificModuleDefRef;
-        
 
         
-        @XmlElement(name="VENDOR-SPECIFIC-MODULE-DEF-REF")
-        public ArrayList<VendorSpecificModuleDefRef> getVendorSpecificModuleDefRef() {
-            return this.vendorSpecificModuleDefRef;
-        }
 
-        public void setVendorSpecificModuleDefRef(ArrayList<VendorSpecificModuleDefRef> value) {
-            this.vendorSpecificModuleDefRef = value;
-        }
-        
-
-        
-        
-        public static class VendorSpecificModuleDefRef extends Ref {
-            
-            protected EcucModuleDefSubtypesEnum dest;
-            
-
-            
-            @XmlAttribute(name="DEST")
-            public EcucModuleDefSubtypesEnum getDest() {
-                return this.dest;
-            }
-
-            public void setDest(EcucModuleDefSubtypesEnum value) {
-                this.dest = value;
-            }
-            
-        }
-        
         
     }
     

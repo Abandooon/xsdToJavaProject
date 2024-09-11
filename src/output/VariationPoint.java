@@ -135,18 +135,7 @@ public class VariationPoint {
     
     public static class PostBuildVariantConditions {
         
-        protected ArrayList<PostBuildVariantCondition> postBuildVariantCondition;
-        
 
-        
-        @XmlElement(name="POST-BUILD-VARIANT-CONDITION")
-        public ArrayList<PostBuildVariantCondition> getPostBuildVariantCondition() {
-            return this.postBuildVariantCondition;
-        }
-
-        public void setPostBuildVariantCondition(ArrayList<PostBuildVariantCondition> value) {
-            this.postBuildVariantCondition = value;
-        }
         
 
         

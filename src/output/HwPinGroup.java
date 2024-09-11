@@ -255,18 +255,7 @@ public class HwPinGroup {
     
     public static class ShortNameFragments {
         
-        protected ArrayList<ShortNameFragment> shortNameFragment;
-        
 
-        
-        @XmlElement(name="SHORT-NAME-FRAGMENT")
-        public ArrayList<ShortNameFragment> getShortNameFragment() {
-            return this.shortNameFragment;
-        }
-
-        public void setShortNameFragment(ArrayList<ShortNameFragment> value) {
-            this.shortNameFragment = value;
-        }
         
 
         
@@ -274,18 +263,7 @@ public class HwPinGroup {
     
     public static class Annotations {
         
-        protected ArrayList<Annotation> annotation;
-        
 
-        
-        @XmlElement(name="ANNOTATION")
-        public ArrayList<Annotation> getAnnotation() {
-            return this.annotation;
-        }
-
-        public void setAnnotation(ArrayList<Annotation> value) {
-            this.annotation = value;
-        }
         
 
         
@@ -312,56 +290,15 @@ public class HwPinGroup {
     
     public static class HwCategoryRefs {
         
-        protected ArrayList<HwCategoryRef> hwCategoryRef;
-        
 
         
-        @XmlElement(name="HW-CATEGORY-REF")
-        public ArrayList<HwCategoryRef> getHwCategoryRef() {
-            return this.hwCategoryRef;
-        }
 
-        public void setHwCategoryRef(ArrayList<HwCategoryRef> value) {
-            this.hwCategoryRef = value;
-        }
-        
-
-        
-        
-        public static class HwCategoryRef extends Ref {
-            
-            protected HwCategorySubtypesEnum dest;
-            
-
-            
-            @XmlAttribute(name="DEST")
-            public HwCategorySubtypesEnum getDest() {
-                return this.dest;
-            }
-
-            public void setDest(HwCategorySubtypesEnum value) {
-                this.dest = value;
-            }
-            
-        }
-        
         
     }
     
     public static class HwAttributeValues {
         
-        protected ArrayList<HwAttributeValue> hwAttributeValue;
-        
 
-        
-        @XmlElement(name="HW-ATTRIBUTE-VALUE")
-        public ArrayList<HwAttributeValue> getHwAttributeValue() {
-            return this.hwAttributeValue;
-        }
-
-        public void setHwAttributeValue(ArrayList<HwAttributeValue> value) {
-            this.hwAttributeValue = value;
-        }
         
 
         

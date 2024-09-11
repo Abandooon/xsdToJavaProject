@@ -315,18 +315,7 @@ public class MemorySection {
     
     public static class ShortNameFragments {
         
-        protected ArrayList<ShortNameFragment> shortNameFragment;
-        
 
-        
-        @XmlElement(name="SHORT-NAME-FRAGMENT")
-        public ArrayList<ShortNameFragment> getShortNameFragment() {
-            return this.shortNameFragment;
-        }
-
-        public void setShortNameFragment(ArrayList<ShortNameFragment> value) {
-            this.shortNameFragment = value;
-        }
         
 
         
@@ -334,18 +323,7 @@ public class MemorySection {
     
     public static class Annotations {
         
-        protected ArrayList<Annotation> annotation;
-        
 
-        
-        @XmlElement(name="ANNOTATION")
-        public ArrayList<Annotation> getAnnotation() {
-            return this.annotation;
-        }
-
-        public void setAnnotation(ArrayList<Annotation> value) {
-            this.annotation = value;
-        }
         
 
         
@@ -353,56 +331,15 @@ public class MemorySection {
     
     public static class ExecutableEntityRefs {
         
-        protected ArrayList<ExecutableEntityRef> executableEntityRef;
-        
 
         
-        @XmlElement(name="EXECUTABLE-ENTITY-REF")
-        public ArrayList<ExecutableEntityRef> getExecutableEntityRef() {
-            return this.executableEntityRef;
-        }
 
-        public void setExecutableEntityRef(ArrayList<ExecutableEntityRef> value) {
-            this.executableEntityRef = value;
-        }
-        
-
-        
-        
-        public static class ExecutableEntityRef extends Ref {
-            
-            protected ExecutableEntitySubtypesEnum dest;
-            
-
-            
-            @XmlAttribute(name="DEST")
-            public ExecutableEntitySubtypesEnum getDest() {
-                return this.dest;
-            }
-
-            public void setDest(ExecutableEntitySubtypesEnum value) {
-                this.dest = value;
-            }
-            
-        }
-        
         
     }
     
     public static class Options {
         
-        protected ArrayList<Identifier> option;
-        
 
-        
-        @XmlElement(name="OPTION")
-        public ArrayList<Identifier> getOption() {
-            return this.option;
-        }
-
-        public void setOption(ArrayList<Identifier> value) {
-            this.option = value;
-        }
         
 
         

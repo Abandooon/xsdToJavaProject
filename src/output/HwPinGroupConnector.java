@@ -90,18 +90,7 @@ public class HwPinGroupConnector {
     
     public static class HwPinConnections {
         
-        protected ArrayList<HwPinConnector> hwPinConnector;
-        
 
-        
-        @XmlElement(name="HW-PIN-CONNECTOR")
-        public ArrayList<HwPinConnector> getHwPinConnector() {
-            return this.hwPinConnector;
-        }
-
-        public void setHwPinConnector(ArrayList<HwPinConnector> value) {
-            this.hwPinConnector = value;
-        }
         
 
         
@@ -109,39 +98,9 @@ public class HwPinGroupConnector {
     
     public static class HwPinGroupRefs {
         
-        protected ArrayList<HwPinGroupRef> hwPinGroupRef;
-        
 
         
-        @XmlElement(name="HW-PIN-GROUP-REF")
-        public ArrayList<HwPinGroupRef> getHwPinGroupRef() {
-            return this.hwPinGroupRef;
-        }
 
-        public void setHwPinGroupRef(ArrayList<HwPinGroupRef> value) {
-            this.hwPinGroupRef = value;
-        }
-        
-
-        
-        
-        public static class HwPinGroupRef extends Ref {
-            
-            protected HwPinGroupSubtypesEnum dest;
-            
-
-            
-            @XmlAttribute(name="DEST")
-            public HwPinGroupSubtypesEnum getDest() {
-                return this.dest;
-            }
-
-            public void setDest(HwPinGroupSubtypesEnum value) {
-                this.dest = value;
-            }
-            
-        }
-        
         
     }
     

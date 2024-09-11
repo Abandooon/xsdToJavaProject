@@ -105,18 +105,7 @@ public class AutosarEngineeringObject {
     
     public static class RevisionLabels {
         
-        protected ArrayList<RevisionLabelString> revisionLabel;
-        
 
-        
-        @XmlElement(name="REVISION-LABEL")
-        public ArrayList<RevisionLabelString> getRevisionLabel() {
-            return this.revisionLabel;
-        }
-
-        public void setRevisionLabel(ArrayList<RevisionLabelString> value) {
-            this.revisionLabel = value;
-        }
         
 
         

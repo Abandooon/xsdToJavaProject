@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import os
-import re
 from lxml import etree
 from jinja2 import Environment, FileSystemLoader
-
 from src.DslParser import parse_dsl
+from src.XsdParser.ExtractAttributeGroup import extractAttributeGroup
 from src.XsdParser.ExtractComplexType import extractComplexType
+from src.XsdParser.ExtractGroup import extractGroup
 from src.XsdParser.ExtractSimpleType import extractSimpleType
 from src.XsdParser.Utils import to_camel_case,to_pascal_case
 
@@ -23,9 +23,11 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper):
     root = tree.getroot()  # 获取XML的根节点
 
     # 提取信息
-    complexTypes = extractComplexType(root, element_wrapper)  # 提取复杂类型信息
-    print(f"提取了 {len(complexTypes)} 个复杂类型")
+    groups = extractGroup(root, element_wrapper)
+    attributeGroups = extractAttributeGroup(root)
+    complexTypes = extractComplexType(root, element_wrapper, groups, attributeGroups)  # 提取复杂类型信息
     simpleTypes = extractSimpleType(root)  # 提取简单类型信息
+    print(f"提取了 {len(complexTypes)} 个复杂类型")
 
     for simpleType in simpleTypes:
         # 含enumeration标签的需解析为类，应用simpleType模版
@@ -44,8 +46,6 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper):
             outputPath = os.path.join(outputDir, f"{to_pascal_case(simpleType['name'])}.java")
             with open(outputPath, 'w') as file:
                 file.write(javaCode)  # 将生成的Java代码写入文件
-
-            # print(f"Generated {outputPath}")  # 输出生成的文件路径
 
 
     # 生成Java代码

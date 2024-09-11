@@ -150,18 +150,7 @@ public class DocRevision {
     
     public static class Modifications {
         
-        protected ArrayList<Modification> modification;
-        
 
-        
-        @XmlElement(name="MODIFICATION")
-        public ArrayList<Modification> getModification() {
-            return this.modification;
-        }
-
-        public void setModification(ArrayList<Modification> value) {
-            this.modification = value;
-        }
         
 
         

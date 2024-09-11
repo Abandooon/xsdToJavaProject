@@ -60,18 +60,7 @@ public class SwDataDefProps {
     
     public static class SwDataDefPropsVariants {
         
-        protected ArrayList<SwDataDefPropsConditional> swDataDefPropsConditional;
-        
 
-        
-        @XmlElement(name="SW-DATA-DEF-PROPS-CONDITIONAL")
-        public ArrayList<SwDataDefPropsConditional> getSwDataDefPropsConditional() {
-            return this.swDataDefPropsConditional;
-        }
-
-        public void setSwDataDefPropsConditional(ArrayList<SwDataDefPropsConditional> value) {
-            this.swDataDefPropsConditional = value;
-        }
         
 
         

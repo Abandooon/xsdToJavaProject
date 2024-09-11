@@ -4,7 +4,7 @@ from src.XsdParser.ExtractGroup import extractGroup
 from src.XsdParser.Utils import to_camel_case,to_pascal_case
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-def process_complex_type(complexType, root, element_wrapper):
+def process_complex_type(complexType, root, element_wrapper, groups, attributeGroups):
     name = complexType.get('name')  # 获取复杂类型的名称
     if not name:
         return None  # 跳过没有名称的复杂类型-----内部类名定义在element
@@ -30,7 +30,7 @@ def process_complex_type(complexType, root, element_wrapper):
         # 处理extension下的attributegroup
         for attributeGroupRef in base.findall("./{http://www.w3.org/2001/XMLSchema}attributeGroup"):
             refName = attributeGroupRef.get('ref').split(':')[-1]
-            attributeGroups = extractAttributeGroup(root)  # 获取引用的属性组
+            # attributeGroups = extractAttributeGroup(root)  # 获取引用的属性组
             if refName in attributeGroups:
                 for attr in attributeGroups[refName]:
                     attributes.append({
@@ -43,7 +43,7 @@ def process_complex_type(complexType, root, element_wrapper):
     # 处理complex下第一级attributeGroup
     for attributeGroupRef in complexType.findall("./{http://www.w3.org/2001/XMLSchema}attributeGroup"):
         refName = attributeGroupRef.get('ref').split(':')[-1]
-        attributeGroups = extractAttributeGroup(root)  # 获取引用的属性组
+        # attributeGroups = extractAttributeGroup(root)  # 获取引用的属性组
         if refName in attributeGroups:
             for attr in attributeGroups[refName]:
                 attributes.append({
@@ -58,7 +58,7 @@ def process_complex_type(complexType, root, element_wrapper):
     if sequence is not None:
         for groupRef in sequence.findall("./{http://www.w3.org/2001/XMLSchema}group"):
             refName = groupRef.get('ref').split(':')[-1]
-            groups = extractGroup(root, element_wrapper)  # 获取引用的群组
+            # groups = extractGroup(root, element_wrapper)  # 获取引用的群组
             if refName in groups:
                 for element in groups[refName]['elements']:
                     attributes.append({
@@ -75,7 +75,7 @@ def process_complex_type(complexType, root, element_wrapper):
         maxOccurs = choice.get('maxOccurs')
         for groupRef in choice.findall("./{http://www.w3.org/2001/XMLSchema}group"):
             refName = groupRef.get('ref').split(':')[-1]
-            groups = extractGroup(root, element_wrapper)  # 获取引用的群组
+            # groups = extractGroup(root, element_wrapper)  # 获取引用的群组
             if refName in groups:
                 if maxOccurs == '1':
                     for element in groups[refName]['elements']:
@@ -101,12 +101,12 @@ def process_complex_type(complexType, root, element_wrapper):
         'extends': extends
     }
 
-def extractComplexType(root, element_wrapper):
+def extractComplexType(root, element_wrapper, groups, attributeGroups):
     complexTypes = []  # 初始化一个列表，用于存储复杂类型的信息
 
     # 使用 ThreadPoolExecutor 并行处理 complexType
     with ThreadPoolExecutor() as executor:
-        futures = [executor.submit(process_complex_type, complexType, root, element_wrapper)
+        futures = [executor.submit(process_complex_type, complexType, root, element_wrapper, groups, attributeGroups)
                    for complexType in root.findall(".//{http://www.w3.org/2001/XMLSchema}complexType")]
 
         for future in as_completed(futures):

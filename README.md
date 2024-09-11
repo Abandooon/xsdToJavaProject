@@ -4,6 +4,8 @@ task：重新捋一遍逻辑，看为什么一直调用它
 一直处理group: SW-VARIABLE-REF-PROXY，这个是choice下的group ref，考虑把所有逻辑抽出来单独放在这个类，不调用其他函数
 没必要list<object>，直接拆开，以前就是这么写的
 
+匹配标签正则式：<xsd:complexType\b[^>]*>([\s\S]*?)<\/xsd:complexType>
+
 ## 标签含义
 
 - <xsd:group>不会被解析为类，定义了一个元素组，里面的<xsd:element>定义了组里的元素,

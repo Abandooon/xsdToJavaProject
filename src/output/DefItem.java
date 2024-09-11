@@ -195,18 +195,7 @@ public class DefItem {
     
     public static class ShortNameFragments {
         
-        protected ArrayList<ShortNameFragment> shortNameFragment;
-        
 
-        
-        @XmlElement(name="SHORT-NAME-FRAGMENT")
-        public ArrayList<ShortNameFragment> getShortNameFragment() {
-            return this.shortNameFragment;
-        }
-
-        public void setShortNameFragment(ArrayList<ShortNameFragment> value) {
-            this.shortNameFragment = value;
-        }
         
 
         

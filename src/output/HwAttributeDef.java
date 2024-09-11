@@ -225,18 +225,7 @@ public class HwAttributeDef {
     
     public static class ShortNameFragments {
         
-        protected ArrayList<ShortNameFragment> shortNameFragment;
-        
 
-        
-        @XmlElement(name="SHORT-NAME-FRAGMENT")
-        public ArrayList<ShortNameFragment> getShortNameFragment() {
-            return this.shortNameFragment;
-        }
-
-        public void setShortNameFragment(ArrayList<ShortNameFragment> value) {
-            this.shortNameFragment = value;
-        }
         
 
         
@@ -244,18 +233,7 @@ public class HwAttributeDef {
     
     public static class Annotations {
         
-        protected ArrayList<Annotation> annotation;
-        
 
-        
-        @XmlElement(name="ANNOTATION")
-        public ArrayList<Annotation> getAnnotation() {
-            return this.annotation;
-        }
-
-        public void setAnnotation(ArrayList<Annotation> value) {
-            this.annotation = value;
-        }
         
 
         
@@ -263,18 +241,7 @@ public class HwAttributeDef {
     
     public static class HwAttributeLiterals {
         
-        protected ArrayList<HwAttributeLiteralDef> hwAttributeLiteralDef;
-        
 
-        
-        @XmlElement(name="HW-ATTRIBUTE-LITERAL-DEF")
-        public ArrayList<HwAttributeLiteralDef> getHwAttributeLiteralDef() {
-            return this.hwAttributeLiteralDef;
-        }
-
-        public void setHwAttributeLiteralDef(ArrayList<HwAttributeLiteralDef> value) {
-            this.hwAttributeLiteralDef = value;
-        }
         
 
         

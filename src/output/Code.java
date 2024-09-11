@@ -210,18 +210,7 @@ public class Code {
     
     public static class ShortNameFragments {
         
-        protected ArrayList<ShortNameFragment> shortNameFragment;
-        
 
-        
-        @XmlElement(name="SHORT-NAME-FRAGMENT")
-        public ArrayList<ShortNameFragment> getShortNameFragment() {
-            return this.shortNameFragment;
-        }
-
-        public void setShortNameFragment(ArrayList<ShortNameFragment> value) {
-            this.shortNameFragment = value;
-        }
         
 
         
@@ -229,18 +218,7 @@ public class Code {
     
     public static class Annotations {
         
-        protected ArrayList<Annotation> annotation;
-        
 
-        
-        @XmlElement(name="ANNOTATION")
-        public ArrayList<Annotation> getAnnotation() {
-            return this.annotation;
-        }
-
-        public void setAnnotation(ArrayList<Annotation> value) {
-            this.annotation = value;
-        }
         
 
         
@@ -248,18 +226,7 @@ public class Code {
     
     public static class ArtifactDescriptors {
         
-        protected ArrayList<AutosarEngineeringObject> autosarEngineeringObject;
-        
 
-        
-        @XmlElement(name="AUTOSAR-ENGINEERING-OBJECT")
-        public ArrayList<AutosarEngineeringObject> getAutosarEngineeringObject() {
-            return this.autosarEngineeringObject;
-        }
-
-        public void setAutosarEngineeringObject(ArrayList<AutosarEngineeringObject> value) {
-            this.autosarEngineeringObject = value;
-        }
         
 
         
@@ -267,39 +234,9 @@ public class Code {
     
     public static class CallbackHeaderRefs {
         
-        protected ArrayList<CallbackHeaderRef> callbackHeaderRef;
-        
 
         
-        @XmlElement(name="CALLBACK-HEADER-REF")
-        public ArrayList<CallbackHeaderRef> getCallbackHeaderRef() {
-            return this.callbackHeaderRef;
-        }
 
-        public void setCallbackHeaderRef(ArrayList<CallbackHeaderRef> value) {
-            this.callbackHeaderRef = value;
-        }
-        
-
-        
-        
-        public static class CallbackHeaderRef extends Ref {
-            
-            protected ServiceNeedsSubtypesEnum dest;
-            
-
-            
-            @XmlAttribute(name="DEST")
-            public ServiceNeedsSubtypesEnum getDest() {
-                return this.dest;
-            }
-
-            public void setDest(ServiceNeedsSubtypesEnum value) {
-                this.dest = value;
-            }
-            
-        }
-        
         
     }
     

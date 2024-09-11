@@ -75,39 +75,9 @@ public class RoleBasedMcDataAssignment {
     
     public static class McDataInstanceRefs {
         
-        protected ArrayList<McDataInstanceRef> mcDataInstanceRef;
-        
 
         
-        @XmlElement(name="MC-DATA-INSTANCE-REF")
-        public ArrayList<McDataInstanceRef> getMcDataInstanceRef() {
-            return this.mcDataInstanceRef;
-        }
 
-        public void setMcDataInstanceRef(ArrayList<McDataInstanceRef> value) {
-            this.mcDataInstanceRef = value;
-        }
-        
-
-        
-        
-        public static class McDataInstanceRef extends Ref {
-            
-            protected McDataInstanceSubtypesEnum dest;
-            
-
-            
-            @XmlAttribute(name="DEST")
-            public McDataInstanceSubtypesEnum getDest() {
-                return this.dest;
-            }
-
-            public void setDest(McDataInstanceSubtypesEnum value) {
-                this.dest = value;
-            }
-            
-        }
-        
         
     }
     

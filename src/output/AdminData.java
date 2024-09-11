@@ -105,18 +105,7 @@ public class AdminData {
     
     public static class DocRevisions {
         
-        protected ArrayList<DocRevision> docRevision;
-        
 
-        
-        @XmlElement(name="DOC-REVISION")
-        public ArrayList<DocRevision> getDocRevision() {
-            return this.docRevision;
-        }
-
-        public void setDocRevision(ArrayList<DocRevision> value) {
-            this.docRevision = value;
-        }
         
 
         
@@ -124,18 +113,7 @@ public class AdminData {
     
     public static class Sdgs {
         
-        protected ArrayList<Sdg> sdg;
-        
 
-        
-        @XmlElement(name="SDG")
-        public ArrayList<Sdg> getSdg() {
-            return this.sdg;
-        }
-
-        public void setSdg(ArrayList<Sdg> value) {
-            this.sdg = value;
-        }
         
 
         

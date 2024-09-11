@@ -75,18 +75,7 @@ public class McDataAccessDetails {
     
     public static class RteEventIrefs {
         
-        protected ArrayList<RteEventInEcuInstanceRef> rteEventIref;
-        
 
-        
-        @XmlElement(name="RTE-EVENT-IREF")
-        public ArrayList<RteEventInEcuInstanceRef> getRteEventIref() {
-            return this.rteEventIref;
-        }
-
-        public void setRteEventIref(ArrayList<RteEventInEcuInstanceRef> value) {
-            this.rteEventIref = value;
-        }
         
 
         
@@ -94,18 +83,7 @@ public class McDataAccessDetails {
     
     public static class VariableAccessIrefs {
         
-        protected ArrayList<VariableAccessInEcuInstanceRef> variableAccessIref;
-        
 
-        
-        @XmlElement(name="VARIABLE-ACCESS-IREF")
-        public ArrayList<VariableAccessInEcuInstanceRef> getVariableAccessIref() {
-            return this.variableAccessIref;
-        }
-
-        public void setVariableAccessIref(ArrayList<VariableAccessInEcuInstanceRef> value) {
-            this.variableAccessIref = value;
-        }
         
 
         

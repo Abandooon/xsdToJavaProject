@@ -105,18 +105,7 @@ public class McSupportData {
     
     public static class EmulationSupports {
         
-        protected ArrayList<McSwEmulationMethodSupport> mcSwEmulationMethodSupport;
-        
 
-        
-        @XmlElement(name="MC-SW-EMULATION-METHOD-SUPPORT")
-        public ArrayList<McSwEmulationMethodSupport> getMcSwEmulationMethodSupport() {
-            return this.mcSwEmulationMethodSupport;
-        }
-
-        public void setMcSwEmulationMethodSupport(ArrayList<McSwEmulationMethodSupport> value) {
-            this.mcSwEmulationMethodSupport = value;
-        }
         
 
         
@@ -124,18 +113,7 @@ public class McSupportData {
     
     public static class McParameterInstances {
         
-        protected ArrayList<McDataInstance> mcDataInstance;
-        
 
-        
-        @XmlElement(name="MC-DATA-INSTANCE")
-        public ArrayList<McDataInstance> getMcDataInstance() {
-            return this.mcDataInstance;
-        }
-
-        public void setMcDataInstance(ArrayList<McDataInstance> value) {
-            this.mcDataInstance = value;
-        }
         
 
         
@@ -143,18 +121,7 @@ public class McSupportData {
     
     public static class McVariableInstances {
         
-        protected ArrayList<McDataInstance> mcDataInstance;
-        
 
-        
-        @XmlElement(name="MC-DATA-INSTANCE")
-        public ArrayList<McDataInstance> getMcDataInstance() {
-            return this.mcDataInstance;
-        }
-
-        public void setMcDataInstance(ArrayList<McDataInstance> value) {
-            this.mcDataInstance = value;
-        }
         
 
         
@@ -162,39 +129,9 @@ public class McSupportData {
     
     public static class MeasurableSystemConstantValuesRefs {
         
-        protected ArrayList<MeasurableSystemConstantValuesRef> measurableSystemConstantValuesRef;
-        
 
         
-        @XmlElement(name="MEASURABLE-SYSTEM-CONSTANT-VALUES-REF")
-        public ArrayList<MeasurableSystemConstantValuesRef> getMeasurableSystemConstantValuesRef() {
-            return this.measurableSystemConstantValuesRef;
-        }
 
-        public void setMeasurableSystemConstantValuesRef(ArrayList<MeasurableSystemConstantValuesRef> value) {
-            this.measurableSystemConstantValuesRef = value;
-        }
-        
-
-        
-        
-        public static class MeasurableSystemConstantValuesRef extends Ref {
-            
-            protected SwSystemconstantValueSetSubtypesEnum dest;
-            
-
-            
-            @XmlAttribute(name="DEST")
-            public SwSystemconstantValueSetSubtypesEnum getDest() {
-                return this.dest;
-            }
-
-            public void setDest(SwSystemconstantValueSetSubtypesEnum value) {
-                this.dest = value;
-            }
-            
-        }
-        
         
     }
     

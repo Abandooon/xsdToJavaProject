@@ -225,18 +225,7 @@ public class DependencyOnArtifact {
     
     public static class ShortNameFragments {
         
-        protected ArrayList<ShortNameFragment> shortNameFragment;
-        
 
-        
-        @XmlElement(name="SHORT-NAME-FRAGMENT")
-        public ArrayList<ShortNameFragment> getShortNameFragment() {
-            return this.shortNameFragment;
-        }
-
-        public void setShortNameFragment(ArrayList<ShortNameFragment> value) {
-            this.shortNameFragment = value;
-        }
         
 
         
@@ -244,18 +233,7 @@ public class DependencyOnArtifact {
     
     public static class Annotations {
         
-        protected ArrayList<Annotation> annotation;
-        
 
-        
-        @XmlElement(name="ANNOTATION")
-        public ArrayList<Annotation> getAnnotation() {
-            return this.annotation;
-        }
-
-        public void setAnnotation(ArrayList<Annotation> value) {
-            this.annotation = value;
-        }
         
 
         
@@ -263,18 +241,7 @@ public class DependencyOnArtifact {
     
     public static class Usages {
         
-        protected ArrayList<DependencyUsageEnum> usage;
-        
 
-        
-        @XmlElement(name="USAGE")
-        public ArrayList<DependencyUsageEnum> getUsage() {
-            return this.usage;
-        }
-
-        public void setUsage(ArrayList<DependencyUsageEnum> value) {
-            this.usage = value;
-        }
         
 
         

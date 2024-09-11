@@ -285,18 +285,7 @@ public class HwElement {
     
     public static class ShortNameFragments {
         
-        protected ArrayList<ShortNameFragment> shortNameFragment;
-        
 
-        
-        @XmlElement(name="SHORT-NAME-FRAGMENT")
-        public ArrayList<ShortNameFragment> getShortNameFragment() {
-            return this.shortNameFragment;
-        }
-
-        public void setShortNameFragment(ArrayList<ShortNameFragment> value) {
-            this.shortNameFragment = value;
-        }
         
 
         
@@ -304,18 +293,7 @@ public class HwElement {
     
     public static class Annotations {
         
-        protected ArrayList<Annotation> annotation;
-        
 
-        
-        @XmlElement(name="ANNOTATION")
-        public ArrayList<Annotation> getAnnotation() {
-            return this.annotation;
-        }
-
-        public void setAnnotation(ArrayList<Annotation> value) {
-            this.annotation = value;
-        }
         
 
         
@@ -342,56 +320,15 @@ public class HwElement {
     
     public static class HwCategoryRefs {
         
-        protected ArrayList<HwCategoryRef> hwCategoryRef;
-        
 
         
-        @XmlElement(name="HW-CATEGORY-REF")
-        public ArrayList<HwCategoryRef> getHwCategoryRef() {
-            return this.hwCategoryRef;
-        }
 
-        public void setHwCategoryRef(ArrayList<HwCategoryRef> value) {
-            this.hwCategoryRef = value;
-        }
-        
-
-        
-        
-        public static class HwCategoryRef extends Ref {
-            
-            protected HwCategorySubtypesEnum dest;
-            
-
-            
-            @XmlAttribute(name="DEST")
-            public HwCategorySubtypesEnum getDest() {
-                return this.dest;
-            }
-
-            public void setDest(HwCategorySubtypesEnum value) {
-                this.dest = value;
-            }
-            
-        }
-        
         
     }
     
     public static class HwAttributeValues {
         
-        protected ArrayList<HwAttributeValue> hwAttributeValue;
-        
 
-        
-        @XmlElement(name="HW-ATTRIBUTE-VALUE")
-        public ArrayList<HwAttributeValue> getHwAttributeValue() {
-            return this.hwAttributeValue;
-        }
-
-        public void setHwAttributeValue(ArrayList<HwAttributeValue> value) {
-            this.hwAttributeValue = value;
-        }
         
 
         
@@ -399,18 +336,7 @@ public class HwElement {
     
     public static class NestedElements {
         
-        protected ArrayList<HwElementRefConditional> hwElementRefConditional;
-        
 
-        
-        @XmlElement(name="HW-ELEMENT-REF-CONDITIONAL")
-        public ArrayList<HwElementRefConditional> getHwElementRefConditional() {
-            return this.hwElementRefConditional;
-        }
-
-        public void setHwElementRefConditional(ArrayList<HwElementRefConditional> value) {
-            this.hwElementRefConditional = value;
-        }
         
 
         
@@ -418,18 +344,7 @@ public class HwElement {
     
     public static class HwPinGroups {
         
-        protected ArrayList<HwPinGroup> hwPinGroup;
-        
 
-        
-        @XmlElement(name="HW-PIN-GROUP")
-        public ArrayList<HwPinGroup> getHwPinGroup() {
-            return this.hwPinGroup;
-        }
-
-        public void setHwPinGroup(ArrayList<HwPinGroup> value) {
-            this.hwPinGroup = value;
-        }
         
 
         
@@ -437,18 +352,7 @@ public class HwElement {
     
     public static class HwElementConnections {
         
-        protected ArrayList<HwElementConnector> hwElementConnector;
-        
 
-        
-        @XmlElement(name="HW-ELEMENT-CONNECTOR")
-        public ArrayList<HwElementConnector> getHwElementConnector() {
-            return this.hwElementConnector;
-        }
-
-        public void setHwElementConnector(ArrayList<HwElementConnector> value) {
-            this.hwElementConnector = value;
-        }
         
 
         

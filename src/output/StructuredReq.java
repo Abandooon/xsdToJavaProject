@@ -450,18 +450,7 @@ public class StructuredReq {
     
     public static class ShortNameFragments {
         
-        protected ArrayList<ShortNameFragment> shortNameFragment;
-        
 
-        
-        @XmlElement(name="SHORT-NAME-FRAGMENT")
-        public ArrayList<ShortNameFragment> getShortNameFragment() {
-            return this.shortNameFragment;
-        }
-
-        public void setShortNameFragment(ArrayList<ShortNameFragment> value) {
-            this.shortNameFragment = value;
-        }
         
 
         
@@ -469,18 +458,7 @@ public class StructuredReq {
     
     public static class Annotations {
         
-        protected ArrayList<Annotation> annotation;
-        
 
-        
-        @XmlElement(name="ANNOTATION")
-        public ArrayList<Annotation> getAnnotation() {
-            return this.annotation;
-        }
-
-        public void setAnnotation(ArrayList<Annotation> value) {
-            this.annotation = value;
-        }
         
 
         
@@ -488,77 +466,17 @@ public class StructuredReq {
     
     public static class TraceRefs {
         
-        protected ArrayList<TraceRef> traceRef;
-        
 
         
-        @XmlElement(name="TRACE-REF")
-        public ArrayList<TraceRef> getTraceRef() {
-            return this.traceRef;
-        }
 
-        public void setTraceRef(ArrayList<TraceRef> value) {
-            this.traceRef = value;
-        }
-        
-
-        
-        
-        public static class TraceRef extends Ref {
-            
-            protected TraceableSubtypesEnum dest;
-            
-
-            
-            @XmlAttribute(name="DEST")
-            public TraceableSubtypesEnum getDest() {
-                return this.dest;
-            }
-
-            public void setDest(TraceableSubtypesEnum value) {
-                this.dest = value;
-            }
-            
-        }
-        
         
     }
     
     public static class TestedItemRefs {
         
-        protected ArrayList<TestedItemRef> testedItemRef;
-        
 
         
-        @XmlElement(name="TESTED-ITEM-REF")
-        public ArrayList<TestedItemRef> getTestedItemRef() {
-            return this.testedItemRef;
-        }
 
-        public void setTestedItemRef(ArrayList<TestedItemRef> value) {
-            this.testedItemRef = value;
-        }
-        
-
-        
-        
-        public static class TestedItemRef extends Ref {
-            
-            protected TraceableSubtypesEnum dest;
-            
-
-            
-            @XmlAttribute(name="DEST")
-            public TraceableSubtypesEnum getDest() {
-                return this.dest;
-            }
-
-            public void setDest(TraceableSubtypesEnum value) {
-                this.dest = value;
-            }
-            
-        }
-        
         
     }
     

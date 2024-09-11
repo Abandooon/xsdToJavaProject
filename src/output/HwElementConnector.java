@@ -105,56 +105,15 @@ public class HwElementConnector {
     
     public static class HwElementRefs {
         
-        protected ArrayList<HwElementRef> hwElementRef;
-        
 
         
-        @XmlElement(name="HW-ELEMENT-REF")
-        public ArrayList<HwElementRef> getHwElementRef() {
-            return this.hwElementRef;
-        }
 
-        public void setHwElementRef(ArrayList<HwElementRef> value) {
-            this.hwElementRef = value;
-        }
-        
-
-        
-        
-        public static class HwElementRef extends Ref {
-            
-            protected HwElementSubtypesEnum dest;
-            
-
-            
-            @XmlAttribute(name="DEST")
-            public HwElementSubtypesEnum getDest() {
-                return this.dest;
-            }
-
-            public void setDest(HwElementSubtypesEnum value) {
-                this.dest = value;
-            }
-            
-        }
-        
         
     }
     
     public static class HwPinGroupConnections {
         
-        protected ArrayList<HwPinGroupConnector> hwPinGroupConnector;
-        
 
-        
-        @XmlElement(name="HW-PIN-GROUP-CONNECTOR")
-        public ArrayList<HwPinGroupConnector> getHwPinGroupConnector() {
-            return this.hwPinGroupConnector;
-        }
-
-        public void setHwPinGroupConnector(ArrayList<HwPinGroupConnector> value) {
-            this.hwPinGroupConnector = value;
-        }
         
 
         
@@ -162,18 +121,7 @@ public class HwElementConnector {
     
     public static class HwPinConnections {
         
-        protected ArrayList<HwPinConnector> hwPinConnector;
-        
 
-        
-        @XmlElement(name="HW-PIN-CONNECTOR")
-        public ArrayList<HwPinConnector> getHwPinConnector() {
-            return this.hwPinConnector;
-        }
-
-        public void setHwPinConnector(ArrayList<HwPinConnector> value) {
-            this.hwPinConnector = value;
-        }
         
 
         

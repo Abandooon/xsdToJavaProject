@@ -240,18 +240,7 @@ public class BswDebugInfo {
     
     public static class ShortNameFragments {
         
-        protected ArrayList<ShortNameFragment> shortNameFragment;
-        
 
-        
-        @XmlElement(name="SHORT-NAME-FRAGMENT")
-        public ArrayList<ShortNameFragment> getShortNameFragment() {
-            return this.shortNameFragment;
-        }
-
-        public void setShortNameFragment(ArrayList<ShortNameFragment> value) {
-            this.shortNameFragment = value;
-        }
         
 
         
@@ -259,18 +248,7 @@ public class BswDebugInfo {
     
     public static class Annotations {
         
-        protected ArrayList<Annotation> annotation;
-        
 
-        
-        @XmlElement(name="ANNOTATION")
-        public ArrayList<Annotation> getAnnotation() {
-            return this.annotation;
-        }
-
-        public void setAnnotation(ArrayList<Annotation> value) {
-            this.annotation = value;
-        }
         
 
         
@@ -278,18 +256,7 @@ public class BswDebugInfo {
     
     public static class LocalDebugDatas {
         
-        protected ArrayList<ImplementationDataTypeElement> implementationDataTypeElement;
-        
 
-        
-        @XmlElement(name="IMPLEMENTATION-DATA-TYPE-ELEMENT")
-        public ArrayList<ImplementationDataTypeElement> getImplementationDataTypeElement() {
-            return this.implementationDataTypeElement;
-        }
-
-        public void setImplementationDataTypeElement(ArrayList<ImplementationDataTypeElement> value) {
-            this.implementationDataTypeElement = value;
-        }
         
 
         
@@ -297,77 +264,17 @@ public class BswDebugInfo {
     
     public static class ParameterAccessedForDebugRefs {
         
-        protected ArrayList<ParameterAccessedForDebugRef> parameterAccessedForDebugRef;
-        
 
         
-        @XmlElement(name="PARAMETER-ACCESSED-FOR-DEBUG-REF")
-        public ArrayList<ParameterAccessedForDebugRef> getParameterAccessedForDebugRef() {
-            return this.parameterAccessedForDebugRef;
-        }
 
-        public void setParameterAccessedForDebugRef(ArrayList<ParameterAccessedForDebugRef> value) {
-            this.parameterAccessedForDebugRef = value;
-        }
-        
-
-        
-        
-        public static class ParameterAccessedForDebugRef extends Ref {
-            
-            protected ParameterDataPrototypeSubtypesEnum dest;
-            
-
-            
-            @XmlAttribute(name="DEST")
-            public ParameterDataPrototypeSubtypesEnum getDest() {
-                return this.dest;
-            }
-
-            public void setDest(ParameterDataPrototypeSubtypesEnum value) {
-                this.dest = value;
-            }
-            
-        }
-        
         
     }
     
     public static class VariableAccessedForDebugRefs {
         
-        protected ArrayList<VariableAccessedForDebugRef> variableAccessedForDebugRef;
-        
 
         
-        @XmlElement(name="VARIABLE-ACCESSED-FOR-DEBUG-REF")
-        public ArrayList<VariableAccessedForDebugRef> getVariableAccessedForDebugRef() {
-            return this.variableAccessedForDebugRef;
-        }
 
-        public void setVariableAccessedForDebugRef(ArrayList<VariableAccessedForDebugRef> value) {
-            this.variableAccessedForDebugRef = value;
-        }
-        
-
-        
-        
-        public static class VariableAccessedForDebugRef extends Ref {
-            
-            protected VariableDataPrototypeSubtypesEnum dest;
-            
-
-            
-            @XmlAttribute(name="DEST")
-            public VariableDataPrototypeSubtypesEnum getDest() {
-                return this.dest;
-            }
-
-            public void setDest(VariableDataPrototypeSubtypesEnum value) {
-                this.dest = value;
-            }
-            
-        }
-        
         
     }
     

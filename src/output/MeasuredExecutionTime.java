@@ -345,18 +345,7 @@ public class MeasuredExecutionTime {
     
     public static class ShortNameFragments {
         
-        protected ArrayList<ShortNameFragment> shortNameFragment;
-        
 
-        
-        @XmlElement(name="SHORT-NAME-FRAGMENT")
-        public ArrayList<ShortNameFragment> getShortNameFragment() {
-            return this.shortNameFragment;
-        }
-
-        public void setShortNameFragment(ArrayList<ShortNameFragment> value) {
-            this.shortNameFragment = value;
-        }
         
 
         
@@ -364,18 +353,7 @@ public class MeasuredExecutionTime {
     
     public static class Annotations {
         
-        protected ArrayList<Annotation> annotation;
-        
 
-        
-        @XmlElement(name="ANNOTATION")
-        public ArrayList<Annotation> getAnnotation() {
-            return this.annotation;
-        }
-
-        public void setAnnotation(ArrayList<Annotation> value) {
-            this.annotation = value;
-        }
         
 
         
@@ -440,39 +418,9 @@ public class MeasuredExecutionTime {
     
     public static class IncludedLibraryRefs {
         
-        protected ArrayList<IncludedLibraryRef> includedLibraryRef;
-        
 
         
-        @XmlElement(name="INCLUDED-LIBRARY-REF")
-        public ArrayList<IncludedLibraryRef> getIncludedLibraryRef() {
-            return this.includedLibraryRef;
-        }
 
-        public void setIncludedLibraryRef(ArrayList<IncludedLibraryRef> value) {
-            this.includedLibraryRef = value;
-        }
-        
-
-        
-        
-        public static class IncludedLibraryRef extends Ref {
-            
-            protected DependencyOnArtifactSubtypesEnum dest;
-            
-
-            
-            @XmlAttribute(name="DEST")
-            public DependencyOnArtifactSubtypesEnum getDest() {
-                return this.dest;
-            }
-
-            public void setDest(DependencyOnArtifactSubtypesEnum value) {
-                this.dest = value;
-            }
-            
-        }
-        
         
     }
     

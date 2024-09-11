@@ -255,18 +255,7 @@ public class ResourceConsumption {
     
     public static class ShortNameFragments {
         
-        protected ArrayList<ShortNameFragment> shortNameFragment;
-        
 
-        
-        @XmlElement(name="SHORT-NAME-FRAGMENT")
-        public ArrayList<ShortNameFragment> getShortNameFragment() {
-            return this.shortNameFragment;
-        }
-
-        public void setShortNameFragment(ArrayList<ShortNameFragment> value) {
-            this.shortNameFragment = value;
-        }
         
 
         
@@ -274,18 +263,7 @@ public class ResourceConsumption {
     
     public static class Annotations {
         
-        protected ArrayList<Annotation> annotation;
-        
 
-        
-        @XmlElement(name="ANNOTATION")
-        public ArrayList<Annotation> getAnnotation() {
-            return this.annotation;
-        }
-
-        public void setAnnotation(ArrayList<Annotation> value) {
-            this.annotation = value;
-        }
         
 
         
@@ -293,51 +271,7 @@ public class ResourceConsumption {
     
     public static class ExecutionTimes {
         
-        protected ArrayList<AnalyzedExecutionTime> analyzedExecutionTime;
-        
-        protected ArrayList<MeasuredExecutionTime> measuredExecutionTime;
-        
-        protected ArrayList<RoughEstimateOfExecutionTime> roughEstimateOfExecutionTime;
-        
-        protected ArrayList<SimulatedExecutionTime> simulatedExecutionTime;
-        
 
-        
-        @XmlElement(name="ANALYZED-EXECUTION-TIME")
-        public ArrayList<AnalyzedExecutionTime> getAnalyzedExecutionTime() {
-            return this.analyzedExecutionTime;
-        }
-
-        public void setAnalyzedExecutionTime(ArrayList<AnalyzedExecutionTime> value) {
-            this.analyzedExecutionTime = value;
-        }
-        
-        @XmlElement(name="MEASURED-EXECUTION-TIME")
-        public ArrayList<MeasuredExecutionTime> getMeasuredExecutionTime() {
-            return this.measuredExecutionTime;
-        }
-
-        public void setMeasuredExecutionTime(ArrayList<MeasuredExecutionTime> value) {
-            this.measuredExecutionTime = value;
-        }
-        
-        @XmlElement(name="ROUGH-ESTIMATE-OF-EXECUTION-TIME")
-        public ArrayList<RoughEstimateOfExecutionTime> getRoughEstimateOfExecutionTime() {
-            return this.roughEstimateOfExecutionTime;
-        }
-
-        public void setRoughEstimateOfExecutionTime(ArrayList<RoughEstimateOfExecutionTime> value) {
-            this.roughEstimateOfExecutionTime = value;
-        }
-        
-        @XmlElement(name="SIMULATED-EXECUTION-TIME")
-        public ArrayList<SimulatedExecutionTime> getSimulatedExecutionTime() {
-            return this.simulatedExecutionTime;
-        }
-
-        public void setSimulatedExecutionTime(ArrayList<SimulatedExecutionTime> value) {
-            this.simulatedExecutionTime = value;
-        }
         
 
         
@@ -345,40 +279,7 @@ public class ResourceConsumption {
     
     public static class HeapUsages {
         
-        protected ArrayList<MeasuredHeapUsage> measuredHeapUsage;
-        
-        protected ArrayList<RoughEstimateHeapUsage> roughEstimateHeapUsage;
-        
-        protected ArrayList<WorstCaseHeapUsage> worstCaseHeapUsage;
-        
 
-        
-        @XmlElement(name="MEASURED-HEAP-USAGE")
-        public ArrayList<MeasuredHeapUsage> getMeasuredHeapUsage() {
-            return this.measuredHeapUsage;
-        }
-
-        public void setMeasuredHeapUsage(ArrayList<MeasuredHeapUsage> value) {
-            this.measuredHeapUsage = value;
-        }
-        
-        @XmlElement(name="ROUGH-ESTIMATE-HEAP-USAGE")
-        public ArrayList<RoughEstimateHeapUsage> getRoughEstimateHeapUsage() {
-            return this.roughEstimateHeapUsage;
-        }
-
-        public void setRoughEstimateHeapUsage(ArrayList<RoughEstimateHeapUsage> value) {
-            this.roughEstimateHeapUsage = value;
-        }
-        
-        @XmlElement(name="WORST-CASE-HEAP-USAGE")
-        public ArrayList<WorstCaseHeapUsage> getWorstCaseHeapUsage() {
-            return this.worstCaseHeapUsage;
-        }
-
-        public void setWorstCaseHeapUsage(ArrayList<WorstCaseHeapUsage> value) {
-            this.worstCaseHeapUsage = value;
-        }
         
 
         
@@ -386,18 +287,7 @@ public class ResourceConsumption {
     
     public static class MemorySections {
         
-        protected ArrayList<MemorySection> memorySection;
-        
 
-        
-        @XmlElement(name="MEMORY-SECTION")
-        public ArrayList<MemorySection> getMemorySection() {
-            return this.memorySection;
-        }
-
-        public void setMemorySection(ArrayList<MemorySection> value) {
-            this.memorySection = value;
-        }
         
 
         
@@ -405,18 +295,7 @@ public class ResourceConsumption {
     
     public static class SectionNamePrefixs {
         
-        protected ArrayList<SectionNamePrefix> sectionNamePrefix;
-        
 
-        
-        @XmlElement(name="SECTION-NAME-PREFIX")
-        public ArrayList<SectionNamePrefix> getSectionNamePrefix() {
-            return this.sectionNamePrefix;
-        }
-
-        public void setSectionNamePrefix(ArrayList<SectionNamePrefix> value) {
-            this.sectionNamePrefix = value;
-        }
         
 
         
@@ -424,40 +303,7 @@ public class ResourceConsumption {
     
     public static class StackUsages {
         
-        protected ArrayList<MeasuredStackUsage> measuredStackUsage;
-        
-        protected ArrayList<RoughEstimateStackUsage> roughEstimateStackUsage;
-        
-        protected ArrayList<WorstCaseStackUsage> worstCaseStackUsage;
-        
 
-        
-        @XmlElement(name="MEASURED-STACK-USAGE")
-        public ArrayList<MeasuredStackUsage> getMeasuredStackUsage() {
-            return this.measuredStackUsage;
-        }
-
-        public void setMeasuredStackUsage(ArrayList<MeasuredStackUsage> value) {
-            this.measuredStackUsage = value;
-        }
-        
-        @XmlElement(name="ROUGH-ESTIMATE-STACK-USAGE")
-        public ArrayList<RoughEstimateStackUsage> getRoughEstimateStackUsage() {
-            return this.roughEstimateStackUsage;
-        }
-
-        public void setRoughEstimateStackUsage(ArrayList<RoughEstimateStackUsage> value) {
-            this.roughEstimateStackUsage = value;
-        }
-        
-        @XmlElement(name="WORST-CASE-STACK-USAGE")
-        public ArrayList<WorstCaseStackUsage> getWorstCaseStackUsage() {
-            return this.worstCaseStackUsage;
-        }
-
-        public void setWorstCaseStackUsage(ArrayList<WorstCaseStackUsage> value) {
-            this.worstCaseStackUsage = value;
-        }
         
 
         

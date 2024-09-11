@@ -35,18 +35,18 @@ def extractGroup(root, element_wrapper):
                     accumulated_elements.extend(elements)
                     accumulated_inner_classes.extend(inner_classes)
 
-                # innerInnerChoices = innerChoice.findall("./{http://www.w3.org/2001/XMLSchema}choice")
-                # if innerInnerChoices is not None:
-                #     for innerInnerChoice in innerInnerChoices:
-                #         innerMaxOccurs = innerInnerChoice.get('maxOccurs')
-                #         group = innerInnerChoice.find("./{http://www.w3.org/2001/XMLSchema}group")
-                #         refName = group.get('ref').split(':')[-1]
-                #         #添加打印，另一个调用的地方也打印，找到是哪个地方循环引用
-                #         print(f"group------process_choiceRef {group_name}")
-                #         elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs, element_wrapper,
-                #                                                     'None', depth=1)
-                #         accumulated_elements.extend(elements)
-                #         accumulated_inner_classes.extend(inner_classes)
+                innerInnerChoices = innerChoice.findall("./{http://www.w3.org/2001/XMLSchema}choice")
+                if innerInnerChoices is not None:
+                    for innerInnerChoice in innerInnerChoices:
+                        innerMaxOccurs = innerInnerChoice.get('maxOccurs')
+                        group = innerInnerChoice.find("./{http://www.w3.org/2001/XMLSchema}group")
+                        refName = group.get('ref').split(':')[-1]
+                        #添加打印，另一个调用的地方也打印，找到是哪个地方循环引用
+                        # print(f"group------process_choiceRef {group_name}")
+                        elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs, element_wrapper,
+                                                                    'None', depth=1)
+                        accumulated_elements.extend(elements)
+                        accumulated_inner_classes.extend(inner_classes)
 
         groups[group_name] = {
             'elements': accumulated_elements,

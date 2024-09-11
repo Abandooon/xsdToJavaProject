@@ -10,7 +10,7 @@ def process_complex_type(complexType, root, element_wrapper, groups, attributeGr
         return None  # 跳过没有名称的复杂类型-----内部类名定义在element
     attributes = []  # 初始化列表，用于存储复杂类型的属性
     extends = None
-    print(f"Processing complexType: {name}")
+    # print(f"Processing complexType: {name}")
 
     # 处理扩展simpleContent
     simpleContent = complexType.find("./{http://www.w3.org/2001/XMLSchema}simpleContent")
@@ -105,7 +105,7 @@ def extractComplexType(root, element_wrapper, groups, attributeGroups):
     complexTypes = []  # 初始化一个列表，用于存储复杂类型的信息
 
     # 使用 ThreadPoolExecutor 并行处理 complexType
-    with ThreadPoolExecutor() as executor:
+    with ThreadPoolExecutor(max_workers=8) as executor:
         futures = [executor.submit(process_complex_type, complexType, root, element_wrapper, groups, attributeGroups)
                    for complexType in root.findall(".//{http://www.w3.org/2001/XMLSchema}complexType")]
 

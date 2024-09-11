@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import os
+import time
+
 from lxml import etree
 from jinja2 import Environment, FileSystemLoader
 from src.DslParser import parse_dsl
@@ -12,13 +14,14 @@ from src.XsdParser.Utils import to_camel_case,to_pascal_case
 
 
 def generateJavaClass(input_dir, output_dir, package_name, element_wrapper):
+    start_time = time.time()  # 记录开始时间
     # 配置模板环境
     env = Environment(loader=FileSystemLoader('templates'))  # 加载模板文件夹
     complexTypeClassTemplate = env.get_template('ComplexTypeClassTemplate.j2')  # 获取指定模板文件
     simpleTypeClassTemplate = env.get_template('SimpleTypeClassTemplate.j2')
 
     # 解析XSD文件
-    xsdFile = os.path.join(input_dir, 'simpleTest.xsd')  # 指定XSD文件路径
+    xsdFile = os.path.join(input_dir, 'AUTOSAR_4-2-2_result.xsd')  # 指定XSD文件路径
     tree = etree.parse(xsdFile)  # 解析XSD文件为树结构
     root = tree.getroot()  # 获取XML的根节点
 
@@ -50,9 +53,8 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper):
 
     # 生成Java代码
     for complexType in complexTypes:
-        print(
-            f"正在渲染复杂类型类: {complexType['name']}，属性: {complexType['attributes']}, 内部类: {complexType['innerClasses']}")
-
+        # print(
+        #     f"正在渲染复杂类型类: {complexType['name']}，属性: {complexType['attributes']}, 内部类: {complexType['innerClasses']}")
         # 检查属性是否为空，避免传递None
         for attr in complexType['attributes']:
             if attr['name'] is None or attr['type'] is None:
@@ -77,7 +79,9 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper):
         with open(outputPath, 'w') as file:
             file.write(javaCode)  # 将生成的Java代码写入文件
 
-        # print(f"Generated {outputPath}")  # 输出生成的文件路径
+    end_time = time.time()  # 记录结束时间
+    print(f"Java类生成总耗时: {end_time - start_time:.2f}秒")  # 打印耗时
+
 
 
 if __name__ == "__main__":

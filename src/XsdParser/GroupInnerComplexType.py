@@ -65,7 +65,7 @@ def process_group_inner_complex_type(root, element, element_wrapper, group_name)
     return inner_complex_types  # 返回内部复杂类型信息列表
 
 def process_choice(root, choice, element_name, element_wrapper, group_name):
-    print(f"process_choice called with element_name: {element_name}")
+    # print(f"process_choice called with element_name: {element_name}")
     elements = []  # 初始化列表，用于存储choice中的元素
     innerClass = []
     groups = {}
@@ -74,11 +74,11 @@ def process_choice(root, choice, element_name, element_wrapper, group_name):
     for child in choice:
         if child.tag.endswith('element'):
             elements, innerClass = (process_choice_elements(root, choice, maxOccurs, element_name, element_wrapper, group_name))  # 处理choice中的元素，传入当前choice的maxoccurs和父element的name（wrapper注解名）
-        # elif child.tag.endswith('group'):  # element和group没有同时存在，choice下为group的只有两个
-        #     refName = child.get('ref').split(':')[-1]
-        #     #判断条件？参数有问题？怎么一直传element-----process_choiceRef SW-COMPARISON-VARIABLES
-        #     print(f"element-----process_choiceRef {element_name}")
-        #     elements, innerClass = process_choiceRef(root, refName, maxOccurs, element_wrapper, element_name)
+        elif child.tag.endswith('group'):  # element和group没有同时存在，choice下为group的只有两个
+            refName = child.get('ref').split(':')[-1]
+            #判断条件？参数有问题？怎么一直传element-----process_choiceRef SW-COMPARISON-VARIABLES
+            # print(f"element-----process_choiceRef {element_name}")
+            elements, innerClass = process_choiceRef(root, refName, maxOccurs, element_wrapper, element_name)
 
     return elements, innerClass, maxOccurs  # 返回元素列表
 

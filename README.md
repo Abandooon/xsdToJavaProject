@@ -1,8 +1,14 @@
-task：两个调用group ref的地方一直重复，怎么调用的，怎么传参数的？
+
+9.12 @xmlElementWrapper还没生成
+xsd文件各厂商实现不一，用户具体需求不一样，jaxb生成规则不能满足需求，以autosar为例，，，，，
+
+9.11 把choice group ref取消注释，没有循环调用，但是性能不好
+
+9.8 两个调用group ref的地方一直重复，怎么调用的，怎么传参数的？
 传的参数有问题？测试用例改为simpleTest，注掉了choiceref
 task：重新捋一遍逻辑，看为什么一直调用它
 一直处理group: SW-VARIABLE-REF-PROXY，这个是choice下的group ref，考虑把所有逻辑抽出来单独放在这个类，不调用其他函数
-没必要list<object>，直接拆开，以前就是这么写的
+9.3 没必要list<object>，直接拆开，以前就是这么写的
 
 匹配标签正则式：<xsd:complexType\b[^>]*>([\s\S]*?)<\/xsd:complexType>
 

@@ -75,7 +75,7 @@ def process_elements(root, sequenceOrChoice, maxOccurs, fatherElementName, eleme
                 else:
                     element_type = mapXsdTypeToJava(element_type.split(':')[-1], context='group')  # 将类型映射为Java类型
                     elements.append({
-                        'name': to_camel_case(element_name),
+                        'name': to_camel_case(element_name)+'s',
                         'type': 'ArrayList<{}>'.format(element_type),
                         'annotation': '@XmlElement(name="{}")'.format(element_name)
                         # 'annotation': '@XmlElementWrapper(name="{}")\n@XmlElement(name="{}")'.format(fatherElementName, element_name)
@@ -90,7 +90,7 @@ def process_elements(root, sequenceOrChoice, maxOccurs, fatherElementName, eleme
                     })
                 else:
                     elements.append({
-                        'name': to_camel_case(element_name),
+                        'name': to_camel_case(element_name)+'s',
                         'type': 'ArrayList<{}>'.format(to_pascal_case(element_name)),
                         'annotation': '@XmlElement(name="{}")'.format(element_name)
                         # 'annotation': '@XmlElementWrapper(name="{}")\n@XmlElement(name="{}")'.format(fatherElementName, element_name)

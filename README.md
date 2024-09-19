@@ -1,4 +1,4 @@
-对比文件发现生成的list的属性名不能直接用现在的规则，用更上层element的name?, 对比一下不是用插件生成的原始类
+对比文件发现生成的list的属性名不能直接用现在的规则，用更上层element的name?, 对比一下不是用插件生成的原始类--------->如果是只有一个element的list，变量名用上层element的name---多个的，上面element不能用作name
 
 9.12 @xmlElementWrapper还没生成
 xsd文件各厂商实现不一，用户具体需求不一样，jaxb生成规则不能满足需求，以autosar为例，，，，，
@@ -8,6 +8,7 @@ xsd文件各厂商实现不一，用户具体需求不一样，jaxb生成规则�
 9.8 两个调用group ref的地方一直重复，怎么调用的，怎么传参数的？
 传的参数有问题？测试用例改为simpleTest，注掉了choiceref
 task：重新捋一遍逻辑，看为什么一直调用它
+
 一直处理group: SW-VARIABLE-REF-PROXY，这个是choice下的group ref，考虑把所有逻辑抽出来单独放在这个类，不调用其他函数
 9.3 没必要list<object>，直接拆开，以前就是这么写的
 

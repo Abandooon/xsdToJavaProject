@@ -1,4 +1,5 @@
 #这里要运行两次，搭配第一次生成的wrapper文件修改返回值类型为wrapper
+#加个判断，如果生成的getter方法与构造同名，则改一下构造方法的参数名，不然会报错
 import os
 import re
 import logging

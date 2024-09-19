@@ -36,7 +36,7 @@ def process_choiceRef(root, refName, maxOccurs, element_wrapper, element_name, d
                         else:
                             element_type = mapXsdTypeToJava(element_type.split(':')[-1], context='group')
                             elements.append({
-                                'name': to_camel_case(element_name),
+                                'name': to_camel_case(element_name)+'s',
                                 'type': 'ArrayList<{}>'.format(element_type),
                                 'annotation': '@XmlElement(name="{}")'.format(element_name)
                             })
@@ -49,7 +49,7 @@ def process_choiceRef(root, refName, maxOccurs, element_wrapper, element_name, d
                             })
                         else:
                             elements.append({
-                                'name': to_camel_case(element_name),
+                                'name': to_camel_case(element_name)+'s',
                                 'type': 'ArrayList<{}>'.format(to_pascal_case(element_name)),
                                 'annotation': '@XmlElement(name="{}")'.format(element_name)
                             })

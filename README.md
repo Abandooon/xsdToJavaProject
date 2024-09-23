@@ -1,3 +1,6 @@
+如果开启wrapper则判断内部类element数量，为1则添加wrapper注解，若同时开启wrapper和内部类，则只有一个element的内部类嵌套内部类只生成里层的类
+如果开启extractinnerClass则提取内部类----没有写重名情况的代码
+
 对比文件发现生成的list的属性名不能直接用现在的规则，用更上层element的name?, 对比一下不是用插件生成的原始类--------->如果是只有一个element的list，变量名用上层element的name---多个的，上面element不能用作name
 
 9.12 @xmlElementWrapper还没生成

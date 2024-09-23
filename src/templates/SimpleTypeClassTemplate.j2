@@ -10,7 +10,7 @@ public enum {{ className }} {
 
     {% for enum in enumerations %}
     @XmlEnumValue("{{ enum }}")
-    {{ enum.replace('-', '_').upper() }}("{{ enum }}"){% if not loop.last %},{% endif %};
+    {{ enum.replace('-', '_').upper() }}("{{ enum }}"){% if not loop.last %},{% endif %}
     {% endfor %}
 
     private final java.lang.String value;

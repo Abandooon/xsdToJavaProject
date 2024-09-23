@@ -10,6 +10,7 @@ def process_complex_type(complexType, root, element_wrapper, groups, attributeGr
         return None  # 跳过没有名称的复杂类型-----内部类名定义在element
     attributes = []  # 初始化列表，用于存储复杂类型的属性
     extends = None
+    inner_classes = []
     # print(f"Processing complexType: {name}")
 
     # 处理扩展simpleContent
@@ -53,7 +54,6 @@ def process_complex_type(complexType, root, element_wrapper, groups, attributeGr
                 })
 
     # 处理群组sequence下group
-    inner_classes = []
     sequence = complexType.find("./{http://www.w3.org/2001/XMLSchema}sequence")
     if sequence is not None:
         for groupRef in sequence.findall("./{http://www.w3.org/2001/XMLSchema}group"):

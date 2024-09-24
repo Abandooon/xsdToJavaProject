@@ -11,6 +11,7 @@ from src.XsdParser.ExtractComplexType import extractComplexType
 from src.XsdParser.ExtractGroup import extractGroup
 from src.XsdParser.ExtractSimpleType import extractSimpleType
 from src.XsdParser.Utils import to_camel_case, to_pascal_case
+from src.XsdParser.Expansion.InternalClassExtractor import extract_internal_classes
 
 
 def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extract_inner_class):
@@ -27,7 +28,7 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
     simpleTypeClassTemplate = env.get_template('SimpleTypeClassTemplate.j2')
 
     # 解析XSD文件
-    xsdFile = os.path.join(input_dir, 'AUTOSAR_4-2-2_result.xsd')  # 指定XSD文件路径
+    xsdFile = os.path.join(input_dir, 'test.xsd')  # 指定XSD文件路径
     tree = etree.parse(xsdFile)  # 解析XSD文件为树结构
     root = tree.getroot()  # 获取XML的根节点
 
@@ -57,42 +58,48 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
             with open(outputPath, 'w') as file:
                 file.write(javaCode)  # 将生成的Java代码写入文件
 
-    # 生成复杂类型的Java代码
-    for complexType in complexTypes:
-        # 渲染主类的Java类模板
-        javaCode = complexTypeClassTemplate.render(
-            packageName=package_name,
-            className=to_pascal_case(complexType['name']),
-            extends=complexType['extends'],
-            attributes=complexType['attributes']
-        )
+    # 生成Java代码
+    if extract_inner_class:
+        for complexType in complexTypes:
+            main_class_name = to_pascal_case(complexType['name'])  # 定义主类名
+            extract_internal_classes(complexType, output_dir, package_name, complexTypeClassTemplate)
 
-        # 创建输出目录
-        outputDir = output_dir
-        os.makedirs(outputDir, exist_ok=True)
+            # 生成主类的Java代码，使用更新后的成员类型
+            javaCode = complexTypeClassTemplate.render(
+                packageName=package_name,
+                className=main_class_name,
+                extends=complexType['extends'],
+                attributes=complexType['attributes']
+            )
 
-        # 将主类生成到单独的Java文件中
-        outputPath = os.path.join(outputDir, f"{to_pascal_case(complexType['name'])}.java")
-        with open(outputPath, 'w') as file:
-            file.write(javaCode)  # 写入主类的Java代码
+            # 创建输出目录
+            os.makedirs(output_dir, exist_ok=True)
 
-        # 仅当 extract_inner_class 为 True 时处理并生成每个内部类
-        if extract_inner_class:
-            for inner_class in complexType['innerClasses']:
-                innerClassCode = complexTypeClassTemplate.render(
-                    packageName=package_name,
-                    className=to_pascal_case(inner_class['InnerClassName']),
-                    extends=inner_class['extendsClass'],
-                    attributes=inner_class['InnerClassAttributes']
-                )
-                # 内部类也要生成到独立的Java文件中
-                innerOutputPath = os.path.join(outputDir, f"{to_pascal_case(inner_class['InnerClassName'])}.java")
-                with open(innerOutputPath, 'w') as file:
-                    file.write(innerClassCode)
+            # 将主类生成到单独的Java文件中
+            outputPath = os.path.join(output_dir, f"{main_class_name}.java")
+            with open(outputPath, 'w') as file:
+                file.write(javaCode)  # 写入主类的Java代码
+    else:
+        for complexType in complexTypes:
+            javaCode = complexTypeClassTemplate.render(
+                packageName=package_name,
+                className=to_pascal_case(complexType['name']),
+                extends=complexType['extends'],
+                attributes=complexType['attributes'],  # 传递属性列表
+                innerClasses=complexType.get('innerClasses', [])  # 直接传递内部类列表
+                # rootElement=rootElement   #由dsl传递参数开启
+                # xmlType
+            )
+            outputDir = output_dir  # 指定输出目录
+            os.makedirs(outputDir, exist_ok=True)  # 创建输出目录（如果不存在）
+
+            # 设置Java文件的输出路径，文件名与类名一致
+            outputPath = os.path.join(outputDir, f"{to_pascal_case(complexType['name'])}.java")
+            with open(outputPath, 'w') as file:
+                file.write(javaCode)  # 将生成的Java代码写入文件
 
     end_time = time.time()  # 记录结束时间
     print(f"Java类生成总耗时: {end_time - start_time:.2f}秒")  # 打印耗时
-
 
 if __name__ == "__main__":
     dsl_file = 'config.dsl'

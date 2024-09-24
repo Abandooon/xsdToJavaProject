@@ -15,10 +15,15 @@ def parse_dsl(file_path):
                 match_bool = re.match(r'(\w+)\s*=\s*(true|false)', line.strip(), re.IGNORECASE)
                 if match_bool:
                     key, value = match_bool.groups()
-                    config[key] = value.lower() == 'true'
+                    config[key] = value.lower() == 'true'  # 转换为布尔值
                 # 处理没有单引号的字符串：例如 input_dir = input
                 match_no_quotes = re.match(r'(\w+)\s*=\s*([^\s]+)', line.strip())
                 if match_no_quotes:
                     key, value = match_no_quotes.groups()
                     config[key] = value
+
+    # 转换ExtractInnerClass为布尔值
+    if 'ExtractInnerClass' in config:
+        config['ExtractInnerClass'] = config['ExtractInnerClass'] == 'true'
+
     return config

@@ -7,7 +7,7 @@ from src.XsdParser.ExtractChoiceGroup import process_choiceRef
 from src.XsdParser.Utils import to_camel_case,to_pascal_case
 
 
-def process_group_inner_complex_type(root, element, element_wrapper, group_name):
+def process_group_inner_complex_type(root, element, element_wrapper):
     inner_complex_types = []  # 初始化列表，用于存储内部复杂类型信息
 
     # 查找 group 中的所有 element 标签
@@ -26,7 +26,9 @@ def process_group_inner_complex_type(root, element, element_wrapper, group_name)
                 # print(f"process_group_inner_complex_type group:{group_name}")
                 # 处理 complexType 中的 choice 标签------->嵌套内部类要继续返回出去，要根据maxoccurs处理element
                 choice = child
-                choice_elements, innerInnerClass, maxOccurs = process_choice(root, choice, element_name, element_wrapper, group_name)
+                #传入element_name，用于生成wrapper注解
+                #返回的是当前内部类的成员和内部类，应该进一步提取，先调试一步步往外提，还没处理嵌套内部类
+                choice_elements, innerInnerClass = process_choice(root, choice, element_name, element_wrapper)
                 attributes.extend(choice_elements)
             elif child.tag.endswith('simpleContent'):
                 # 处理simpleContent
@@ -64,25 +66,23 @@ def process_group_inner_complex_type(root, element, element_wrapper, group_name)
 
     return inner_complex_types  # 返回内部复杂类型信息列表
 
-def process_choice(root, choice, element_name, element_wrapper, group_name):
-    # print(f"process_choice called with element_name: {element_name}")
+#处理group中内部类的choice，传入上一级的element_name用于生成wrapper注解
+def process_choice(root, choice, element_name, element_wrapper):
     elements = []  # 初始化列表，用于存储choice中的元素
     innerClass = []
-    groups = {}
-    maxOccurs = choice.get('maxOccurs')   # --------->当前choice对应的maxoccurs，在这里获取的不是传进来的
+    maxOccurs = choice.get('maxOccurs')
 
     for child in choice:
         if child.tag.endswith('element'):
-            elements, innerClass = (process_choice_elements(root, choice, maxOccurs, element_name, element_wrapper, group_name))  # 处理choice中的元素，传入当前choice的maxoccurs和父element的name（wrapper注解名）
-            print(elements)
+            # 处理choice中的元素，传入当前choice的maxoccurs和父element的name（wrapper注解名）
+            elements, innerClass = (process_choice_elements(root, choice, maxOccurs, element_name, element_wrapper))
+            print(elements, innerClass)
             #或者直接改这里？从处理好的里面提取，然后把内部类置空-------不行，这里的elements已经是内部类名了，应该从里面改
         elif child.tag.endswith('group'):  # element和group没有同时存在，choice下为group的只有两个
             refName = child.get('ref').split(':')[-1]
-            #判断条件？参数有问题？怎么一直传element-----process_choiceRef SW-COMPARISON-VARIABLES
-            # print(f"element-----process_choiceRef {element_name}")
             elements, innerClass = process_choiceRef(root, refName, maxOccurs, element_wrapper, element_name)
 
-    return elements, innerClass, maxOccurs  # 返回元素列表
+    return elements, innerClass  # 返回元素列表
 
 
 

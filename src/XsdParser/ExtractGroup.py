@@ -10,10 +10,6 @@ def extractGroup(root, element_wrapper):
     # 查找所有群组元素
     for group in root.findall(".//{http://www.w3.org/2001/XMLSchema}group"):
         group_name = group.get('name')
-        #同一个要点好几次----》这里面的有调用自身的？ 递归了？
-        elements = []
-        inner_classes = []
-
         accumulated_elements = []
         accumulated_inner_classes = []
 
@@ -21,7 +17,7 @@ def extractGroup(root, element_wrapper):
             if child.tag.endswith('sequence'):
                 sequence = child
                 if sequence is not None:
-                    elements, inner_classes = process_elements(root, sequence, '1', None, element_wrapper, group_name)
+                    elements, inner_classes = process_elements(root, sequence, '1', element_wrapper)
                     accumulated_elements.extend(elements)
                     accumulated_inner_classes.extend(inner_classes)
             elif child.tag.endswith('choice'):
@@ -31,7 +27,7 @@ def extractGroup(root, element_wrapper):
 
                 elementsObj = innerChoice.findall("./{http://www.w3.org/2001/XMLSchema}element")
                 if elementsObj is not None:
-                    elements, inner_classes = process_elements(root, innerChoice, maxOccurs, None, element_wrapper, group_name)
+                    elements, inner_classes = process_elements(root, innerChoice, maxOccurs, element_wrapper)
                     accumulated_elements.extend(elements)
                     accumulated_inner_classes.extend(inner_classes)
 
@@ -55,50 +51,47 @@ def extractGroup(root, element_wrapper):
 
     return groups
 
-
-def process_elements(root, sequenceOrChoice, maxOccurs, fatherElementName, element_wrapper, group_name):
+#处理group里面的element
+#如果开启了wrapper，应该从内部类中提取出内部类的element放到这里，相当于直接type=
+def process_elements(root, sequenceOrChoice, maxOccurs, element_wrapper):
     elements = []
     inner_classes = []
     for element in sequenceOrChoice.findall("./{http://www.w3.org/2001/XMLSchema}element"):
         element_name = element.get('name')  # 获取元素名称
-        element_type = element.get('type')  # 获取元素类型-----》没有就是内部类
-
-        if element_wrapper == 'false':
-            if element_type:
-                if maxOccurs == '1':
-                    element_type = mapXsdTypeToJava(element_type.split(':')[-1], context='group')  # 将类型映射为Java类型
-                    elements.append({
-                        'name': to_camel_case(element_name),
-                        'type': element_type,
-                        'annotation': '@XmlElement(name="{}")'.format(element_name)
-                    })
-                else:
-                    element_type = mapXsdTypeToJava(element_type.split(':')[-1], context='group')  # 将类型映射为Java类型
-                    elements.append({
-                        'name': to_camel_case(element_name)+'s',
-                        'type': 'ArrayList<{}>'.format(element_type),
-                        'annotation': '@XmlElement(name="{}")'.format(element_name)
-                        # 'annotation': '@XmlElementWrapper(name="{}")\n@XmlElement(name="{}")'.format(fatherElementName, element_name)
-                    })
+        element_type = element.get('type')  # 获取元素类型-----》没有就是内部类，走到else里面
+        if element_type:
+            if maxOccurs == '1':
+                element_type = mapXsdTypeToJava(element_type.split(':')[-1], context='group')  # 将类型映射为Java类型
+                elements.append({
+                    'name': to_camel_case(element_name),
+                    'type': element_type,
+                    'annotation': '@XmlElement(name="{}")'.format(element_name)
+                })
             else:
-                # 这里就是生成内部类对应的字段------》嵌套内部类也要考虑list
-                if maxOccurs == '1':
-                    elements.append({
-                        'name': to_camel_case(element_name),
-                        'type': to_pascal_case(element_name),
-                        'annotation': '@XmlElement(name="{}")'.format(element_name)
-                    })
-                else:
-                    elements.append({
-                        'name': to_camel_case(element_name)+'s',
-                        'type': 'ArrayList<{}>'.format(to_pascal_case(element_name)),
-                        'annotation': '@XmlElement(name="{}")'.format(element_name)
-                        # 'annotation': '@XmlElementWrapper(name="{}")\n@XmlElement(name="{}")'.format(fatherElementName, element_name)
-                    })
-                # 处理内部的 complexType 并生成内部类
-                inner_complex_types = process_group_inner_complex_type(root, element, element_wrapper, group_name)  # 处理群组中的复杂类型，生成内部类
-                for inner_type in inner_complex_types:
-                    inner_classes.append(inner_type)  # 将内部类信息单独存储
+                element_type = mapXsdTypeToJava(element_type.split(':')[-1], context='group')  # 将类型映射为Java类型
+                elements.append({
+                    'name': to_camel_case(element_name)+'s',
+                    'type': 'ArrayList<{}>'.format(element_type),
+                    'annotation': '@XmlElement(name="{}")'.format(element_name)
+                })
+        else:
+            # 这里就是生成内部类对应的字段------》嵌套内部类也要考虑list
+            if maxOccurs == '1':
+                elements.append({
+                    'name': to_camel_case(element_name),
+                    'type': to_pascal_case(element_name),
+                    'annotation': '@XmlElement(name="{}")'.format(element_name)
+                })
+            else:
+                elements.append({
+                    'name': to_camel_case(element_name)+'s',
+                    'type': 'ArrayList<{}>'.format(to_pascal_case(element_name)),
+                    'annotation': '@XmlElement(name="{}")'.format(element_name)
+                })
+            # 处理内部的complexType并生成内部类
+            inner_complex_types = process_group_inner_complex_type(root, element, element_wrapper)  # 处理群组中的复杂类型，生成内部类
+            for inner_type in inner_complex_types:
+                inner_classes.append(inner_type)  # 将内部类信息单独存储
 
     return elements, inner_classes  # 返回元素列表
 def get_max_occurs(choice):

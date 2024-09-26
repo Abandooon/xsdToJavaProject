@@ -20,6 +20,7 @@ def process_group_inner_complex_type(root, element, element_wrapper):
         attributes = []  # 初始化列表，用于存储属性信息
         innerInnerClass = []
         extendsClass = None
+        wrapperElement = False
 
         for child in complex_type:
             if child.tag.endswith('choice'):
@@ -28,7 +29,7 @@ def process_group_inner_complex_type(root, element, element_wrapper):
                 choice = child
                 #传入element_name，用于生成wrapper注解
                 #返回的是当前内部类的成员和内部类，应该进一步提取，先调试一步步往外提，还没处理嵌套内部类
-                choice_elements, innerInnerClass = process_choice(root, choice, element_name, element_wrapper)
+                choice_elements, innerInnerClass, wrapperElement = process_choice(root, choice, element_name, element_wrapper)
                 attributes.extend(choice_elements)
             elif child.tag.endswith('simpleContent'):
                 # 处理simpleContent
@@ -64,25 +65,26 @@ def process_group_inner_complex_type(root, element, element_wrapper):
             'innerInnerClass': innerInnerClass
         })
 
-    return inner_complex_types  # 返回内部复杂类型信息列表
+    return inner_complex_types, wrapperElement  # 返回内部复杂类型信息列表
 
 #处理group中内部类的choice，传入上一级的element_name用于生成wrapper注解
 def process_choice(root, choice, element_name, element_wrapper):
     elements = []  # 初始化列表，用于存储choice中的元素
     innerClass = []
     maxOccurs = choice.get('maxOccurs')
+    wrapperElement = False
 
     for child in choice:
         if child.tag.endswith('element'):
             # 处理choice中的元素，传入当前choice的maxoccurs和父element的name（wrapper注解名）
-            elements, innerClass = (process_choice_elements(root, choice, maxOccurs, element_name, element_wrapper))
-            print(elements, innerClass)
+            elements, innerClass, wrapperElement = (process_choice_elements(root, choice, maxOccurs, element_name, element_wrapper))
+
             #或者直接改这里？从处理好的里面提取，然后把内部类置空-------不行，这里的elements已经是内部类名了，应该从里面改
         elif child.tag.endswith('group'):  # element和group没有同时存在，choice下为group的只有两个
             refName = child.get('ref').split(':')[-1]
             elements, innerClass = process_choiceRef(root, refName, maxOccurs, element_wrapper, element_name)
 
-    return elements, innerClass  # 返回元素列表
+    return elements, innerClass, wrapperElement  # 返回元素列表
 
 
 

@@ -57,10 +57,14 @@ def process_elements(root, sequenceOrChoice, maxOccurs, element_wrapper):
     elements = []
     inner_classes = []
     for element in sequenceOrChoice.findall("./{http://www.w3.org/2001/XMLSchema}element"):
+        if element.get('maxOccurs') !='1':
+            maxOccurs = element.get('maxOccurs')
+            # print(maxOccurs)
         element_name = element.get('name')  # 获取元素名称
         element_type = element.get('type')  # 获取元素类型-----》没有就是内部类，走到else里面
+        wrapperElement = False
         if element_type:
-            if maxOccurs == '1':
+            if maxOccurs == "1":
                 element_type = mapXsdTypeToJava(element_type.split(':')[-1], context='group')  # 将类型映射为Java类型
                 elements.append({
                     'name': to_camel_case(element_name),
@@ -75,28 +79,41 @@ def process_elements(root, sequenceOrChoice, maxOccurs, element_wrapper):
                     'annotation': '@XmlElement(name="{}")'.format(element_name)
                 })
         else:
+            #加了wrapperelement参数没有走到里面，重新设计参数调用逻辑
             # 这里就是生成内部类对应的字段------》嵌套内部类也要考虑list
+            inner_complex_types, wrapperElement = process_group_inner_complex_type(root, element,
+                                                                                   element_wrapper)  # 处理群组中的复杂类型，生成内部类
+            #这里是内部类上层的element，为1才生成wrapper，不然他本身就是list
             if maxOccurs == '1':
-                elements.append({
-                    'name': to_camel_case(element_name),
-                    'type': to_pascal_case(element_name),
-                    'annotation': '@XmlElement(name="{}")'.format(element_name)
-                })
+                if wrapperElement:
+                    for inner_type in inner_complex_types:
+                        for attr in inner_type.get('InnerClassAttributes'):
+                            elements.append({
+                                'name': attr.get('name'),
+                                'type': attr.get('type'),
+                                'annotation': attr.get('annotation')
+                            })
+                        for innerInnerClass in inner_type.get('innerInnerClass'):
+                            inner_classes.append(innerInnerClass)
+                    # print(inner_complex_types)
+                else:
+                    elements.append({
+                        'name': to_camel_case(element_name),
+                        'type': to_pascal_case(element_name),
+                        'annotation': '@XmlElement(name="{}")'.format(element_name)
+                    })
+                    # 处理内部的complexType并生成内部类
+                    for inner_type in inner_complex_types:
+                        inner_classes.append(inner_type)  # 将内部类信息单独存储
             else:
                 elements.append({
-                    'name': to_camel_case(element_name)+'s',
+                    'name': to_camel_case(element_name) + 's',
                     'type': 'ArrayList<{}>'.format(to_pascal_case(element_name)),
                     'annotation': '@XmlElement(name="{}")'.format(element_name)
                 })
-            # 处理内部的complexType并生成内部类
-            inner_complex_types = process_group_inner_complex_type(root, element, element_wrapper)  # 处理群组中的复杂类型，生成内部类
-            for inner_type in inner_complex_types:
-                inner_classes.append(inner_type)  # 将内部类信息单独存储
+                # 处理内部的complexType并生成内部类
+                for inner_type in inner_complex_types:
+                    inner_classes.append(inner_type)  # 将内部类信息单独存储
 
     return elements, inner_classes  # 返回元素列表
-def get_max_occurs(choice):
-    max_occurs = choice.get('maxOccurs')
-    if max_occurs is None:
-        return '1'  # 默认值为 1
-    return max_occurs
 

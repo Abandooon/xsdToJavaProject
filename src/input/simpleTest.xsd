@@ -59,10 +59,11 @@
           </xsd:simpleContent>
         </xsd:complexType>
       </xsd:element>
-      <xsd:element maxOccurs="1" minOccurs="0" name="IS-REENTRANT" type="AR:BOOLEAN"/>
+      <xsd:element maxOccurs="2" minOccurs="0" name="IS-REENTRANT" type="AR:BOOLEAN"/>
       <xsd:element maxOccurs="1" minOccurs="0" name="IS-SYNCHRONOUS" type="AR:BOOLEAN"/>
     </xsd:sequence>
   </xsd:group>
+  
   <xsd:group name="FLAT-MAP">
     <xsd:sequence>
       <xsd:element maxOccurs="1" minOccurs="0" name="ALL-CHANNELS-REFS">

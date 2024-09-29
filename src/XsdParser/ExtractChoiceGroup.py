@@ -3,14 +3,10 @@ from src.XsdParser.TypeMapping import mapXsdTypeToJava
 from src.XsdParser.Utils import to_camel_case, to_pascal_case
 
 
-def process_choiceRef(root, refName, maxOccurs, element_wrapper, element_name, depth=0):
-    if depth > 10:  # 递归深度限制，防止无限递归
-        print(f"Error: Recursion depth limit reached when processing group {refName}")
-        return [], []
+def process_choiceRef(root, refName, maxOccurs, element_wrapper):
 
     for group in root.findall(".//{http://www.w3.org/2001/XMLSchema}group"):
         if group.get('name') == refName:
-            print(f"Processing choiceGroupRef: {refName}, Depth: {depth}")  # 打印处理的群组名称和深度
             sequence = group.find("./{http://www.w3.org/2001/XMLSchema}sequence")
 
             if sequence is None:
@@ -24,7 +20,7 @@ def process_choiceRef(root, refName, maxOccurs, element_wrapper, element_name, d
                 element_name = element.get('name')  # 获取元素名称
                 element_type = element.get('type')  # 获取元素类型
 
-                if element_wrapper == 'false':
+                if not element_wrapper:
                     if element_type:
                         if maxOccurs == '1':
                             element_type = mapXsdTypeToJava(element_type.split(':')[-1], context='group')
@@ -41,6 +37,7 @@ def process_choiceRef(root, refName, maxOccurs, element_wrapper, element_name, d
                                 'annotation': '@XmlElement(name="{}")'.format(element_name)
                             })
                     else:
+                        # 不开启wrapper，内部类
                         if maxOccurs == '1':
                             elements.append({
                                 'name': to_camel_case(element_name),
@@ -112,7 +109,7 @@ def process_choiceRef(root, refName, maxOccurs, element_wrapper, element_name, d
                             })
                         for inner_type in inner_complex_types:
                             inner_classes.append(inner_type)
-
+                else:
+                    print("开启wrapper（choice ref）")
             return elements, inner_classes
-    print(f"Error: choiceGroupRef '{refName}' not found in the XML schema at depth {depth}.")
     return [], []

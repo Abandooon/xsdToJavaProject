@@ -28,7 +28,7 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
     simpleTypeClassTemplate = env.get_template('SimpleTypeClassTemplate.j2')
 
     # 解析XSD文件
-    xsdFile = os.path.join(input_dir, 'test.xsd')  # 指定XSD文件路径
+    xsdFile = os.path.join(input_dir, 'simpleTest.xsd')  # 指定XSD文件路径
     tree = etree.parse(xsdFile)  # 解析XSD文件为树结构
     root = tree.getroot()  # 获取XML的根节点
 
@@ -114,9 +114,8 @@ if __name__ == "__main__":
     input_dir = config.get('input_dir')
     output_dir = config.get('output_dir')
     package_name = config.get('package_name')
-    element_wrapper = config.get('element_wrapper')
-
-    # 从DSL配置中读取 ExtractInnerClass 参数，默认值为 False
+    #默认为false
+    element_wrapper = config.get('element_wrapper', False)
     extract_inner_class = config.get('ExtractInnerClass', False)
 
     # 调用生成Java类的函数

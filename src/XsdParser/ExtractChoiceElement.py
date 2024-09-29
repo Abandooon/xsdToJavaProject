@@ -24,7 +24,7 @@ def process_choice_elements(root, choice, maxOccurs, fatherElementName, element_
             element_type = single_element.get('type')
             element_type = mapXsdTypeToJava(element_type.split(':')[-1], context='group')  # 将类型映射为Java类型
             elements.append({
-                'name': to_camel_case(element_name) + 's',
+                'name': to_camel_case(element_name),
                 'type': 'ArrayList<{}>'.format(element_type), #现在还是存在内部类中的，应该在外层提取到主类中
                 # 'annotation': '@XmlElement(name="{}")'.format(element_name)
                 'annotation': '@XmlElementWrapper(name="{}")\n@XmlElement(name="{}")'.format(fatherElementName, element_name)
@@ -34,7 +34,7 @@ def process_choice_elements(root, choice, maxOccurs, fatherElementName, element_
             element_name = single_element.get('name')
             complex_type = single_element.find("./{http://www.w3.org/2001/XMLSchema}complexType")
             elements.append({
-                'name': to_camel_case(element_name) + 's',
+                'name': to_camel_case(element_name),
                 'type': 'ArrayList<{}>'.format(to_pascal_case(element_name)),
                 # 'annotation': '@XmlElement(name="{}")'.format(element_name)
                 'annotation': '@XmlElementWrapper(name="{}")\n@XmlElement(name="{}")'.format(fatherElementName,
@@ -97,7 +97,7 @@ def process_choice_elements(root, choice, maxOccurs, fatherElementName, element_
                 else:
                     element_type = mapXsdTypeToJava(element_type.split(':')[-1], context='group')  # 将类型映射为Java类型
                     elements.append({
-                        'name': to_camel_case(element_name) + 's',
+                        'name': to_camel_case(element_name),
                         'type': 'ArrayList<{}>'.format(element_type),
                         'annotation': '@XmlElement(name="{}")'.format(element_name)
                         # 'annotation': '@XmlElementWrapper(name="{}")\n@XmlElement(name="{}")'.format(fatherElementName, element_name)
@@ -112,7 +112,7 @@ def process_choice_elements(root, choice, maxOccurs, fatherElementName, element_
                     })
                 else:
                     elements.append({
-                        'name': to_camel_case(element_name) + 's',
+                        'name': to_camel_case(element_name),
                         'type': 'ArrayList<{}>'.format(to_pascal_case(element_name)),
                         'annotation': '@XmlElement(name="{}")'.format(element_name)
                         # 'annotation': '@XmlElementWrapper(name="{}")\n@XmlElement(name="{}")'.format(fatherElementName, element_name)

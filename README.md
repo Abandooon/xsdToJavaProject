@@ -1,3 +1,5 @@
+SDG-CONTENTS里面的SW-VARIABLE-REFS类型多了s；把四个复杂类型里加同名的element内部类，两个相同两个不同对应四种情况做测试，是不是可以直接把主类的生成也放在InternalClassExtractor里面避免传主类信息的参数
+
 如果开启wrapper则判断内部类element数量，为1则添加wrapper注解，若同时开启wrapper和内部类，则只有一个element的内部类嵌套内部类只生成里层的类
 如果开启extractinnerClass则提取内部类----没有写重名情况的代码
 

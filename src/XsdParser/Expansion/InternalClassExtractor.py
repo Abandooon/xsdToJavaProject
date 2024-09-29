@@ -43,19 +43,18 @@ def extract_internal_classes(complexType, output_dir, package_name, class_templa
                     'rename_flag': False,
                     'inner_class_attributes': inner_class_attributes
                 })
-                new_inner_class_name = inner_class_name
-                inner_output_path = os.path.join(output_dir, f"{new_inner_class_name}.java")
+                inner_output_path = os.path.join(output_dir, f"{inner_class_name}.java")
 
                 # 渲染并写入内部类代码
                 new_inner_class_code = class_template.render(
                     packageName=package_name,
-                    className=new_inner_class_name,
+                    className=inner_class_name,
                     extends=inner_class['extendsClass'],
                     attributes=inner_class_attributes
                 )
                 with open(inner_output_path, 'w') as file:
                     file.write(new_inner_class_code)
-                inner_class_mapping[inner_class_name] = new_inner_class_name
+                print(f"inner_class_mapping: {inner_class_mapping}")
             else:
                 # （3）名字一样属性不匹配，设置重命名标记位为true并生成类文件
                 new_inner_class_name = f"{inner_class_name}_{main_class_name}"
@@ -93,6 +92,4 @@ def extract_internal_classes(complexType, output_dir, package_name, class_templa
             else:
                 break
         # 保存映射
-
-
     return inner_class_mapping

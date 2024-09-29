@@ -88,7 +88,7 @@ def process_complex_type(complexType, root, element_wrapper, groups, attributeGr
                 else:
                     for element in groups[refName]['elements']:
                         attributes.append({
-                            'name': element['name']+'s',
+                            'name': element['name'],
                             'type': 'ArrayList<{}>'.format(to_pascal_case(element['name'])),
                             'annotation': element['annotation'],
                         })

@@ -50,6 +50,13 @@
   <!-- element group for class BswInterfaces::BswModuleClientServerEntry -->
   <xsd:group name="BSW-MODULE-CLIENT-SERVER-ENTRY">
     <xsd:sequence>
+    <xsd:element maxOccurs="1" minOccurs="0" name="SW-VARIABLE-REFS">
+        <xsd:complexType>
+          <xsd:choice maxOccurs="unbounded" minOccurs="0">
+            <xsd:group ref="AR:SW-VARIABLE-REF-PROXY"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
       <xsd:element maxOccurs="1" minOccurs="0" name="ENCAPSULATED-ENTRY-REF">
         <xsd:complexType>
           <xsd:simpleContent>
@@ -168,6 +175,13 @@
             </xsd:simpleContent>
           </xsd:complexType>
         </xsd:element>
+        <xsd:element maxOccurs="1" minOccurs="0" name="SW-VARIABLE-REFS">
+        <xsd:complexType>
+          <xsd:choice maxOccurs="unbounded" minOccurs="0">
+            <xsd:group ref="AR:SW-VARIABLE-REF-PROXY"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
         <xsd:element name="SDXF" type="AR:REFERRABLE-REF-CONDITIONAL"/>
         <xsd:element name="SD" type="AR:SD"/>
         <xsd:element name="SDG" type="AR:SDG"/>

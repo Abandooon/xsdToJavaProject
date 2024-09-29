@@ -26,12 +26,17 @@ def extract_internal_classes(complexType, output_dir, package_name, class_templa
         # 检查全局列表中的内部类名
         is_duplicate = False
         rename_flag = False
+        other_main_name = None
         for info in inner_class_info_list:
             if info['inner_class_name'] == inner_class_name:
                 if info['inner_class_attributes'] == inner_class_attributes:
                     #有重复，不生成文件
                     is_duplicate = True
+                    #获取重命名标记位，为false则不修改主类；为true则修改主类
                     rename_flag = info['rename_flag']
+                    #如果重命名标记位为true，记录下该条匹配到的内部类主类名，用于修改当前主类成员
+                    if rename_flag:
+                        other_main_name = info['main_class_name']
                     break
                 else:
                     rename_flag = True
@@ -39,7 +44,7 @@ def extract_internal_classes(complexType, output_dir, package_name, class_templa
 
         if not is_duplicate:
             if not rename_flag:
-                # 没有匹配到，将信息存储到列表并生成类文件
+                # （1）第一次没有匹配到，将信息存储到列表并生成类文件
                 inner_class_info_list.append({
                     'inner_class_name': inner_class_name,
                     'main_class_name': main_class_name,
@@ -59,7 +64,7 @@ def extract_internal_classes(complexType, output_dir, package_name, class_templa
                 with open(inner_output_path, 'w') as file:
                     file.write(new_inner_class_code)
             else:
-                # 属性不匹配，设置重命名标记位为true并生成类文件
+                # （3）名字一样属性不匹配，设置重命名标记位为true并生成类文件
                 new_inner_class_name = f"{inner_class_name}_{main_class_name}"
                 inner_class_info_list.append({
                     'inner_class_name': inner_class_name,
@@ -83,15 +88,15 @@ def extract_internal_classes(complexType, output_dir, package_name, class_templa
                     if attribute['type'] == inner_class_name:
                         attribute['type'] = new_inner_class_name
         else:
+            #（4）不生成内部类文件，如果重命名标记位为true修改主类，修改为匹配到的内部类主类名
             if rename_flag:
-                print(f"Inner class {inner_class_name} has been renamed")
-            else:
-                # 属性匹配且重命名标记位为true，更新主类中的成员类型
-                new_inner_class_name = f"{inner_class_name}_{main_class_name}"
+                new_inner_class_name = f"{inner_class_name}_{other_main_name}"
                 for attribute in complexType['attributes']:
                     if attribute['type'] == inner_class_name:
                         attribute['type'] = new_inner_class_name
-
+            #（2）不生成内部类文件，如果重命名标记位为false不修改主类
+            else:
+                break
         # 保存映射
         inner_class_mapping[inner_class_name] = new_inner_class_name
 

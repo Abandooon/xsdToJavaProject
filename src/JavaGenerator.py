@@ -12,6 +12,7 @@ from src.XsdParser.ExtractGroup import extractGroup
 from src.XsdParser.ExtractSimpleType import extractSimpleType
 from src.XsdParser.Utils import to_camel_case, to_pascal_case
 from src.XsdParser.Expansion.InternalClassExtractor import extract_internal_classes
+from src.XsdParser.Expansion.InnerInnerExtractor import extract_internals_classes
 
 
 def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extract_inner_class):
@@ -61,30 +62,9 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
     # 生成Java代码
     if extract_inner_class:
         for complexType in complexTypes:
-            main_class_name = to_pascal_case(complexType['name'])  # 定义主类名
-            inner_class_mapping = extract_internal_classes(complexType, output_dir, package_name,
-                                                           complexTypeClassTemplate)
+            # extract_internal_classes(complexType, output_dir, package_name, complexTypeClassTemplate)
+            extract_internals_classes(complexType, output_dir, package_name, complexTypeClassTemplate)
 
-            # 更新主类的属性类型
-            for attribute in complexType['attributes']:
-                if attribute['type'] in inner_class_mapping:
-                    attribute['type'] = inner_class_mapping[attribute['type']]
-
-            # 生成主类的Java代码，使用更新后的成员类型
-            javaCode = complexTypeClassTemplate.render(
-                packageName=package_name,
-                className=main_class_name,
-                extends=complexType['extends'],
-                attributes=complexType['attributes']
-            )
-
-            # 创建输出目录
-            os.makedirs(output_dir, exist_ok=True)
-
-            # 将主类生成到单独的Java文件中
-            outputPath = os.path.join(output_dir, f"{main_class_name}.java")
-            with open(outputPath, 'w') as file:
-                file.write(javaCode)
     else:
         for complexType in complexTypes:
             javaCode = complexTypeClassTemplate.render(

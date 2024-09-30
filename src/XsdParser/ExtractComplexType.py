@@ -89,7 +89,7 @@ def process_complex_type(complexType, root, element_wrapper, groups, attributeGr
                     for element in groups[refName]['elements']:
                         attributes.append({
                             'name': element['name'],
-                            'type': 'ArrayList<{}>'.format(to_pascal_case(element['name'])),
+                            'type': element['type'],
                             'annotation': element['annotation'],
                         })
                     inner_classes.extend(groups[refName]['innerClasses'])

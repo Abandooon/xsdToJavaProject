@@ -50,13 +50,6 @@
   <!-- element group for class BswInterfaces::BswModuleClientServerEntry -->
   <xsd:group name="BSW-MODULE-CLIENT-SERVER-ENTRY">
     <xsd:sequence>
-    <xsd:element maxOccurs="1" minOccurs="0" name="SW-VARIABLE-REFS">
-        <xsd:complexType>
-          <xsd:choice maxOccurs="unbounded" minOccurs="0">
-            <xsd:group ref="AR:SW-VARIABLE-REF-PROXY"/>
-          </xsd:choice>
-        </xsd:complexType>
-      </xsd:element>
       <xsd:element maxOccurs="1" minOccurs="0" name="ENCAPSULATED-ENTRY-REF">
         <xsd:complexType>
           <xsd:simpleContent>
@@ -108,6 +101,15 @@
 
  <xsd:group name="SW-AXIS-INDIVIDUAL">
     <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="0" name="ENCAPSULATED-ENTRY-REF">
+        <xsd:complexType>
+          <xsd:simpleContent>
+            <xsd:extension base="AR:REF">
+              <xsd:attribute name="DEST" type="AR:BSW-MODULE-ENTRY--SUBTYPES-ENUM" use="required"/>
+            </xsd:extension>
+          </xsd:simpleContent>
+        </xsd:complexType>
+      </xsd:element>
       <xsd:element maxOccurs="1" minOccurs="0" name="SW-VARIABLE-REFS">
         <xsd:complexType>
           <xsd:choice maxOccurs="unbounded" minOccurs="0">
@@ -126,7 +128,20 @@
       </xsd:element>
     </xsd:sequence>
   </xsd:group>
-
+  <!-- element group for class Identifiable::ShortNameFragment -->
+  <xsd:group name="SHORT-NAME-FRAGMENT">
+    <xsd:sequence>
+      <xsd:element maxOccurs="1" minOccurs="0" name="ROLE" type="AR:STRING"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- complex type for class Identifiable::ShortNameFragment -->
+  <xsd:complexType abstract="false" mixed="false" name="SHORT-NAME-FRAGMENT">
+    <xsd:sequence>
+      <xsd:group ref="AR:AR-OBJECT"/>
+      <xsd:group ref="AR:SHORT-NAME-FRAGMENT"/>
+    </xsd:sequence>
+    <xsd:attributeGroup ref="AR:AR-OBJECT"/>
+  </xsd:complexType>
   <!-- complex type for class BswInterfaces::BswModuleClientServerEntry -->
   <xsd:complexType abstract="false" mixed="false" name="SW-AXIS-INDIVIDUAL">
     <xsd:sequence>
@@ -175,13 +190,15 @@
             </xsd:simpleContent>
           </xsd:complexType>
         </xsd:element>
-        <xsd:element maxOccurs="1" minOccurs="0" name="SW-VARIABLE-REFS">
-        <xsd:complexType>
-          <xsd:choice maxOccurs="unbounded" minOccurs="0">
-            <xsd:group ref="AR:SW-VARIABLE-REF-PROXY"/>
-          </xsd:choice>
-        </xsd:complexType>
-      </xsd:element>
+        <xsd:element maxOccurs="1" minOccurs="0" name="ENCAPSULATED-ENTRY-REF">
+          <xsd:complexType>
+            <xsd:simpleContent>
+              <xsd:extension base="AR:REF">
+               <xsd:attribute name="DEST" type="AR:MC-DATA-INSTANCE--SUBTYPES-ENUM" use="required"/>
+              </xsd:extension>
+            </xsd:simpleContent>
+          </xsd:complexType>
+        </xsd:element>
         <xsd:element name="SDXF" type="AR:REFERRABLE-REF-CONDITIONAL"/>
         <xsd:element name="SD" type="AR:SD"/>
         <xsd:element name="SDG" type="AR:SDG"/>
@@ -197,5 +214,24 @@
     </xsd:choice>
     <xsd:attributeGroup ref="AR:AR-OBJECT"/>
   </xsd:complexType>
-
+  <xsd:complexType abstract="false" mixed="false" name="SDG-CONTENTS-TEST">
+    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+      <xsd:group ref="AR:SDG-CONTENTS-TEST"/>
+    </xsd:choice>
+  </xsd:complexType>
+  <xsd:group name="SDG-CONTENTS-TEST">
+    <xsd:choice>
+      <xsd:choice maxOccurs="unbounded" minOccurs="0">
+        <xsd:element maxOccurs="1" minOccurs="0" name="ENCAPSULATED-ENTRY-REF">
+          <xsd:complexType>
+            <xsd:simpleContent>
+              <xsd:extension base="AR:REF">
+               <xsd:attribute name="DEST" type="AR:MC-DATA-INSTANCE--SUBTYPES-ENUM" use="required"/>
+              </xsd:extension>
+            </xsd:simpleContent>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:choice>
+    </xsd:choice>
+  </xsd:group>
 </xsd:schema>

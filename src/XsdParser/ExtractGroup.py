@@ -16,6 +16,7 @@ def extractGroup(root, element_wrapper):
         for child in group:
             if child.tag.endswith('sequence'):
                 sequence = child
+                #在这里处理elements和choice group ref
                 if sequence is not None:
                     elements, inner_classes = process_elements(root, sequence, '1', element_wrapper)
                     accumulated_elements.extend(elements)
@@ -37,8 +38,7 @@ def extractGroup(root, element_wrapper):
                         innerMaxOccurs = innerInnerChoice.get('maxOccurs')
                         group = innerInnerChoice.find("./{http://www.w3.org/2001/XMLSchema}group")
                         refName = group.get('ref').split(':')[-1]
-                        #添加打印，另一个调用的地方也打印，找到是哪个地方循环引用
-                        # print(f"group------process_choiceRef {group_name}")
+                        #传入引用的group名，返回该group中的elements
                         elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs, element_wrapper)
                         accumulated_elements.extend(elements)
                         accumulated_inner_classes.extend(inner_classes)

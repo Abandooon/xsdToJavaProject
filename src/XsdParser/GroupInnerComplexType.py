@@ -82,7 +82,7 @@ def process_choice(root, choice, element_name, element_wrapper):
             #或者直接改这里？从处理好的里面提取，然后把内部类置空-------不行，这里的elements已经是内部类名了，应该从里面改
         elif child.tag.endswith('group'):  # element和group没有同时存在，choice下为group的只有两个
             refName = child.get('ref').split(':')[-1]
-            elements, innerClass = process_choiceRef(root, refName, maxOccurs, element_wrapper)
+            elements, innerClass = process_choiceRef(root, refName, maxOccurs)
 
     return elements, innerClass, wrapperElement  # 返回元素列表
 

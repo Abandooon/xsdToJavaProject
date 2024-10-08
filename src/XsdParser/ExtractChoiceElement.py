@@ -9,9 +9,9 @@ def process_choice_elements(root, choice, maxOccurs, fatherElementName, element_
     #设置wrapperelement记录当前内部类是否生成wrapper，若是则要改主类element且不生成内部类
     wrapperElement = False
     #判断有几个element,如果只有一个且choice为unbounded且开启了wrapper，不生成内部类，直接把list<>放到主类中，注解加wrapper
-    print("Count:", len(choice.findall("./{http://www.w3.org/2001/XMLSchema}element")))
-    print("maxOccurs:", maxOccurs)
-    print("element_wrapper:", element_wrapper)
+    # print("Count:", len(choice.findall("./{http://www.w3.org/2001/XMLSchema}element")))
+    # print("maxOccurs:", maxOccurs)
+    # print("element_wrapper:", element_wrapper)
 
     if len(choice.findall(
             "./{http://www.w3.org/2001/XMLSchema}element")) == 1 and maxOccurs != '1' and element_wrapper:

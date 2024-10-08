@@ -20,6 +20,7 @@ def process_choiceRef(root, refName, maxOccurs, element_wrapper):
                 element_name = element.get('name')  # 获取元素名称
                 element_type = element.get('type')  # 获取元素类型
 
+                #在这里就判断wrapper对吗，应该再进去一点只看group ref吧？
                 if not element_wrapper:
                     if element_type:
                         if maxOccurs == '1':
@@ -63,15 +64,6 @@ def process_choiceRef(root, refName, maxOccurs, element_wrapper):
                             attributes = []  # 初始化列表，用于存储属性信息
                             innerInnerClass = []
                             extendsClass = None
-
-                            # 处理 complexType 中的 choice 标签------->嵌套内部类要继续返回出去，要根据maxoccurs处理element
-                            # for choice in complex_type.findall("./{http://www.w3.org/2001/XMLSchema}choice"):
-                            #     choice_elements, innerInnerClass, maxOccurs = process_choice(root, choice, element_name,
-                            #                                                                  element_wrapper)
-                            #     # if maxOccurs == '1':
-                            #     attributes.extend(choice_elements)
-                            #     # elif:  ------->可以不在这里处理，在element那里处理注解，把max参数传到模板处理list
-
                             # 处理simpleContent
                             simple_content = complex_type.find("./{http://www.w3.org/2001/XMLSchema}simpleContent")
                             if simple_content is not None:
@@ -111,5 +103,6 @@ def process_choiceRef(root, refName, maxOccurs, element_wrapper):
                             inner_classes.append(inner_type)
                 else:
                     print("开启wrapper（choice ref）")
+                    #修改这里--------应该预留group ref引到的只有一个的逻辑
             return elements, inner_classes
     return [], []

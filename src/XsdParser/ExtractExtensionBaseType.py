@@ -1,6 +1,6 @@
 from src.XsdParser.TypeMapping import mapXsdTypeToJava
 from src.XsdParser.ExtractSimpleType import extractSimpleType
-from src.XsdParser.Utils import to_camel_case,to_pascal_case
+from src.XsdParser.Utils import to_pascal_case
 
 
 # 只处理扩展本身，不处理下面的标签

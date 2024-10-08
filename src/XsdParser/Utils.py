@@ -1,4 +1,6 @@
 import re
+
+
 #处理choice下的group ref，不能直接调用extract_group，否则会无限递归
 def to_pascal_case(snake_str):
     if not isinstance(snake_str, str):
@@ -14,3 +16,4 @@ def to_camel_case(snake_str):
 
     components = re.split('[-_]', snake_str)
     return components[0].lower() + ''.join(x.title() for x in components[1:])
+

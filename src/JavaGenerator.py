@@ -10,8 +10,7 @@ from src.XsdParser.ExtractAttributeGroup import extractAttributeGroup
 from src.XsdParser.ExtractComplexType import extractComplexType
 from src.XsdParser.ExtractGroup import extractGroup
 from src.XsdParser.ExtractSimpleType import extractSimpleType
-from src.XsdParser.Utils import to_camel_case, to_pascal_case
-from src.XsdParser.Expansion.InternalClassExtractor import extract_internal_classes
+from src.XsdParser.Utils import to_pascal_case
 from src.XsdParser.Expansion.InnerInnerExtractor import extract_internals_classes
 
 

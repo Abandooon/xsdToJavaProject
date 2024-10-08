@@ -16,11 +16,21 @@ def extractGroup(root, element_wrapper):
         for child in group:
             if child.tag.endswith('sequence'):
                 sequence = child
-                #在这里处理elements和choice group ref
-                if sequence is not None:
-                    elements, inner_classes = process_elements(root, sequence, '1', element_wrapper)
-                    accumulated_elements.extend(elements)
-                    accumulated_inner_classes.extend(inner_classes)
+                for sub_child in sequence:
+                    if sub_child.tag.endswith('element'):
+                        element = sub_child
+                        maxOccurs = element.get('maxOccurs')
+                        elements, inner_classes = process_elements(root, sequence, maxOccurs, element_wrapper)
+                        accumulated_elements.extend(elements)
+                        accumulated_inner_classes.extend(inner_classes)
+                    elif sub_child.tag.endswith('choice'):
+                        choice = sub_child
+                        innerMaxOccurs = choice.get('maxOccurs')
+                        group = choice.find("./{http://www.w3.org/2001/XMLSchema}group")
+                        refName = group.get('ref').split(':')[-1]
+                        elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs)
+                        accumulated_elements.extend(elements)
+                        accumulated_inner_classes.extend(inner_classes)
             elif child.tag.endswith('choice'):
                 choice = child
                 innerChoice = choice.find("./{http://www.w3.org/2001/XMLSchema}choice")
@@ -39,7 +49,7 @@ def extractGroup(root, element_wrapper):
                         group = innerInnerChoice.find("./{http://www.w3.org/2001/XMLSchema}group")
                         refName = group.get('ref').split(':')[-1]
                         #传入引用的group名，返回该group中的elements
-                        elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs, element_wrapper)
+                        elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs)
                         accumulated_elements.extend(elements)
                         accumulated_inner_classes.extend(inner_classes)
 

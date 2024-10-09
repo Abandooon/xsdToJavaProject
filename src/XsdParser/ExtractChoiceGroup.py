@@ -1,34 +1,37 @@
 from src.XsdParser.ExtractExtensionBaseType import extractBaseType
-from src.XsdParser.GroupInnerComplexType import process_group_inner_complex_type
 from src.XsdParser.TypeMapping import mapXsdTypeToJava
 from src.XsdParser.Utils import to_camel_case, to_pascal_case
-
-
-def process_choiceRef(root, refName, maxOccurs):
-
+def process_choiceRef(root, refName, maxOccurs,element_wrapper):
+    accumulated_elements = []
+    accumulated_inner_classes = []
     for group in root.findall(".//{http://www.w3.org/2001/XMLSchema}group"):
-        accumulated_elements = []
-        accumulated_inner_classes = []
         if group.get('name') == refName:
             for child in group:
-                #1.这里是group下的sequence中内部类的group ref对应逻辑（group 下choice没有sequence直接element）
-                if group.tag.endwith("sequence"):
+                # 1.这里是group下的sequence中内部类的group ref对应逻辑（group 下choice没有sequence直接element）
+                if group.tag.endswith("sequence"):
                     sequence = child
                     for sub_child in sequence:
-                        if sub_child.tag.endwith("element"):
+                        if sub_child.tag.endswith("element"):
                             element = sub_child
-                            maxOccurs = element.get('maxOccurs')
-                    elements, inner_classes = extract_element(root, sequence, maxOccurs)
-                    accumulated_elements.extend(elements)
-                    accumulated_inner_classes.extend(inner_classes)
-                    #下面是处理element的逻辑，相当于process_elements，避免了循环依赖
-
-                # elif group.tag.endwiths("element"):
-                elif group.tag.endwiths("choice"):
+                            maxOccurs = element.get('maxOccurs') or '1'
+                            elements, inner_classes = extract_element(root, sequence, maxOccurs,element_wrapper)
+                            accumulated_elements.extend(elements)
+                            accumulated_inner_classes.extend(inner_classes)
+                        # 2. sequence下choice，递归调用
+                        elif sub_child.tag.endswith("choice"):
+                            choice = sub_child
+                            innerMaxOccurs = choice.get('maxOccurs') or '1'
+                            group = choice.find("./{http://www.w3.org/2001/XMLSchema}group")
+                            refName = group.get('ref').split(':')[-1]
+                            elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs,element_wrapper)
+                            accumulated_elements.extend(elements)
+                            accumulated_inner_classes.extend(inner_classes)
+                # 3.嵌套choice下的，递归调用
+                elif group.tag.endswith("choice"):
                     choice = child
                     innerChoice = choice.find("./{http://www.w3.org/2001/XMLSchema}choice")
                     maxOccurs = innerChoice.get('maxOccurs')
-                    elements, inner_classes = extract_element(root, innerChoice, maxOccurs)
+                    elements, inner_classes = extract_element(root, innerChoice, maxOccurs,element_wrapper)
                     accumulated_elements.extend(elements)
                     accumulated_inner_classes.extend(inner_classes)
                     innerInnerChoices = innerChoice.findall("./{http://www.w3.org/2001/XMLSchema}choice")
@@ -37,14 +40,13 @@ def process_choiceRef(root, refName, maxOccurs):
                             innerMaxOccurs = innerInnerChoice.get('maxOccurs')
                             group = innerInnerChoice.find("./{http://www.w3.org/2001/XMLSchema}group")
                             refName = group.get('ref').split(':')[-1]
-                            elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs)
+                            elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs,element_wrapper)
                             elements.extend(elements)
                             inner_classes.extend(inner_classes)
-            return accumulated_elements, accumulated_inner_classes
-    return [], []
+    return accumulated_elements, accumulated_inner_classes
 
 #group ref的目的是提取引到的group中的element放到elements列表中，不需要做额外的事，对于group ref本身的操作已经在三个地方都写好了，只需提取element返回出去即可
-def extract_element(root, sequenceOrChoice, maxOccurs):
+def extract_element(root, sequenceOrChoice, maxOccurs,element_wrapper):
     elements = []
     inner_classes = []
     for element in sequenceOrChoice.findall("./{http://www.w3.org/2001/XMLSchema}element"):
@@ -79,7 +81,8 @@ def extract_element(root, sequenceOrChoice, maxOccurs):
                     'type': 'ArrayList<{}>'.format(to_pascal_case(element_name)),
                     'annotation': '@XmlElement(name="{}")'.format(element_name)
                 })
-            # inner_complex_types = process_group_inner_complex_type(root, element, element_wrapper)
+            from src.XsdParser.GroupInnerComplexType import process_group_inner_complex_type
+            inner_complex_types = process_group_inner_complex_type(root, element, element_wrapper)
             inner_complex_types = []  # 初始化列表，用于存储内部复杂类型信息
 
             # 查找 group 中的所有 element 标签
@@ -122,7 +125,6 @@ def extract_element(root, sequenceOrChoice, maxOccurs):
 
                 inner_complex_types.append({
                     'InnerClassName': inner_class_name,
-                    # 'annotation' : element_name,
                     'InnerClassAttributes': attributes,
                     'extendsClass': extendsClass,
                     'innerInnerClass': innerInnerClass

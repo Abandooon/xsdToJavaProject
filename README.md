@@ -1,27 +1,33 @@
+10.9 extractGroup里面的endswith判断不对，
 10.8 group ref的目的是提取引到的group中的element放到elements列表中，不需要做额外的事，对于group ref本身的操作已经在三个地方都写好了，只需提取element返回出去即可.
       对于引到的group中的element，不能调用process_elements否则会循环依赖，单独写extract_element。
-      三处group ref都调用extractchoicegroup,对里面element的处理调用extract_element，最终将引用到的group里面所有的element放到列表中返回出去，只要里面的element，如果有group ref，则递归调用，提取每个group的element
+     
+10.4 三处group ref都调用extractchoicegroup,对里面element的处理调用extract_element，最终将引用到的group里面所有的element放到列表中返回出去，只要里面的element
+     ，如果有group ref，则递归调用，提取每个group的element
 
+9.27 提取内部类
 
+9.24 实现wrapper
 
-SDG-CONTENTS里面的SW-VARIABLE-REFS类型多了s；把四个复杂类型里加同名的element内部类，两个相同两个不同对应四种情况做测试，是不是可以直接把主类的生成也放在InternalClassExtractor里面避免传主类信息的参数
+9.19 SDG-CONTENTS里面的SW-VARIABLE-REFS类型多了s；把四个复杂类型里加同名的element内部类，两个相同两个不同对应四种情况做测试，是不是可以直接把主类的生成也放在InternalClassExtractor里面避免传主类信息的参数
 
-如果开启wrapper则判断内部类element数量，为1则添加wrapper注解，若同时开启wrapper和内部类，则只有一个element的内部类嵌套内部类只生成里层的类
-如果开启extractinnerClass则提取内部类----没有写重名情况的代码
+     如果开启wrapper则判断内部类element数量，为1则添加wrapper注解，若同时开启wrapper和内部类，则只有一个element的内部类嵌套内部类只生成里层的类
+     如果开启extractinnerClass则提取内部类----没有写重名情况的代码
 
-对比文件发现生成的list的属性名不能直接用现在的规则，用更上层element的name?, 对比一下不是用插件生成的原始类--------->如果是只有一个element的list，变量名用上层element的name---多个的，上面element不能用作name
+     对比文件发现生成的list的属性名不能直接用现在的规则，用更上层element的name?, 对比一下不是用插件生成的原始类--------->如果是只有一个element的list，变量名用上层element的name---多个的，上面element不能用作name
 
 9.12 @xmlElementWrapper还没生成
-xsd文件各厂商实现不一，用户具体需求不一样，jaxb生成规则不能满足需求，以autosar为例，，，，，
+     xsd文件各厂商实现不一，用户具体需求不一样，jaxb生成规则不能满足需求，以autosar为例，，，，，
 
 9.11 把choice group ref取消注释，没有循环调用，但是性能不好
 
 9.8 两个调用group ref的地方一直重复，怎么调用的，怎么传参数的？
-传的参数有问题？测试用例改为simpleTest，注掉了choiceref
-task：重新捋一遍逻辑，看为什么一直调用它
+    传的参数有问题？测试用例改为simpleTest，注掉了choiceref
+    task：重新捋一遍逻辑，看为什么一直调用它
 
-一直处理group: SW-VARIABLE-REF-PROXY，这个是choice下的group ref，考虑把所有逻辑抽出来单独放在这个类，不调用其他函数
+    一直处理group: SW-VARIABLE-REF-PROXY，这个是choice下的group ref，考虑把所有逻辑抽出来单独放在这个类，不调用其他函数
 9.3 没必要list<object>，直接拆开，以前就是这么写的
+
 
 匹配标签正则式：<xsd:group name\b[^>]*>([\s\S]*?)<\/xsd:group>
 

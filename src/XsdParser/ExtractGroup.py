@@ -17,26 +17,30 @@ def extractGroup(root, element_wrapper):
             if child.tag.endswith('sequence'):
                 sequence = child
                 for sub_child in sequence:
-                    if sub_child.tag.endswith('element'):
-                        element = sub_child
-                        maxOccurs = element.get('maxOccurs')
-                        elements, inner_classes = process_elements(root, sequence, maxOccurs, element_wrapper)
-                        accumulated_elements.extend(elements)
-                        accumulated_inner_classes.extend(inner_classes)
-                    elif sub_child.tag.endswith('choice'):
-                        choice = sub_child
-                        innerMaxOccurs = choice.get('maxOccurs')
-                        group = choice.find("./{http://www.w3.org/2001/XMLSchema}group")
-                        refName = group.get('ref').split(':')[-1]
-                        elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs)
-                        accumulated_elements.extend(elements)
-                        accumulated_inner_classes.extend(inner_classes)
+                    print(sub_child.tag)
+                    # if sub_child.tag.endswith('element'):
+                    #     element = sub_child
+                    #     maxOccurs = element.get('maxOccurs') or '1'
+                    #     elements, inner_classes = process_elements(root, sequence, maxOccurs, element_wrapper)
+                    #     accumulated_elements.extend(elements)
+                    #     accumulated_inner_classes.extend(inner_classes)
+                    #如果是choice，就要找到引用的group，提取里面的element放到这里
+                    # if sub_child.tag.endswith('choice'):
+                    #     choice = sub_child
+                    #     innerMaxOccurs = choice.get('maxOccurs') or '1'
+                    #     group = choice.find("./{http://www.w3.org/2001/XMLSchema}group")
+                    #     refName = group.get('ref').split(':')[-1]
+                    #     elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs ,element_wrapper)
+                    #     accumulated_elements.extend(elements)
+                    #     accumulated_inner_classes.extend(inner_classes)
+            #1.直接提取element出来；2.找到引用的group提取element放到这里
             elif child.tag.endswith('choice'):
                 choice = child
                 innerChoice = choice.find("./{http://www.w3.org/2001/XMLSchema}choice")
                 maxOccurs = innerChoice.get('maxOccurs')
-
                 elementsObj = innerChoice.findall("./{http://www.w3.org/2001/XMLSchema}element")
+
+                #elementsObj仅用于判断有没有，process_elements传的是上级innerChoice，遍历所有element返回出来
                 if elementsObj is not None:
                     elements, inner_classes = process_elements(root, innerChoice, maxOccurs, element_wrapper)
                     accumulated_elements.extend(elements)
@@ -49,7 +53,7 @@ def extractGroup(root, element_wrapper):
                         group = innerInnerChoice.find("./{http://www.w3.org/2001/XMLSchema}group")
                         refName = group.get('ref').split(':')[-1]
                         #传入引用的group名，返回该group中的elements
-                        elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs)
+                        elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs,element_wrapper)
                         accumulated_elements.extend(elements)
                         accumulated_inner_classes.extend(inner_classes)
 
@@ -68,9 +72,9 @@ def process_elements(root, sequenceOrChoice, maxOccurs, element_wrapper):
     for element in sequenceOrChoice.findall("./{http://www.w3.org/2001/XMLSchema}element"):
         if element.get('maxOccurs') !='1':
             maxOccurs = element.get('maxOccurs')
-            # print(maxOccurs)
-        element_name = element.get('name')  # 获取元素名称
-        element_type = element.get('type')  # 获取元素类型-----》没有就是内部类，走到else里面
+
+        element_name = element.get('name')
+        element_type = element.get('type')  # 获取元素类型-----没有就是内部类，走到else里面
         wrapperElement = False
         if element_type:
             if maxOccurs == "1":
@@ -89,7 +93,7 @@ def process_elements(root, sequenceOrChoice, maxOccurs, element_wrapper):
                 })
         else:
             #加了wrapperelement参数没有走到里面，重新设计参数调用逻辑
-            # 这里就是生成内部类对应的字段------》嵌套内部类也要考虑list
+            # 这里就是生成内部类对应的字段------嵌套内部类也要考虑list
             inner_complex_types, wrapperElement = process_group_inner_complex_type(root, element,
                                                                                    element_wrapper)  # 处理群组中的复杂类型，生成内部类
             #这里是内部类上层的element，为1才生成wrapper，不然他本身就是list

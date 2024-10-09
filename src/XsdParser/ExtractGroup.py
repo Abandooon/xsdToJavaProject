@@ -16,23 +16,25 @@ def extractGroup(root, element_wrapper):
         for child in group:
             if child.tag.endswith('sequence'):
                 sequence = child
-                for sub_child in sequence:
-                    print(sub_child.tag)
-                    # if sub_child.tag.endswith('element'):
-                    #     element = sub_child
-                    #     maxOccurs = element.get('maxOccurs') or '1'
-                    #     elements, inner_classes = process_elements(root, sequence, maxOccurs, element_wrapper)
-                    #     accumulated_elements.extend(elements)
-                    #     accumulated_inner_classes.extend(inner_classes)
-                    #如果是choice，就要找到引用的group，提取里面的element放到这里
-                    # if sub_child.tag.endswith('choice'):
-                    #     choice = sub_child
-                    #     innerMaxOccurs = choice.get('maxOccurs') or '1'
-                    #     group = choice.find("./{http://www.w3.org/2001/XMLSchema}group")
-                    #     refName = group.get('ref').split(':')[-1]
-                    #     elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs ,element_wrapper)
-                    #     accumulated_elements.extend(elements)
-                    #     accumulated_inner_classes.extend(inner_classes)
+                elements = sequence.findall("./{http://www.w3.org/2001/XMLSchema}element")
+                if elements is not None:
+                    for element in elements:
+                        maxOccurs = element.get('maxOccurs') or '1'
+                        elements, inner_classes = process_elements(root, sequence, maxOccurs, element_wrapper)
+                        accumulated_elements.extend(elements)
+                        accumulated_inner_classes.extend(inner_classes)
+                choices = sequence.findall("./{http://www.w3.org/2001/XMLSchema}choice")
+                if choices is not None:
+                    for choice in choices:
+                        innerMaxOccurs = choice.get('maxOccurs') or '1'
+                        group = choice.find("./{http://www.w3.org/2001/XMLSchema}group")
+                        if group is not None:
+                            refName = group.get('ref').split(':')[-1]
+                            elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs, element_wrapper)
+                            accumulated_elements.extend(elements)
+                            accumulated_inner_classes.extend(inner_classes)
+
+
             #1.直接提取element出来；2.找到引用的group提取element放到这里
             elif child.tag.endswith('choice'):
                 choice = child
@@ -51,11 +53,13 @@ def extractGroup(root, element_wrapper):
                     for innerInnerChoice in innerInnerChoices:
                         innerMaxOccurs = innerInnerChoice.get('maxOccurs')
                         group = innerInnerChoice.find("./{http://www.w3.org/2001/XMLSchema}group")
-                        refName = group.get('ref').split(':')[-1]
-                        #传入引用的group名，返回该group中的elements
-                        elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs,element_wrapper)
-                        accumulated_elements.extend(elements)
-                        accumulated_inner_classes.extend(inner_classes)
+                        if group is not None:
+                            refName = group.get('ref').split(':')[-1]
+                            # 传入引用的group名，返回该group中的elements
+                            elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs, element_wrapper)
+                            accumulated_elements.extend(elements)
+                            accumulated_inner_classes.extend(inner_classes)
+
 
         groups[group_name] = {
             'elements': accumulated_elements,

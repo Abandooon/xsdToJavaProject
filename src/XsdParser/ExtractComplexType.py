@@ -4,6 +4,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 def process_complex_type(complexType, root, element_wrapper, groups, attributeGroups):
     name = complexType.get('name')  # 获取复杂类型的名称
+    # --------------做成jaxb那样的----------------------
     mixed = complexType.get('mixed')  # 获取mixed属性
     if not name:
         return None  # 跳过没有名称的复杂类型-----内部类名定义在element

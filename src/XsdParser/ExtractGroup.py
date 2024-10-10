@@ -91,12 +91,13 @@ def process_elements(root, sequenceOrChoice, element_wrapper):
                     'annotation': '@XmlElement(name="{}")'.format(element_name)
                 })
         else:
-            #加了wrapperelement参数没有走到里面，重新设计参数调用逻辑
             # 这里就是生成内部类对应的字段------嵌套内部类也要考虑list
+            # 由于这里是choice下引用的group中的element，所以不需要wrapper
             inner_complex_types, wrapperElement = process_group_inner_complex_type(root, element,
                                                                                    element_wrapper)  # 处理群组中的复杂类型，生成内部类
             #这里是内部类上层的element，为1才生成wrapper，不然他本身就是list
             if maxOccurs == '1':
+                #如果wrapperElement为True，说明生成了wrapper，将内部类属性放到上层element中，将嵌套内部类提到上层内部类
                 if wrapperElement:
                     for inner_type in inner_complex_types:
                         for attr in inner_type.get('InnerClassAttributes'):

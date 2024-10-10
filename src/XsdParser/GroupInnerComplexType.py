@@ -24,7 +24,6 @@ def process_group_inner_complex_type(root, element, element_wrapper):
 
         for child in complex_type:
             if child.tag.endswith('choice'):
-                # print(f"process_group_inner_complex_type group:{group_name}")
                 # 处理 complexType 中的 choice 标签------->嵌套内部类要继续返回出去，要根据maxoccurs处理element
                 choice = child
                 #传入element_name，用于生成wrapper注解
@@ -46,7 +45,6 @@ def process_group_inner_complex_type(root, element, element_wrapper):
                             attributes.append({
                                 'type': baseTypeInfo['type'],
                                 'annotation': baseTypeInfo['annotation'],
-                                # 'annotationName': baseTypeInfo['annotationName']
                             })
                 for attr in extension.findall("./{http://www.w3.org/2001/XMLSchema}attribute"):
                     attr_name = attr.get('name')  # 获取属性名称
@@ -59,7 +57,6 @@ def process_group_inner_complex_type(root, element, element_wrapper):
 
         inner_complex_types.append({
             'InnerClassName': inner_class_name,
-            # 'annotation' : element_name,
             'InnerClassAttributes': attributes,
             'extendsClass': extendsClass,
             'innerInnerClass': innerInnerClass
@@ -78,8 +75,6 @@ def process_choice(root, choice, element_name, element_wrapper):
         if child.tag.endswith('element'):
             # 处理choice中的元素，传入当前choice的maxoccurs和父element的name（wrapper注解名）
             elements, innerClass, wrapperElement = (process_choice_elements(root, choice, maxOccurs, element_name, element_wrapper))
-
-            #或者直接改这里？从处理好的里面提取，然后把内部类置空-------不行，这里的elements已经是内部类名了，应该从里面改
         elif child.tag.endswith('group'):  # element和group没有同时存在，choice下为group的只有两个
             refName = child.get('ref').split(':')[-1]
             elements, innerClass = process_choiceRef(root, refName, maxOccurs,element_wrapper)

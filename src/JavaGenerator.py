@@ -25,7 +25,7 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
     else:
         complexTypeClassTemplate = env.get_template('ComplexTypeClassTemplate.j2')  # 模板不带有内部类
 
-    simpleTypeClassTemplate = env.get_template('SimpleTypeClassTemplate.j2')
+    simpleTypeClassTemplate = env.get_template('SimpleTypeClass_WithoutAnno_Template.j2')
 
     # 解析XSD文件
     xsdFile = os.path.join(input_dir, 'AUTOSAR_4-2-2_result.xsd')  # 指定XSD文件路径
@@ -35,7 +35,7 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
     # 提取信息
     groups = extractGroup(root, element_wrapper)
     attributeGroups = extractAttributeGroup(root)
-    complexTypes = extractComplexType(root, element_wrapper, groups, attributeGroups)  # 提取复杂类型信息
+    complexTypes = extractComplexType(root, element_wrapper, groups, attributeGroups)  # 提取复杂类型信息，传入提取好的group中的element
     simpleTypes = extractSimpleType(root)  # 提取简单类型信息
     print(f"提取了 {len(complexTypes)} 个复杂类型")
 
@@ -61,7 +61,6 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
     # 生成Java代码
     if extract_inner_class:
         for complexType in complexTypes:
-            # extract_internal_classes(complexType, output_dir, package_name, complexTypeClassTemplate)
             extract_internals_classes(complexType, output_dir, package_name, complexTypeClassTemplate)
 
     else:

@@ -51,8 +51,10 @@ def process_choiceRef(root, refName, maxOccurs,element_wrapper):
 def extract_element(root, sequenceOrChoice, maxOccurs, element_wrapper):
     elements = []
     inner_classes = []
+    wrapperElement = False
     for element in sequenceOrChoice.findall("./{http://www.w3.org/2001/XMLSchema}element"):
         #--------element可能没有maxOccurs，这时候就要看外面的choice-------
+        inner_complex_types = []  # 初始化列表，用于存储内部复杂类型信息
         if maxOccurs == '1':
             maxOccurs = element.get('maxOccurs') or maxOccurs
         element_name = element.get('name')  # 获取元素名称
@@ -73,7 +75,6 @@ def extract_element(root, sequenceOrChoice, maxOccurs, element_wrapper):
                     'annotation': '@XmlElement(name="{}")'.format(element_name)
                 })
         else:
-            # 不开启wrapper，内部类
             if maxOccurs == '1':
                 elements.append({
                     'name': to_camel_case(element_name),
@@ -87,8 +88,8 @@ def extract_element(root, sequenceOrChoice, maxOccurs, element_wrapper):
                     'annotation': '@XmlElement(name="{}")'.format(element_name)
                 })
             from src.XsdParser.GroupInnerComplexType import process_group_inner_complex_type
-            inner_complex_types = process_group_inner_complex_type(root, element, element_wrapper)
-            inner_complex_types = []  # 初始化列表，用于存储内部复杂类型信息
+            inner_complex_types, wrapperElement = process_group_inner_complex_type(root, element, element_wrapper)
+
 
             # 查找 group 中的所有 element 标签
             complex_type = element.find("./{http://www.w3.org/2001/XMLSchema}complexType")

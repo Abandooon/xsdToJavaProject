@@ -16,13 +16,12 @@ def extractGroup(root, element_wrapper):
         for child in group:
             if child.tag.endswith('sequence'):
                 sequence = child
-                elements = sequence.findall("./{http://www.w3.org/2001/XMLSchema}element")
-                if elements is not None:
-                    for element in elements:
-                        maxOccurs = element.get('maxOccurs') or '1'
-                        elements, inner_classes = process_elements(root, sequence, maxOccurs, element_wrapper)
-                        accumulated_elements.extend(elements)
-                        accumulated_inner_classes.extend(inner_classes)
+                element = sequence.findall("./{http://www.w3.org/2001/XMLSchema}element")
+                if element is not None:
+                    elements, inner_classes = process_elements(root, sequence, element_wrapper)
+                    accumulated_elements.extend(elements)
+                    accumulated_inner_classes.extend(inner_classes)
+
                 choices = sequence.findall("./{http://www.w3.org/2001/XMLSchema}choice")
                 if choices is not None:
                     for choice in choices:
@@ -39,12 +38,10 @@ def extractGroup(root, element_wrapper):
             elif child.tag.endswith('choice'):
                 choice = child
                 innerChoice = choice.find("./{http://www.w3.org/2001/XMLSchema}choice")
-                maxOccurs = innerChoice.get('maxOccurs')
-                elementsObj = innerChoice.findall("./{http://www.w3.org/2001/XMLSchema}element")
-
-                #elementsObj仅用于判断有没有，process_elements传的是上级innerChoice，遍历所有element返回出来
-                if elementsObj is not None:
-                    elements, inner_classes = process_elements(root, innerChoice, maxOccurs, element_wrapper)
+                element = innerChoice.findall("./{http://www.w3.org/2001/XMLSchema}element")
+                #element仅用于判断有没有，process_elements传的是上级innerChoice，遍历所有element返回出来
+                if element is not None:
+                    elements, inner_classes = process_elements(root, innerChoice,element_wrapper)
                     accumulated_elements.extend(elements)
                     accumulated_inner_classes.extend(inner_classes)
 
@@ -60,7 +57,6 @@ def extractGroup(root, element_wrapper):
                             accumulated_elements.extend(elements)
                             accumulated_inner_classes.extend(inner_classes)
 
-
         groups[group_name] = {
             'elements': accumulated_elements,
             'innerClasses': accumulated_inner_classes
@@ -70,18 +66,17 @@ def extractGroup(root, element_wrapper):
 
 #处理group里面的element
 #如果开启了wrapper，应该从内部类中提取出内部类的element放到这里，相当于直接type=
-def process_elements(root, sequenceOrChoice, maxOccurs, element_wrapper):
+def process_elements(root, sequenceOrChoice, element_wrapper):
     elements = []
     inner_classes = []
     for element in sequenceOrChoice.findall("./{http://www.w3.org/2001/XMLSchema}element"):
-        if element.get('maxOccurs') !='1':
-            maxOccurs = element.get('maxOccurs')
-
+        # --------element可能没有maxOccurs，这时候就要看外面的choice-------
+        maxOccurs = element.get('maxOccurs') or '1'
         element_name = element.get('name')
         element_type = element.get('type')  # 获取元素类型-----没有就是内部类，走到else里面
         wrapperElement = False
         if element_type:
-            if maxOccurs == "1":
+            if maxOccurs == '1':
                 element_type = mapXsdTypeToJava(element_type.split(':')[-1], context='group')  # 将类型映射为Java类型
                 elements.append({
                     'name': to_camel_case(element_name),

@@ -2,36 +2,38 @@ from src.XsdParser.ExtractExtensionBaseType import extractBaseType
 from src.XsdParser.TypeMapping import mapXsdTypeToJava
 from src.XsdParser.Utils import to_camel_case, to_pascal_case
 def process_choiceRef(root, refName, maxOccurs,element_wrapper):
+    #----------------传进来的是外层choice的maxoccurs，如果他是list，即使里面引的group的element是单个，也要返回list----------------
     accumulated_elements = []
     accumulated_inner_classes = []
     for group in root.findall(".//{http://www.w3.org/2001/XMLSchema}group"):
         if group.get('name') == refName:
             for child in group:
                 # 1.这里是group下的sequence中内部类的group ref对应逻辑（group 下choice没有sequence直接element）
-                if group.tag.endswith("sequence"):
+                if child.tag.endswith('sequence'):
                     sequence = child
-                    for sub_child in sequence:
-                        if sub_child.tag.endswith("element"):
-                            element = sub_child
-                            maxOccurs = element.get('maxOccurs') or '1'
-                            elements, inner_classes = extract_element(root, sequence, maxOccurs,element_wrapper)
-                            accumulated_elements.extend(elements)
-                            accumulated_inner_classes.extend(inner_classes)
-                        # 2. sequence下choice，递归调用
-                        elif sub_child.tag.endswith("choice"):
-                            choice = sub_child
-                            innerMaxOccurs = choice.get('maxOccurs') or '1'
-                            group = choice.find("./{http://www.w3.org/2001/XMLSchema}group")
-                            refName = group.get('ref').split(':')[-1]
-                            elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs,element_wrapper)
-                            accumulated_elements.extend(elements)
-                            accumulated_inner_classes.extend(inner_classes)
+                    element = sequence.findall("./{http://www.w3.org/2001/XMLSchema}element")
+                    if element is not None:
+                        elements, inner_classes = extract_element(root, sequence, maxOccurs, element_wrapper)
+                        accumulated_elements.extend(elements)
+                        accumulated_inner_classes.extend(inner_classes)
+                    choice = sequence.find("./{http://www.w3.org/2001/XMLSchema}choice")
+
+                    # 2. sequence下choice，递归调用
+                    if choice is not None:
+                        innerMaxOccurs = choice.get('maxOccurs') or '1'
+                        group = choice.find("./{http://www.w3.org/2001/XMLSchema}group")
+                        refName = group.get('ref').split(':')[-1]
+                        elements, inner_classes = process_choiceRef(root, refName, innerMaxOccurs, element_wrapper)
+                        accumulated_elements.extend(elements)
+                        accumulated_inner_classes.extend(inner_classes)
+
                 # 3.嵌套choice下的，递归调用
-                elif group.tag.endswith("choice"):
+                elif child.tag.endswith("choice"):
                     choice = child
                     innerChoice = choice.find("./{http://www.w3.org/2001/XMLSchema}choice")
+                    #---------------这里也是，如果外层choice是list，里面引的group的element是单个，也要返回list----------------
                     maxOccurs = innerChoice.get('maxOccurs')
-                    elements, inner_classes = extract_element(root, innerChoice, maxOccurs,element_wrapper)
+                    elements, inner_classes = extract_element(root, innerChoice,maxOccurs, element_wrapper)
                     accumulated_elements.extend(elements)
                     accumulated_inner_classes.extend(inner_classes)
                     innerInnerChoices = innerChoice.findall("./{http://www.w3.org/2001/XMLSchema}choice")
@@ -46,10 +48,13 @@ def process_choiceRef(root, refName, maxOccurs,element_wrapper):
     return accumulated_elements, accumulated_inner_classes
 
 #group ref的目的是提取引到的group中的element放到elements列表中，不需要做额外的事，对于group ref本身的操作已经在三个地方都写好了，只需提取element返回出去即可
-def extract_element(root, sequenceOrChoice, maxOccurs,element_wrapper):
+def extract_element(root, sequenceOrChoice, maxOccurs, element_wrapper):
     elements = []
     inner_classes = []
     for element in sequenceOrChoice.findall("./{http://www.w3.org/2001/XMLSchema}element"):
+        #--------element可能没有maxOccurs，这时候就要看外面的choice-------
+        if maxOccurs == '1':
+            maxOccurs = element.get('maxOccurs') or maxOccurs
         element_name = element.get('name')  # 获取元素名称
         element_type = element.get('type')  # 获取元素类型
         if element_type:

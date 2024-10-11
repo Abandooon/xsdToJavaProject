@@ -5,6 +5,9 @@ from src.XsdParser.Utils import to_pascal_case
 # 维护一个全局的内部类信息列表
 inner_class_info_list = []
 def extract_internals_classes(complexType, output_dir, package_name, class_template, parent_class_name=None):
+    output_subdir = os.path.join(output_dir, 'orimodel')
+    os.makedirs(output_subdir, exist_ok=True)  # 创建输出目录（如果不存在）
+
     if not complexType.get('innerClasses'):
         javaCode = class_template.render(
             packageName=package_name,
@@ -12,8 +15,8 @@ def extract_internals_classes(complexType, output_dir, package_name, class_templ
             extends=complexType['extends'],
             attributes=complexType['attributes']
         )
-        os.makedirs(output_dir, exist_ok=True)
-        outputPath = os.path.join(output_dir, f"{to_pascal_case(complexType['name'])}.java")
+
+        outputPath = os.path.join(output_subdir, f"{to_pascal_case(complexType['name'])}.java")
         with open(outputPath, 'w') as file:
             file.write(javaCode)
         return
@@ -57,7 +60,7 @@ def extract_internals_classes(complexType, output_dir, package_name, class_templ
                     'rename_flag': True,
                     'inner_class_attributes': inner_class_attributes
                 })
-                inner_output_path = os.path.join(output_dir, f"{new_inner_class_name}.java")
+                inner_output_path = os.path.join(output_subdir, f"{new_inner_class_name}.java")
 
                 # 渲染并写入内部类代码
                 new_inner_class_code = class_template.render(
@@ -79,7 +82,7 @@ def extract_internals_classes(complexType, output_dir, package_name, class_templ
                     'rename_flag': False,
                     'inner_class_attributes': inner_class_attributes
                 })
-                inner_output_path = os.path.join(output_dir, f"{inner_class_name}.java")
+                inner_output_path = os.path.join(output_subdir, f"{inner_class_name}.java")
 
                 # 渲染并写入内部类代码
                 new_inner_class_code = class_template.render(
@@ -110,8 +113,8 @@ def extract_internals_classes(complexType, output_dir, package_name, class_templ
                     extends=inner_inner_class['extendsClass'],
                     attributes=inner_inner_class['InnerClassAttributes']
                 )
-                os.makedirs(output_dir, exist_ok=True)
-                outputPath = os.path.join(output_dir, f"{inner_inner_class['InnerClassName']}.java")
+
+                outputPath = os.path.join(output_subdir, f"{inner_inner_class['InnerClassName']}.java")
                 with open(outputPath, 'w') as file:
                     file.write(javaCode)
 
@@ -126,7 +129,7 @@ def extract_internals_classes(complexType, output_dir, package_name, class_templ
         # 创建输出目录
         os.makedirs(output_dir, exist_ok=True)
         # 将主类生成到单独的Java文件中
-        outputPath = os.path.join(output_dir, f"{main_class_name}.java")
+        outputPath = os.path.join(output_subdir, f"{main_class_name}.java")
         with open(outputPath, 'w') as file:
             file.write(javaCode)
 

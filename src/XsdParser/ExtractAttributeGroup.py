@@ -16,8 +16,6 @@ def extractAttributeGroup(root):
             attrType = attribute.get('type')  # 获取属性的类型
             if attrType:
                 attrType = attrType.split(':')[-1]  # 如果属性类型存在，去除命名空间，保留实际类型名
-            # else:
-            #     attrType = 'string'  # 如果类型不存在，默认类型为string------------>不需要，全是有type的
             attributes.append({
                 'name': attrName,  # 属性名称
                 'type': mapXsdTypeToJava(attrType, context='attribute_group')  # 将XSD类型映射为Java类型

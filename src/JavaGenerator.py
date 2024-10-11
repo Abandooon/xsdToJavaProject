@@ -6,6 +6,7 @@ import time
 from lxml import etree
 from jinja2 import Environment, FileSystemLoader
 from src.DslParser import parse_dsl
+from src.XsdParser.Expansion.GenerateWrapper import generate_wrapper_classes
 from src.XsdParser.ExtractAttributeGroup import extractAttributeGroup
 from src.XsdParser.ExtractComplexType import extractComplexType
 from src.XsdParser.ExtractGroup import extractGroup
@@ -25,10 +26,10 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
     else:
         complexTypeClassTemplate = env.get_template('ComplexTypeClassTemplate.j2')  # 模板不带有内部类
 
-    simpleTypeClassTemplate = env.get_template('SimpleTypeClass_WithoutAnno_Template.j2')
+    simpleTypeClassTemplate = env.get_template('SimpleTypeClassTemplate.j2')
 
     # 解析XSD文件
-    xsdFile = os.path.join(input_dir, 'AUTOSAR_4-2-2_result.xsd')  # 指定XSD文件路径
+    xsdFile = os.path.join(input_dir, 'simpleTest.xsd')  # 指定XSD文件路径
     tree = etree.parse(xsdFile)  # 解析XSD文件为树结构
     root = tree.getroot()  # 获取XML的根节点
 
@@ -50,18 +51,25 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
                 enumerations=simpleType['enumerations']
             )
             # 设输出目录，并确保目录存在
-            outputDir = output_dir  # 指定输出目录
-            os.makedirs(outputDir, exist_ok=True)  # 创建输出目录（如果不存在）
+            output_subdir = os.path.join(output_dir, 'orimodel')
+            os.makedirs(output_subdir, exist_ok=True)  # 创建输出目录（如果不存在）
 
             # 设置Java文件的输出路径，文件名与类名一致
-            outputPath = os.path.join(outputDir, f"{to_pascal_case(simpleType['name'])}.java")
+            outputPath = os.path.join(output_subdir, f"{to_pascal_case(simpleType['name'])}.java")
             with open(outputPath, 'w') as file:
                 file.write(javaCode)  # 将生成的Java代码写入文件
 
+    complexTypeClassesInfo = []
     # 生成Java代码
     if extract_inner_class:
         for complexType in complexTypes:
             extract_internals_classes(complexType, output_dir, package_name, complexTypeClassTemplate)
+
+            class_info = {
+                'name': complexType['name'],
+                'attributes': complexType['attributes']
+            }
+            complexTypeClassesInfo.append(class_info)
 
     else:
         for complexType in complexTypes:
@@ -71,17 +79,24 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
                 extends=complexType['extends'],
                 attributes=complexType['attributes'],  # 传递属性列表
                 innerClasses=complexType.get('innerClasses', [])  # 直接传递内部类列表
-                # rootElement=rootElement   #由dsl传递参数开启
-                # xmlType
             )
-            outputDir = output_dir  # 指定输出目录
-            os.makedirs(outputDir, exist_ok=True)  # 创建输出目录（如果不存在）
 
-            # 设置Java文件的输出路径，文件名与类名一致
-            outputPath = os.path.join(outputDir, f"{to_pascal_case(complexType['name'])}.java")
+            #定义目标输出目录，添加 'orimodel' 子目录
+            output_subdir = os.path.join(output_dir, 'orimodel')
+            os.makedirs(output_subdir, exist_ok=True)  # 创建输出目录（如果不存在）
+
+            # 设置 Java 文件的输出路径，文件名与类名一致
+            outputPath = os.path.join(output_subdir, f"{to_pascal_case(complexType['name'])}.java")
+
             with open(outputPath, 'w') as file:
-                file.write(javaCode)  # 将生成的Java代码写入文件
+                file.write(javaCode)  # 将生成的 Java 代码写入文件
 
+            class_info = {
+                'name': complexType['name'],
+                'attributes': complexType['attributes']
+            }
+            complexTypeClassesInfo.append(class_info)
+    generate_wrapper_classes(complexTypeClassesInfo, output_dir, package_name)
     end_time = time.time()  # 记录结束时间
     print(f"Java类生成总耗时: {end_time - start_time:.2f}秒")  # 打印耗时
 

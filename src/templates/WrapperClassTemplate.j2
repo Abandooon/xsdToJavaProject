@@ -1,0 +1,16 @@
+package {{ packageName }};
+
+public class {{ wrapperClassName }} {
+
+    private {{ originalClassName }} {{ originalVariableName }};
+
+    public {{ wrapperClassName }}({{ originalClassName }} {{ originalVariableName }}) {
+        this.{{ originalVariableName }} = {{ originalVariableName }};
+    }
+
+    {% for attribute in attributes %}
+    public {{ attribute.type }} get{{ attribute.name[0]|upper + attribute.name[1:] }}() {
+        return {{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}();
+    }
+    {% endfor %}
+}

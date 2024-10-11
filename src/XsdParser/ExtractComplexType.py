@@ -91,6 +91,21 @@ def process_complex_type(complexType, root, element_wrapper, groups, attributeGr
                             'annotation': element['annotation'],
                         })
                     inner_classes.extend(groups[refName]['innerClasses'])
+        if mixed == 'true':
+            element_refs = []
+            for attr in attributes:
+                if '@XmlElement' in attr['annotation']:
+                    element_name = attr['annotation'].split('name="')[1].split('"')[0]
+                    element_refs.append(
+                        '@XmlElementRef(name="{}", namespace="http://autosar.org/schema/r4.0", type=JAXBElement.class, required=false)'.format(
+                            element_name))
+            attributes = [attr for attr in attributes if '@XmlElement' not in attr['annotation']]
+            if element_refs:
+                attributes.append({
+                    'name': 'content',
+                    'type': 'List<Serializable>',
+                    'annotation': '@XmlElementRefs({\n        ' + ',\n        '.join(element_refs) + '\n    })\n    @XmlMixed'
+                })
 
     return {
         'name': name,

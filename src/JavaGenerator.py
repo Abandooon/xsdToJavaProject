@@ -6,16 +6,17 @@ import time
 from lxml import etree
 from jinja2 import Environment, FileSystemLoader
 from src.DslParser import parse_dsl
-from src.XsdParser.Expansion.GenerateWrapper import generate_wrapper_classes
+from src.XsdParser.Expansion.GenerateWrapper import generate_wrapper_classes, collect_wrapper_class_names
 from src.XsdParser.ExtractAttributeGroup import extractAttributeGroup
 from src.XsdParser.ExtractComplexType import extractComplexType
 from src.XsdParser.ExtractGroup import extractGroup
 from src.XsdParser.ExtractSimpleType import extractSimpleType
 from src.XsdParser.Utils import to_pascal_case
-from src.XsdParser.Expansion.InnerInnerExtractor import extract_internals_classes
+from src.XsdParser.Expansion.InnerInnerExtractor import extract_internals_classes, all_class_info_list
 
 
 def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extract_inner_class):
+
     start_time = time.time()  # 记录开始时间
     # 配置模板环境
     env = Environment(loader=FileSystemLoader('templates'))  # 加载模板文件夹
@@ -59,19 +60,15 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
             with open(outputPath, 'w') as file:
                 file.write(javaCode)  # 将生成的Java代码写入文件
 
-    complexTypeClassesInfo = []
     # 生成Java代码
     if extract_inner_class:
         for complexType in complexTypes:
             extract_internals_classes(complexType, output_dir, package_name, complexTypeClassTemplate)
-
-            class_info = {
-                'name': complexType['name'],
-                'attributes': complexType['attributes']
-            }
-            complexTypeClassesInfo.append(class_info)
-
+            # 在生成内部类后，获取所有类的信息
+            all_classes_info = all_class_info_list
     else:
+        all_classes_info = []
+
         for complexType in complexTypes:
             javaCode = complexTypeClassTemplate.render(
                 packageName=package_name,
@@ -92,13 +89,14 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
                 file.write(javaCode)  # 将生成的 Java 代码写入文件
 
             class_info = {
-                'name': complexType['name'],
+                'name': to_pascal_case(complexType['name']),
                 'attributes': complexType['attributes']
             }
-            complexTypeClassesInfo.append(class_info)
-    generate_wrapper_classes(complexTypeClassesInfo, output_dir, package_name)
+            all_classes_info.append(class_info)
+
     end_time = time.time()  # 记录结束时间
     print(f"Java类生成总耗时: {end_time - start_time:.2f}秒")  # 打印耗时
+    return all_classes_info
 
 if __name__ == "__main__":
     dsl_file = 'config.dsl'
@@ -112,5 +110,12 @@ if __name__ == "__main__":
     extract_inner_class = config.get('ExtractInnerClass', False)
 
     # 调用生成Java类的函数
-    generateJavaClass(input_dir=input_dir, output_dir=output_dir, package_name=package_name,
+    all_classes_info = generateJavaClass(input_dir=input_dir, output_dir=output_dir, package_name=package_name,
                       element_wrapper=element_wrapper, extract_inner_class=extract_inner_class)
+
+
+    # 第一次遍历：收集需要生成的 wrapper 类名
+    wrapper_class_names  = collect_wrapper_class_names(all_classes_info)
+
+    # 第二次遍历：正式生成 wrapper 类
+    generate_wrapper_classes(all_classes_info, output_dir, package_name, wrapper_class_names)

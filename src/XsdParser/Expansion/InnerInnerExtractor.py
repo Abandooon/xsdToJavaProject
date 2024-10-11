@@ -4,6 +4,8 @@ from src.XsdParser.Utils import to_pascal_case
 
 # 维护一个全局的内部类信息列表
 inner_class_info_list = []
+# 新增一个全局的所有类信息列表
+all_class_info_list = []
 def extract_internals_classes(complexType, output_dir, package_name, class_template, parent_class_name=None):
     output_subdir = os.path.join(output_dir, 'orimodel')
     os.makedirs(output_subdir, exist_ok=True)  # 创建输出目录（如果不存在）
@@ -19,6 +21,11 @@ def extract_internals_classes(complexType, output_dir, package_name, class_templ
         outputPath = os.path.join(output_subdir, f"{to_pascal_case(complexType['name'])}.java")
         with open(outputPath, 'w') as file:
             file.write(javaCode)
+            # 将主类信息添加到全局列表
+        all_class_info_list.append({
+            'name': to_pascal_case(complexType['name']),
+            'attributes': complexType['attributes']
+        })
         return
 
     main_class_name = to_pascal_case(complexType['name']) if parent_class_name is None else parent_class_name
@@ -74,6 +81,11 @@ def extract_internals_classes(complexType, output_dir, package_name, class_templ
 
                 # 更新父级类中的成员类型
                 update_parent_attributes(complexType, inner_class_name, new_inner_class_name)
+                # 将内部类信息添加到全局列表
+                all_class_info_list.append({
+                    'name': new_inner_class_name,
+                    'attributes': inner_class_attributes
+                })
             else:
                 # 首次出现，生成类文件
                 inner_class_info_list.append({
@@ -93,6 +105,11 @@ def extract_internals_classes(complexType, output_dir, package_name, class_templ
                 )
                 with open(inner_output_path, 'w') as file:
                     file.write(new_inner_class_code)
+                # 将内部类信息添加到全局列表
+                all_class_info_list.append({
+                    'name': inner_class_name,
+                    'attributes': inner_class_attributes
+                })
         else:
             if rename_flag:
                 # 不生成内部类文件，需要修改父级类的成员类型
@@ -117,6 +134,11 @@ def extract_internals_classes(complexType, output_dir, package_name, class_templ
                 outputPath = os.path.join(output_subdir, f"{inner_inner_class['InnerClassName']}.java")
                 with open(outputPath, 'w') as file:
                     file.write(javaCode)
+                # 将嵌套内部类信息添加到全局列表
+                all_class_info_list.append({
+                    'name': inner_inner_class['InnerClassName'],
+                    'attributes': inner_inner_class['InnerClassAttributes']
+                })
 
     # 如果当前处理的是主类，生成主类的Java代码
     if parent_class_name is None:
@@ -132,6 +154,10 @@ def extract_internals_classes(complexType, output_dir, package_name, class_templ
         outputPath = os.path.join(output_subdir, f"{main_class_name}.java")
         with open(outputPath, 'w') as file:
             file.write(javaCode)
+        all_class_info_list.append({
+            'name': main_class_name,
+            'attributes': complexType['attributes']
+        })
 
 def update_parent_attributes(parent_class, old_inner_class_name, new_inner_class_name):
     for attribute in parent_class['attributes']:

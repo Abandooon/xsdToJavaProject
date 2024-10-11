@@ -9,8 +9,17 @@ public class {{ wrapperClassName }} {
     }
 
     {% for attribute in attributes %}
-    public {{ attribute.type }} get{{ attribute.name[0]|upper + attribute.name[1:] }}() {
-        return {{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}();
-    }
+    {% set attr_type = attribute.type %}
+    {% set actual_type = attr_type %}
+
+    {% if actual_type + 'Wrapper' in wrapperClassNames %}
+        public {{ actual_type }}Wrapper get{{ attribute.name[0]|upper + attribute.name[1:] }}() {
+            return new {{ actual_type }}Wrapper({{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}());
+        }
+    {% else %}
+        public {{ attr_type }} get{{ attribute.name[0]|upper + attribute.name[1:] }}() {
+            return {{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}();
+        }
+    {% endif %}
     {% endfor %}
 }

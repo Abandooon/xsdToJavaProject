@@ -19,7 +19,7 @@ def parse_dsl(file_path):
                     config[key] = value
 
     # 转换ExtractInnerClass和element_wrapper为布尔值
-    for key in ['ExtractInnerClass', 'element_wrapper']:
+    for key in ['ExtractInnerClass', 'element_wrapper','generate_wrapper']:
         if key in config:
             config[key] = config[key] == 'true'
 

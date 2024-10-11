@@ -108,14 +108,15 @@ if __name__ == "__main__":
     #默认为false
     element_wrapper = config.get('element_wrapper', False)
     extract_inner_class = config.get('ExtractInnerClass', False)
+    generate_wrapper = config.get('generate_wrapper', False)
 
     # 调用生成Java类的函数
     all_classes_info = generateJavaClass(input_dir=input_dir, output_dir=output_dir, package_name=package_name,
                       element_wrapper=element_wrapper, extract_inner_class=extract_inner_class)
 
+    if generate_wrapper:
+        # 第一次遍历：收集需要生成的 wrapper 类名
+        wrapper_class_names = collect_wrapper_class_names(all_classes_info)
 
-    # 第一次遍历：收集需要生成的 wrapper 类名
-    wrapper_class_names  = collect_wrapper_class_names(all_classes_info)
-
-    # 第二次遍历：正式生成 wrapper 类
-    generate_wrapper_classes(all_classes_info, output_dir, package_name, wrapper_class_names)
+        # 第二次遍历：正式生成 wrapper 类
+        generate_wrapper_classes(all_classes_info, output_dir, package_name, wrapper_class_names)

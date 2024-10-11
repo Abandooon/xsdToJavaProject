@@ -9,17 +9,16 @@ public class {{ wrapperClassName }} {
     }
 
     {% for attribute in attributes %}
-    {% set attr_type = attribute.type %}
-    {% set actual_type = attr_type %}
-
-    {% if actual_type + 'Wrapper' in wrapperClassNames %}
-        public {{ actual_type }}Wrapper get{{ attribute.name[0]|upper + attribute.name[1:] }}() {
-            return new {{ actual_type }}Wrapper({{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}());
+    public {{ attribute.type }} get{{ attribute.name[0]|upper + attribute.name[1:] }}() {
+        {% if 'Wrapper' in attribute.type %}
+        if ({{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}() != null) {
+            return new {{ attribute.type }}({{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}());
+        } else {
+            return null;
         }
-    {% else %}
-        public {{ attr_type }} get{{ attribute.name[0]|upper + attribute.name[1:] }}() {
-            return {{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}();
-        }
-    {% endif %}
+        {% else %}
+        return {{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}();
+        {% endif %}
+    }
     {% endfor %}
 }

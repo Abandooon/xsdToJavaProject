@@ -21,4 +21,17 @@ public class {{ wrapperClassName }} {
         {% endif %}
     }
     {% endfor %}
+
+    {% if hasArrayListSerializable %}
+    public String getValue() {
+        ArrayList<Serializable> serializables = {{ originalVariableName }}.getContent();
+        StringBuilder textContent = new StringBuilder();
+        for (Serializable item : serializables) {
+            if (item instanceof String) {
+                textContent.append((String) item);
+            }
+        }
+        return textContent.toString().trim();
+    }
+    {% endif %}
 }

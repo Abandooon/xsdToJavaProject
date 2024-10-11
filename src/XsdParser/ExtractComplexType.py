@@ -103,7 +103,7 @@ def process_complex_type(complexType, root, element_wrapper, groups, attributeGr
             if element_refs:
                 attributes.append({
                     'name': 'content',
-                    'type': 'List<Serializable>',
+                    'type': 'ArrayList<Serializable>',
                     'annotation': '@XmlElementRefs({\n        ' + ',\n        '.join(element_refs) + '\n    })\n    @XmlMixed'
                 })
 

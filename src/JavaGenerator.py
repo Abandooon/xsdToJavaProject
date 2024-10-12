@@ -30,7 +30,7 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
     simpleTypeClassTemplate = env.get_template('SimpleTypeClassTemplate.j2')
 
     # 解析XSD文件
-    xsdFile = os.path.join(input_dir, 'AUTOSAR_4-2-2_result.xsd')  # 指定XSD文件路径
+    xsdFile = os.path.join(input_dir, 'simpleTest.xsd')  # 指定XSD文件路径
     tree = etree.parse(xsdFile)  # 解析XSD文件为树结构
     root = tree.getroot()  # 获取XML的根节点
 
@@ -99,6 +99,7 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
     return all_classes_info
 
 if __name__ == "__main__":
+
     dsl_file = 'config.dsl'
     config = parse_dsl(dsl_file)
 
@@ -111,12 +112,12 @@ if __name__ == "__main__":
     generate_wrapper = config.get('generate_wrapper', False)
 
     # 调用生成Java类的函数
-    all_classes_info = generateJavaClass(input_dir=input_dir, output_dir=output_dir, package_name=package_name,
-                      element_wrapper=element_wrapper, extract_inner_class=extract_inner_class)
+    all_classes_info = generateJavaClass(input_dir, output_dir, package_name,
+                      element_wrapper, extract_inner_class)
 
     if generate_wrapper:
         # 第一次遍历：收集需要生成的 wrapper 类名
         wrapper_class_names = collect_wrapper_class_names(all_classes_info)
 
         # 第二次遍历：正式生成 wrapper 类
-        generate_wrapper_classes(all_classes_info, output_dir, package_name, wrapper_class_names)
+        generate_wrapper_classes(input_dir, all_classes_info, output_dir, package_name, wrapper_class_names)

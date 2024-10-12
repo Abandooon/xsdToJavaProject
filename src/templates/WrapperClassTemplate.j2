@@ -9,19 +9,61 @@ public class {{ wrapperClassName }} {
     }
 
     {% for attribute in attributes %}
+    // Getter 方法
     public {{ attribute.type }} get{{ attribute.name[0]|upper + attribute.name[1:] }}() {
-        {% if 'Wrapper' in attribute.type %}
+        {% if attribute.hasWrapper %}
         if ({{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}() != null) {
             return new {{ attribute.type }}({{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}());
         } else {
             return null;
         }
         {% else %}
-        return {{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}();
+        return {{ original_variable_name }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}();
         {% endif %}
     }
     {% endfor %}
 
+
+    // 动态生成 getRefObject 方法
+    {% if hasRefObject %}
+    public Object get{{ originalClassName }}Obj() throws BaseXException, ClassNotFoundException, JAXBException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        java.lang.String path = {original_variable_name}.get{name}().getValue();
+        java.lang.String type = {original_variable_name}.get{name}().getDest().toString().replace("_", "-");
+        SchemaController schemaController = (SchemaController) RestrictDTO.controllerMap.get("schemaController");
+        java.lang.String className = schemaController.convertClassName(type);
+        Iproject currentProject = (Iproject) ApplicationContextUtil.applicationContext.get("currentProject");
+        Object queryObject = schemaController.queryObject(currentProject.getName(), path, type);
+        java.lang.String wrapperClassName = "{package_name}" + className + "Wrapper";
+        Class<?> wrapperClass = Class.forName(wrapperClassName);
+        Constructor<?> wrapperConstructor = wrapperClass.getConstructor(queryObject.getClass());
+        Object wrapperInstance = wrapperConstructor.newInstance(queryObject);
+        return wrapperInstance;
+    }
+    {% for method in additionalApiMethods %}
+    public {% if method.has_wrapper %}{{ method.annotation_pascal_case }}Wrapper{% else %}{{ method.annotation_pascal_case }}{% endif %} get{{ method.annotation_pascal_case }}Refs() throws BaseXException, ClassNotFoundException, JAXBException{
+        java.lang.String path = {original_variable_name}.get{name}().getValue();
+        java.lang.String type = {original_variable_name}.get{name}().getDest().toString().replace("_", "-");
+        SchemaController schemaController = (SchemaController) RestrictDTO.controllerMap.get("schemaController");
+        Iproject currentProject = (Iproject) ApplicationContextUtil.applicationContext.get("currentProject");
+        Object queryObject = schemaController.queryObject(currentProject.getName(), path, type);
+        {% if method.has_wrapper %}
+        if(queryObject instanceof {{ method.annotation_pascal_case }}){
+            return new {{ method.annotation_pascal_case }}Wrapper(({{ method.annotation_pascal_case }}) queryObject);
+        }else{
+            return null;
+        }
+        {% else %}
+        if(queryObject instanceof {{ method.annotation_pascal_case }}){
+            return ({{ method.annotation_pascal_case }}) queryObject;
+        }else{
+            return null;
+        }
+        {% endif %}
+    }
+    {% endfor %}
+    {% endif %}
+
+     // 根据变体注解生成getValue方法
     {% if hasArrayListSerializable %}
     public String getValue() {
         ArrayList<Serializable> serializables = {{ originalVariableName }}.getContent();
@@ -33,5 +75,22 @@ public class {{ wrapperClassName }} {
         }
         return textContent.toString().trim();
     }
+    // 根据变体注解生成 get各element ref 方法
+    {% for method in additionalApiMethods %}
+    public List<{% if method.has_wrapper %}{{ method.annotation_pascal_case }}Wrapper{% else %}{{ method.annotation_pascal_case }}{% endif %}> get{{ method.annotation_pascal_case }}Refs() {
+    ArrayList<Serializable> serializables = {{ method.original_variable_name }}.getContent();
+    TypeCast typeCast = new TypeCast();
+    {% if method.has_wrapper %}
+    ArrayList<{{ method.annotation_pascal_case }}> objects = typeCast.getElementsOfType(serializables, {{ method.annotation_pascal_case }}.class);
+    ArrayList<{{ method.annotation_pascal_case }}Wrapper> wrapperObjects = new ArrayList<>();
+    wrapperObjects = (ArrayList<{{ method.annotation_pascal_case }}Wrapper>) objects.stream()
+        .map(a -> new {{ method.annotation_pascal_case }}Wrapper(a))
+        .collect(Collectors.toList());
+    return wrapperObjects;
+    {% else %}
+    return typeCast.getElementsOfType(serializables, {{ method.annotation_pascal_case }}.class);
+    {% endif %}
+    }
+    {% endfor %}
     {% endif %}
 }

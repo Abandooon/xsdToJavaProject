@@ -7,5 +7,7 @@
     <file url="file://$PROJECT_DIR$/src/input/test.xsd" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/input/xml.xsd" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/output/modelwrapper/AllChannelsRefWrapper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/output/modelwrapper/BswImplementationWrapper.java" charset="GBK" />
+    <file url="PROJECT" charset="GBK" />
   </component>
 </project>

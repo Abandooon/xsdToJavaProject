@@ -38,7 +38,7 @@ def generate_wrapper_classes(input_dir, complexTypeClassesInfo, output_dir, pack
             anno = attribute.get('annotation')  # 获取注解信息
             name = attribute.get('name')  # 获取属性的 name
 
-            if original_class_name.endswith(('Ref', 'Iref', 'Tref')) and name == 'dest':
+            if original_class_name.split('_')[0].endswith(('Ref', 'Iref', 'Tref')) and name == 'dest':
                 # 标记为有引用对象
                 has_ref_object = True
 

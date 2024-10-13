@@ -30,7 +30,7 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
     simpleTypeClassTemplate = env.get_template('SimpleTypeClassTemplate.j2')
 
     # 解析XSD文件
-    xsdFile = os.path.join(input_dir, 'simpleTest.xsd')  # 指定XSD文件路径
+    xsdFile = os.path.join(input_dir, 'AUTOSAR_4-2-2.xsd')  # 指定XSD文件路径
     tree = etree.parse(xsdFile)  # 解析XSD文件为树结构
     root = tree.getroot()  # 获取XML的根节点
 

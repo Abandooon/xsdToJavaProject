@@ -8,32 +8,48 @@ public class {{ wrapperClassName }} {
         this.{{ originalVariableName }} = {{ originalVariableName }};
     }
 
-    {% for attribute in attributes %}
+   {% for attribute in attributes %}
     // Getter 方法
     public {{ attribute.type }} get{{ attribute.name[0]|upper + attribute.name[1:] }}() {
-        {% if attribute.hasWrapper %}
+        {% if attribute.type.startswith('ArrayList') and 'Wrapper' in attribute.type %}
+        // 如果返回值是 ArrayList<**Wrapper>
+        if ({{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}() != null) {
+            // 获取原始 ArrayList
+            List<{{ attribute.type.split('<')[1].replace('>', '') }}> originalList = {{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}();
+
+            // 将原始 ArrayList 中的每个元素包装为对应的 Wrapper 对象
+            List<{{ attribute.type.split('<')[1].replace('>', '') }}Wrapper> wrapperList = originalList.stream()
+                .map(item -> new {{ attribute.type.split('<')[1].replace('>', '') }}Wrapper(item))
+                .collect(Collectors.toList());
+
+            // 返回包装后的 ArrayList
+            return new ArrayList<>(wrapperList);
+        } else {
+            return null;  // 如果原始 ArrayList 为空，返回空的 ArrayList
+        }
+        {% else %}
+        // 如果返回值不是 ArrayList<**Wrapper>
         if ({{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}() != null) {
             return new {{ attribute.type }}({{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}());
         } else {
             return null;
         }
-        {% else %}
-        return {{ original_variable_name }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}();
         {% endif %}
     }
-    {% endfor %}
+{% endfor %}
+
 
 
     // 动态生成 getRefObject 方法
     {% if hasRefObject %}
     public Object get{{ originalClassName }}Obj() throws BaseXException, ClassNotFoundException, JAXBException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        java.lang.String path = {original_variable_name}.get{name}().getValue();
-        java.lang.String type = {original_variable_name}.get{name}().getDest().toString().replace("_", "-");
+        java.lang.String path = {{original_variable_name}}.get{{name}}().getValue();
+        java.lang.String type = {{original_variable_name}}.get{{name}}().getDest().toString().replace("_", "-");
         SchemaController schemaController = (SchemaController) RestrictDTO.controllerMap.get("schemaController");
         java.lang.String className = schemaController.convertClassName(type);
         Iproject currentProject = (Iproject) ApplicationContextUtil.applicationContext.get("currentProject");
         Object queryObject = schemaController.queryObject(currentProject.getName(), path, type);
-        java.lang.String wrapperClassName = "{package_name}" + className + "Wrapper";
+        java.lang.String wrapperClassName = "{{package_name}}" + className + "Wrapper";
         Class<?> wrapperClass = Class.forName(wrapperClassName);
         Constructor<?> wrapperConstructor = wrapperClass.getConstructor(queryObject.getClass());
         Object wrapperInstance = wrapperConstructor.newInstance(queryObject);
@@ -41,8 +57,8 @@ public class {{ wrapperClassName }} {
     }
     {% for method in additionalApiMethods %}
     public {% if method.has_wrapper %}{{ method.annotation_pascal_case }}Wrapper{% else %}{{ method.annotation_pascal_case }}{% endif %} get{{ method.annotation_pascal_case }}Refs() throws BaseXException, ClassNotFoundException, JAXBException{
-        java.lang.String path = {original_variable_name}.get{name}().getValue();
-        java.lang.String type = {original_variable_name}.get{name}().getDest().toString().replace("_", "-");
+        java.lang.String path = {{original_variable_name}}.get{{name}}().getValue();
+        java.lang.String type = {{original_variable_name}}.get{{name}}().getDest().toString().replace("_", "-");
         SchemaController schemaController = (SchemaController) RestrictDTO.controllerMap.get("schemaController");
         Iproject currentProject = (Iproject) ApplicationContextUtil.applicationContext.get("currentProject");
         Object queryObject = schemaController.queryObject(currentProject.getName(), path, type);

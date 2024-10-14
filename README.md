@@ -1,3 +1,5 @@
+10.14 变量名不合法--class、break、
+               --修改变量名、getter方法名(break不用)------直接在模版里改
 10.9.1 choice group ref未正确生成，重复提取了element
 10.9 extractGroup里面的endswith判断不对，
 10.8 group ref的目的是提取引到的group中的element放到elements列表中，不需要做额外的事，对于group ref本身的操作已经在三个地方都写好了，只需提取element返回出去即可.

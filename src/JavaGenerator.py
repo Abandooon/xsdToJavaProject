@@ -106,6 +106,7 @@ if __name__ == "__main__":
     input_dir = config.get('input_dir')
     output_dir = config.get('output_dir')
     package_name = config.get('package_name')
+    wrapper_package_name = config.get('wrapper_package_name')
     #默认为false
     element_wrapper = config.get('element_wrapper', False)
     extract_inner_class = config.get('ExtractInnerClass', False)
@@ -120,4 +121,4 @@ if __name__ == "__main__":
         wrapper_class_names = collect_wrapper_class_names(all_classes_info)
 
         # 第二次遍历：正式生成 wrapper 类
-        generate_wrapper_classes(input_dir, all_classes_info, output_dir, package_name, wrapper_class_names)
+        generate_wrapper_classes(input_dir, all_classes_info, output_dir, wrapper_package_name, wrapper_class_names)

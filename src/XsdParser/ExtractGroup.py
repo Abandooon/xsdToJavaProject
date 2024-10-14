@@ -86,7 +86,7 @@ def process_elements(root, sequenceOrChoice, element_wrapper):
             else:
                 element_type = mapXsdTypeToJava(element_type.split(':')[-1], context='group')  # 将类型映射为Java类型
                 elements.append({
-                    'name': to_camel_case(element_name)+'s',
+                    'name': to_camel_case(element_name),
                     'type': 'ArrayList<{}>'.format(element_type),
                     'annotation': '@XmlElement(name="{}")'.format(element_name)
                 })
@@ -97,15 +97,16 @@ def process_elements(root, sequenceOrChoice, element_wrapper):
                                                                                    element_wrapper)  # 处理群组中的复杂类型，生成内部类
             #这里是内部类上层的element，为1才生成wrapper，不然他本身就是list
             if maxOccurs == '1':
-                #如果wrapperElement为True，说明生成了wrapper，将内部类属性放到上层element中，将嵌套内部类提到上层内部类
+                #-------如果wrapperElement为True，说明生成了wrapper，将内部类属性放到上层element中，将嵌套内部类提到上层内部类,属性变量名用上层element的-----
                 if wrapperElement:
                     for inner_type in inner_complex_types:
                         for attr in inner_type.get('InnerClassAttributes'):
                             elements.append({
-                                'name': attr.get('name'),
+                                'name': to_camel_case(element_name),
                                 'type': attr.get('type'),
                                 'annotation': attr.get('annotation')
                             })
+                        #---将嵌套内部类提取出来放到外层
                         for innerInnerClass in inner_type.get('innerInnerClass'):
                             inner_classes.append(innerInnerClass)
                     # print(inner_complex_types)

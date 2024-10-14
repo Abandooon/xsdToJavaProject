@@ -14,7 +14,7 @@ def collect_wrapper_class_names(complexTypeClassesInfo):
         wrapper_class_names.add(wrapper_class_name)
     return wrapper_class_names
 
-def generate_wrapper_classes(input_dir, complexTypeClassesInfo, output_dir, package_name, wrapper_class_names):
+def generate_wrapper_classes(input_dir, complexTypeClassesInfo, output_dir, wrapper_package_name, wrapper_class_names):
     # 配置模板环境
     env = Environment(loader=FileSystemLoader('templates'))
     wrapperClassTemplate = env.get_template('WrapperClassTemplate.j2')
@@ -25,7 +25,7 @@ def generate_wrapper_classes(input_dir, complexTypeClassesInfo, output_dir, pack
 
     for class_info in complexTypeClassesInfo:
         original_class_name = class_info['name']
-        original_variable_name = to_camel_case(class_info['name'])
+        original_variable_name = to_camel_case(class_info['name']) if original_class_name not in ['String', 'Boolean', 'Float', 'Integer'] else to_camel_case(class_info['name']) + '1'
         wrapper_class_name = original_class_name + 'Wrapper'
         attributes = []
         additional_api_methods = []  # 保存需要生成的 API 方法信息
@@ -52,12 +52,12 @@ def generate_wrapper_classes(input_dir, complexTypeClassesInfo, output_dir, pack
                 for refObjName in refObjNames:
                     # 预先检查是否有 Wrapper 类
                     has_wrapper = refObjName + 'Wrapper' in wrapper_class_names
-                    return_type = refObjName + 'Wrapper' if has_wrapper else refObjName
+                    return_type = refObjName if has_wrapper else refObjName
 
                     # 构建 method_info，减少重复代码
                     method_info = {
                         'annotation_pascal_case': return_type,  # PascalCase 类名或 Wrapper 类名
-                        'original_variable_name': return_type.lower(),  # 小写形式的变量名
+                        # 'original_variable_name': refObjName.lower(),  # 小写形式的变量名
                         'has_wrapper': has_wrapper  # 是否有 Wrapper 类
                     }
 
@@ -119,7 +119,7 @@ def generate_wrapper_classes(input_dir, complexTypeClassesInfo, output_dir, pack
 
         # 渲染模板，将必要的信息传递给模板
         javaCode = wrapperClassTemplate.render(
-            packageName=package_name,
+            packageName=wrapper_package_name,
             wrapperClassName=wrapper_class_name,
             originalClassName=original_class_name,
             originalVariableName=original_variable_name,

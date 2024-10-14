@@ -1,6 +1,7 @@
 input_dir = 'input'
 output_dir = 'output'
-package_name = 'com.example'
+package_name = 'stdgui.data.model.orimodel'
+wrapper_package_name = 'stdgui.data.model.modelwrapper'
 element_wrapper = 'true'
 ExtractInnerClass = 'true'
 generate_wrapper = 'true'

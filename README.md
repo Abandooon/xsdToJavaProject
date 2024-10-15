@@ -1,6 +1,6 @@
 CalprmAxisCategoryEnumSimple枚举重复----xsd里面重复了
 
-10.16 wrapper中返回值为枚举的对不上，为什么会与原型类的返回值类型不同 
+10.16 wrapper中返回值为枚举的对不上，为什么会与原型类的返回值类型不同--------eclipse覆盖？ 
 10.14 变量名不合法--class、break、
                --修改变量名、getter方法名(break不用)------直接在模版里改
 10.9.1 choice group ref未正确生成，重复提取了element

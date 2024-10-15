@@ -30,7 +30,7 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
     simpleTypeClassTemplate = env.get_template('SimpleTypeClassTemplate.j2')
 
     # 解析XSD文件
-    xsdFile = os.path.join(input_dir, 'AUTOSAR_4-2-2.xsd')  # 指定XSD文件路径
+    xsdFile = os.path.join(input_dir, 'test.xsd')  # 指定XSD文件路径
     tree = etree.parse(xsdFile)  # 解析XSD文件为树结构
     root = tree.getroot()  # 获取XML的根节点
 
@@ -122,4 +122,4 @@ if __name__ == "__main__":
         wrapper_class_names = collect_wrapper_class_names(all_classes_info)
 
         # 第二次遍历：正式生成 wrapper 类
-        generate_wrapper_classes(input_dir, all_classes_info, output_dir, wrapper_package_name, wrapper_class_names)
+        generate_wrapper_classes(input_dir, all_classes_info, output_dir, wrapper_package_name, wrapper_class_names, package_name)

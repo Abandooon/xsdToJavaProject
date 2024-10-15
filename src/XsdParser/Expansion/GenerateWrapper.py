@@ -14,7 +14,7 @@ def collect_wrapper_class_names(complexTypeClassesInfo):
         wrapper_class_names.add(wrapper_class_name)
     return wrapper_class_names
 
-def generate_wrapper_classes(input_dir, complexTypeClassesInfo, output_dir, wrapper_package_name, wrapper_class_names):
+def generate_wrapper_classes(input_dir, complexTypeClassesInfo, output_dir, wrapper_package_name, wrapper_class_names, package_name):
     # 配置模板环境
     env = Environment(loader=FileSystemLoader('templates'))
     wrapperClassTemplate = env.get_template('WrapperClassTemplate.j2')
@@ -25,7 +25,7 @@ def generate_wrapper_classes(input_dir, complexTypeClassesInfo, output_dir, wrap
 
     for class_info in complexTypeClassesInfo:
         original_class_name = class_info['name']
-        original_variable_name = class_info['name'] if original_class_name not in ['String', 'Boolean', 'Float', 'Integer'] else class_info['name'] + '1'
+        original_variable_name = class_info['name'][0].lower() + class_info['name'][1:] if original_class_name not in ['String', 'Boolean', 'Float', 'Integer'] else class_info['name'][0].lower() + class_info['name'][1:] + '1'
         wrapper_class_name = original_class_name + 'Wrapper'
         attributes = []
         additional_api_methods = []  # 保存需要生成的 API 方法信息
@@ -119,6 +119,7 @@ def generate_wrapper_classes(input_dir, complexTypeClassesInfo, output_dir, wrap
 
         # 渲染模板，将必要的信息传递给模板
         javaCode = wrapperClassTemplate.render(
+            oriPackageName=package_name,
             packageName=wrapper_package_name,
             wrapperClassName=wrapper_class_name,
             originalClassName=original_class_name,

@@ -1,5 +1,15 @@
 package {{ packageName }};
-
+{% for attribute in attributes %}
+    {% if attribute.type.startswith('ArrayList') and 'Wrapper' in attribute.type %}
+    {% if attribute.type.split('<')[1].replace('>', '').replace('Wrapper', '') in ['Annotation', 'String', 'Boolean', 'Float'] %}
+        import {{ oriPackageName }}.{{ attribute.type.split('<')[1].replace('>', '').replace('Wrapper', '') }};
+    {% endif %}
+    {% else %}
+        {% if attribute.type.replace('Wrapper', '') in ['Annotation', 'String', 'Boolean', 'Float'] %}
+        import {{ oriPackageName }}.{{ attribute.type.replace('Wrapper', '') }};
+    {% endif %}
+    {% endif %}
+{% endfor %}
 public class {{ wrapperClassName }} {
 
     private {{ originalClassName }} {{ originalVariableName }};

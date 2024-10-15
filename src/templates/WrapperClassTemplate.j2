@@ -9,28 +9,24 @@ public class {{ wrapperClassName }} {
     }
 
    {% for attribute in attributes %}
-    // Getter 方法
-    public {{ attribute.type }} get{{ attribute.name[0]|upper + attribute.name[1:] }}() {
+    public {{ attribute.type }} get{% if attribute.name == 'class' %}Class1{% else %}{{ attribute.name[0]|upper + attribute.name[1:] }}{% endif %}() {
         {% if attribute.type.startswith('ArrayList') and 'Wrapper' in attribute.type %}
-        // 如果返回值是 ArrayList<**Wrapper>
-        if ({{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}() != null) {
-            // 获取原始 ArrayList
-            List<{{ attribute.type.split('<')[1].replace('>', '') }}> originalList = {{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}();
-
-            // 将原始 ArrayList 中的每个元素包装为对应的 Wrapper 对象
-            List<{{ attribute.type.split('<')[1].replace('>', '') }}Wrapper> wrapperList = originalList.stream()
-                .map(item -> new {{ attribute.type.split('<')[1].replace('>', '') }}Wrapper(item))
+        if (CollUtil.isNotEmpty({{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}())) {
+            ArrayList<{{ attribute.type.split('<')[1].replace('>', '').replace('Wrapper', '') }}> originalList = {{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}();
+            ArrayList<{{ attribute.type.split('<')[1].replace('>', '') }}> wrapperList = (ArrayList<{{ attribute.type.split('<')[1].replace('>', '') }}>)originalList.stream()
+                .map(item -> new {{ attribute.type.split('<')[1].replace('>', '') }}(item))
                 .collect(Collectors.toList());
-
-            // 返回包装后的 ArrayList
-            return new ArrayList<>(wrapperList);
+            return wrapperList;
         } else {
-            return null;  // 如果原始 ArrayList 为空，返回空的 ArrayList
+            return null;
         }
         {% else %}
-        // 如果返回值不是 ArrayList<**Wrapper>
-        if ({{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}() != null) {
+        if (CollUtil.isNotEmpty({{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}())) {
+            {% if 'Wrapper' in attribute.type %}
             return new {{ attribute.type }}({{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}());
+            {% else %}
+            return {{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}();
+            {% endif %}
         } else {
             return null;
         }

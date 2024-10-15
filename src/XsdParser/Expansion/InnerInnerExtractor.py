@@ -14,6 +14,7 @@ def extract_internals_classes(complexType, output_dir, package_name, class_templ
         javaCode = class_template.render(
             packageName=package_name,
             className=to_pascal_case(complexType['name']),
+            rootElementName = complexType['name'],
             extends=complexType['extends'],
             attributes=complexType['attributes']
         )
@@ -145,6 +146,7 @@ def extract_internals_classes(complexType, output_dir, package_name, class_templ
         javaCode = class_template.render(
             packageName=package_name,
             className=main_class_name,
+            rootElementName=complexType['name'],
             extends=complexType.get('extends'),
             attributes=complexType['attributes']
         )

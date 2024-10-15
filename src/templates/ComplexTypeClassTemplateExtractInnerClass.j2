@@ -1,22 +1,22 @@
 package {{ packageName }};
-
+@XmlRootElement(name = "{{ rootElementName }}")
 public class {{ className }}{% if extends %} extends {{ extends }}{% endif %} {
 
     {% for attribute in attributes %}
     {% if attribute.name and attribute.type %}
-    protected {{ attribute.type }} {{ attribute.name }};
+    protected {{ attribute.type }} {{ attribute.name }}{% if attribute.name in ['class', 'break','float','byte'] %}1{% endif %};
     {% endif %}
     {% endfor %}
 
     {% for attribute in attributes %}
     {% if attribute.name and attribute.type %}
     {{ attribute.annotation }}
-    public {{ attribute.type }} get{{ attribute.name[0] | upper + attribute.name[1:] }}() {
-        return this.{{ attribute.name }};
-    }
+    public {{ attribute.type }} get{{ attribute.name[0] | upper + attribute.name[1:] }}{% if attribute.name == 'class' %}1{% endif %}() {
+    return this.{{ attribute.name }}{% if attribute.name in ['class', 'break','float','byte'] %}1{% endif %};
+}
 
     public void set{{ attribute.name[0] | upper + attribute.name[1:] }}({{ attribute.type }} value) {
-        this.{{ attribute.name }} = value;
+        this.{{ attribute.name }}{% if attribute.name in ['class', 'break','float','byte'] %}1{% endif %} = value;
     }
     {% endif %}
     {% endfor %}

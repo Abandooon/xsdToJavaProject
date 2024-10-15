@@ -25,7 +25,7 @@ def generate_wrapper_classes(input_dir, complexTypeClassesInfo, output_dir, wrap
 
     for class_info in complexTypeClassesInfo:
         original_class_name = class_info['name']
-        original_variable_name = to_camel_case(class_info['name']) if original_class_name not in ['String', 'Boolean', 'Float', 'Integer'] else to_camel_case(class_info['name']) + '1'
+        original_variable_name = class_info['name'] if original_class_name not in ['String', 'Boolean', 'Float', 'Integer'] else class_info['name'] + '1'
         wrapper_class_name = original_class_name + 'Wrapper'
         attributes = []
         additional_api_methods = []  # 保存需要生成的 API 方法信息

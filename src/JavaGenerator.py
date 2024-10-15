@@ -73,6 +73,7 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
             javaCode = complexTypeClassTemplate.render(
                 packageName=package_name,
                 className=to_pascal_case(complexType['name']),
+                rootElementName=complexType['name'],
                 extends=complexType['extends'],
                 attributes=complexType['attributes'],  # 传递属性列表
                 innerClasses=complexType.get('innerClasses', [])  # 直接传递内部类列表

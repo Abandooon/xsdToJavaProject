@@ -77,26 +77,30 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
                 extends=complexType['extends'],
                 attributes=complexType['attributes'],  # 传递属性列表
                 innerClasses=complexType.get('innerClasses', [])  # 直接传递内部类列表
+
             )
+            # ---------模版测试-------
+            if(complexType['name'] == 'BSW-IMPLEMENTATION'):
+                print({complexType['name']})
 
-            #定义目标输出目录，添加 'orimodel' 子目录
-            output_subdir = os.path.join(output_dir, 'orimodel')
-            os.makedirs(output_subdir, exist_ok=True)  # 创建输出目录（如果不存在）
-
-            # 设置 Java 文件的输出路径，文件名与类名一致
-            outputPath = os.path.join(output_subdir, f"{to_pascal_case(complexType['name'])}.java")
-
-            with open(outputPath, 'w') as file:
-                file.write(javaCode)  # 将生成的 Java 代码写入文件
-
-            class_info = {
-                'name': to_pascal_case(complexType['name']),
-                'attributes': complexType['attributes']
-            }
-            all_classes_info.append(class_info)
-
-    end_time = time.time()  # 记录结束时间
-    print(f"Java类生成总耗时: {end_time - start_time:.2f}秒")  # 打印耗时
+    #         #定义目标输出目录，添加 'orimodel' 子目录
+    #         output_subdir = os.path.join(output_dir, 'orimodel')
+    #         os.makedirs(output_subdir, exist_ok=True)  # 创建输出目录（如果不存在）
+    #
+    #         # 设置 Java 文件的输出路径，文件名与类名一致
+    #         outputPath = os.path.join(output_subdir, f"{to_pascal_case(complexType['name'])}.java")
+    #
+    #         with open(outputPath, 'w') as file:
+    #             file.write(javaCode)  # 将生成的 Java 代码写入文件
+    #
+    #         class_info = {
+    #             'name': to_pascal_case(complexType['name']),
+    #             'attributes': complexType['attributes']
+    #         }
+    #         all_classes_info.append(class_info)
+    #
+    # end_time = time.time()  # 记录结束时间
+    # print(f"Java类生成总耗时: {end_time - start_time:.2f}秒")  # 打印耗时
     return all_classes_info
 
 if __name__ == "__main__":

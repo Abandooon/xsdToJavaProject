@@ -1,17 +1,22 @@
 package {{ packageName }};
+{% if originalClassName in ['Annotation', 'String', 'Boolean', 'Float', 'Integer', 'Area', 'Entry', 'Date', 'Collection', 'Documentation', 'EventHandler', 'Linker', 'List', 'Parameters', 'Ref', 'SocketAddress', 'System','Map','Elements'] %}
+    import {{ oriPackageName }}.{{ originalClassName }};
+{% endif %}
 {% for attribute in attributes %}
-    {% if attribute.type.startswith('ArrayList') and 'Wrapper' in attribute.type %}
-        {% if attribute.type.split('<')[1].replace('>', '').replace('Wrapper', '') in ['Annotation', 'String', 'Boolean', 'Float'] %}
-    import {{ oriPackageName }}.{{ attribute.type.split('<')[1].replace('>', '').replace('Wrapper', '') }};
-        {% endif %}
-    {% else %}
-        {% if attribute.type.replace('Wrapper', '') in ['Annotation', 'String', 'Boolean', 'Float'] %}
-    import {{ oriPackageName }}.{{ attribute.type.replace('Wrapper', '') }};
-        {% endif %}
+    {% set base_type = attribute.type.split('<')[1].replace('>', '').replace('Wrapper', '') if attribute.type.startswith('ArrayList') else attribute.type.replace('Wrapper', '') %}
+    {% if base_type in ['Annotation', 'String', 'Boolean', 'Float', 'Integer', 'Area', 'Entry', 'Date', 'Collection', 'Documentation', 'EventHandler', 'Linker', 'List', 'Parameters', 'Ref', 'SocketAddress', 'System','Map','Elements'] %}
+        import {{ oriPackageName }}.{{ base_type }};
     {% endif %}
+{% endfor %}
+{% for method in additionalApiMethods %}
+     {% if method.annotation_pascal_case in ['Annotation', 'String', 'Boolean', 'Float', 'Integer', 'Area', 'Entry', 'Date', 'Collection', 'Documentation', 'EventHandler', 'Linker', 'List', 'Parameters', 'Ref', 'SocketAddress', 'System','Map','Elements'] %}
+         import {{ oriPackageName }}.{{ method.annotation_pascal_case }};
+     {% endif %}
 {% endfor %}
 public class {{ wrapperClassName }} {
 
+    {% if hasRefObject %}
+    {% endif %}
     private {{ originalClassName }} {{ originalVariableName }};
 
     public {{ wrapperClassName }}({{ originalClassName }} {{ originalVariableName }}) {
@@ -21,8 +26,8 @@ public class {{ wrapperClassName }} {
    {% for attribute in attributes %}
     public {{ attribute.type }} get{% if attribute.name == 'class' %}Class1{% else %}{{ attribute.name[0]|upper + attribute.name[1:] }}{% endif %}() {
         {% if attribute.type.startswith('ArrayList') and 'Wrapper' in attribute.type %}
-        if (CollUtil.isNotEmpty({{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}())) {
-            ArrayList<{{ attribute.type.split('<')[1].replace('>', '').replace('Wrapper', '') }}> originalList = {{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}();
+        if (CollUtil.isNotEmpty({{ originalVariableName }}.get{% if attribute.name == 'class' %}Class1{% else %}{{ attribute.name[0]|upper + attribute.name[1:] }}{% endif %}())) {
+            ArrayList<{{ attribute.type.split('<')[1].replace('>', '').replace('Wrapper', '') }}> originalList = {{ originalVariableName }}.get{% if attribute.name == 'class' %}Class1{% else %}{{ attribute.name[0]|upper + attribute.name[1:] }}{% endif %}();
             ArrayList<{{ attribute.type.split('<')[1].replace('>', '') }}> wrapperList = (ArrayList<{{ attribute.type.split('<')[1].replace('>', '') }}>)originalList.stream()
                 .map(item -> new {{ attribute.type.split('<')[1].replace('>', '') }}(item))
                 .collect(Collectors.toList());
@@ -31,11 +36,11 @@ public class {{ wrapperClassName }} {
             return null;
         }
         {% else %}
-        if (CollUtil.isNotEmpty({{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}())) {
+        if (CollUtil.isNotEmpty({{ originalVariableName }}.get{% if attribute.name == 'class' %}Class1{% else %}{{ attribute.name[0]|upper + attribute.name[1:] }}{% endif %}())) {
             {% if 'Wrapper' in attribute.type %}
-            return new {{ attribute.type }}({{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}());
+            return new {{ attribute.type }}({{ originalVariableName }}.get{% if attribute.name == 'class' %}Class1{% else %}{{ attribute.name[0]|upper + attribute.name[1:] }}{% endif %}());
             {% else %}
-            return {{ originalVariableName }}.get{{ attribute.name[0]|upper + attribute.name[1:] }}();
+            return {{ originalVariableName }}.get{% if attribute.name == 'class' %}Class1{% else %}{{ attribute.name[0]|upper + attribute.name[1:] }}{% endif %}();
             {% endif %}
         } else {
             return null;
@@ -46,7 +51,6 @@ public class {{ wrapperClassName }} {
 
 
 
-    // 动态生成 getRefObject 方法
     {% if hasRefObject %}
     public Object get{{ originalClassName }}Obj() throws BaseXException, ClassNotFoundException, JAXBException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException {
         java.lang.String path = {{ originalVariableName }}.getValue();
@@ -61,6 +65,7 @@ public class {{ wrapperClassName }} {
         Object wrapperInstance = wrapperConstructor.newInstance(queryObject);
         return wrapperInstance;
     }
+
     {% for method in additionalApiMethods %}
     public {% if method.has_wrapper %}{{ method.annotation_pascal_case }}Wrapper{% else %}{{ method.annotation_pascal_case }}{% endif %} get{{ method.annotation_pascal_case }}() throws BaseXException, ClassNotFoundException, JAXBException{
         java.lang.String path = {{ originalVariableName }}.getValue();
@@ -85,7 +90,7 @@ public class {{ wrapperClassName }} {
     {% endfor %}
     {% endif %}
 
-     // 根据变体注解生成getValue方法
+
     {% if hasArrayListSerializable %}
     public String getValue() {
         ArrayList<Serializable> serializables = {{ originalVariableName }}.getContent();
@@ -97,7 +102,7 @@ public class {{ wrapperClassName }} {
         }
         return textContent.toString().trim();
     }
-    // 根据变体注解生成 get各element ref 方法
+
     {% for method in additionalApiMethods %}
     public List<{% if method.has_wrapper %}{{ method.annotation_pascal_case }}Wrapper{% else %}{{ method.annotation_pascal_case }}{% endif %}> get{{ method.annotation_pascal_case }}Refs() {
     ArrayList<Serializable> serializables = {{ method.original_variable_name }}.getContent();

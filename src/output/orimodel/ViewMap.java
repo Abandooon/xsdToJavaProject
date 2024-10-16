@@ -1,0 +1,254 @@
+package stdgui.data.model.orimodel;
+@XmlRootElement(name = "VIEW-MAP")
+public class ViewMap {
+
+    
+    
+    protected java.lang.String s;
+    
+    
+    
+    protected java.lang.String t;
+    
+    
+    
+    protected java.lang.String uuid;
+    
+    
+    
+    protected Identifier shortName;
+    
+    
+    
+    protected ArrayList<ShortNameFragment> shortNameFragments;
+    
+    
+    
+    protected MultilanguageLongName longName;
+    
+    
+    
+    protected MultiLanguageOverviewParagraph desc;
+    
+    
+    
+    protected CategoryString category;
+    
+    
+    
+    protected AdminData adminData;
+    
+    
+    
+    protected DocumentationBlock introduction;
+    
+    
+    
+    protected ArrayList<Annotation> annotations;
+    
+    
+    
+    protected Identifier role;
+    
+    
+    
+    protected ArrayList<FirstElementRef> firstElementRefs;
+    
+    
+    
+    protected ArrayList<SecondElementRef> secondElementRefs;
+    
+    
+    
+    protected ArrayList<AnyInstanceRef> firstElementInstanceIrefs;
+    
+    
+    
+    protected ArrayList<AnyInstanceRef> secondElementInstanceIrefs;
+    
+    
+
+    
+    
+    @XmlAttribute(name="S")
+    public java.lang.String getS() {
+    return this.s;
+}
+
+    public void setS(java.lang.String value) {
+        this.s = value;
+    }
+    
+    
+    
+    @XmlAttribute(name="T")
+    public java.lang.String getT() {
+    return this.t;
+}
+
+    public void setT(java.lang.String value) {
+        this.t = value;
+    }
+    
+    
+    
+    @XmlAttribute(name="UUID")
+    public java.lang.String getUuid() {
+    return this.uuid;
+}
+
+    public void setUuid(java.lang.String value) {
+        this.uuid = value;
+    }
+    
+    
+    
+    @XmlElement(name="SHORT-NAME")
+    public Identifier getShortName() {
+    return this.shortName;
+}
+
+    public void setShortName(Identifier value) {
+        this.shortName = value;
+    }
+    
+    
+    
+    @XmlElementWrapper(name="SHORT-NAME-FRAGMENTS")
+@XmlElement(name="SHORT-NAME-FRAGMENT")
+    public ArrayList<ShortNameFragment> getShortNameFragments() {
+    return this.shortNameFragments;
+}
+
+    public void setShortNameFragments(ArrayList<ShortNameFragment> value) {
+        this.shortNameFragments = value;
+    }
+    
+    
+    
+    @XmlElement(name="LONG-NAME")
+    public MultilanguageLongName getLongName() {
+    return this.longName;
+}
+
+    public void setLongName(MultilanguageLongName value) {
+        this.longName = value;
+    }
+    
+    
+    
+    @XmlElement(name="DESC")
+    public MultiLanguageOverviewParagraph getDesc() {
+    return this.desc;
+}
+
+    public void setDesc(MultiLanguageOverviewParagraph value) {
+        this.desc = value;
+    }
+    
+    
+    
+    @XmlElement(name="CATEGORY")
+    public CategoryString getCategory() {
+    return this.category;
+}
+
+    public void setCategory(CategoryString value) {
+        this.category = value;
+    }
+    
+    
+    
+    @XmlElement(name="ADMIN-DATA")
+    public AdminData getAdminData() {
+    return this.adminData;
+}
+
+    public void setAdminData(AdminData value) {
+        this.adminData = value;
+    }
+    
+    
+    
+    @XmlElement(name="INTRODUCTION")
+    public DocumentationBlock getIntroduction() {
+    return this.introduction;
+}
+
+    public void setIntroduction(DocumentationBlock value) {
+        this.introduction = value;
+    }
+    
+    
+    
+    @XmlElementWrapper(name="ANNOTATIONS")
+@XmlElement(name="ANNOTATION")
+    public ArrayList<Annotation> getAnnotations() {
+    return this.annotations;
+}
+
+    public void setAnnotations(ArrayList<Annotation> value) {
+        this.annotations = value;
+    }
+    
+    
+    
+    @XmlElement(name="ROLE")
+    public Identifier getRole() {
+    return this.role;
+}
+
+    public void setRole(Identifier value) {
+        this.role = value;
+    }
+    
+    
+    
+    @XmlElementWrapper(name="FIRST-ELEMENT-REFS")
+@XmlElement(name="FIRST-ELEMENT-REF")
+    public ArrayList<FirstElementRef> getFirstElementRefs() {
+    return this.firstElementRefs;
+}
+
+    public void setFirstElementRefs(ArrayList<FirstElementRef> value) {
+        this.firstElementRefs = value;
+    }
+    
+    
+    
+    @XmlElementWrapper(name="SECOND-ELEMENT-REFS")
+@XmlElement(name="SECOND-ELEMENT-REF")
+    public ArrayList<SecondElementRef> getSecondElementRefs() {
+    return this.secondElementRefs;
+}
+
+    public void setSecondElementRefs(ArrayList<SecondElementRef> value) {
+        this.secondElementRefs = value;
+    }
+    
+    
+    
+    @XmlElementWrapper(name="FIRST-ELEMENT-INSTANCE-IREFS")
+@XmlElement(name="FIRST-ELEMENT-INSTANCE-IREF")
+    public ArrayList<AnyInstanceRef> getFirstElementInstanceIrefs() {
+    return this.firstElementInstanceIrefs;
+}
+
+    public void setFirstElementInstanceIrefs(ArrayList<AnyInstanceRef> value) {
+        this.firstElementInstanceIrefs = value;
+    }
+    
+    
+    
+    @XmlElementWrapper(name="SECOND-ELEMENT-INSTANCE-IREFS")
+@XmlElement(name="SECOND-ELEMENT-INSTANCE-IREF")
+    public ArrayList<AnyInstanceRef> getSecondElementInstanceIrefs() {
+    return this.secondElementInstanceIrefs;
+}
+
+    public void setSecondElementInstanceIrefs(ArrayList<AnyInstanceRef> value) {
+        this.secondElementInstanceIrefs = value;
+    }
+    
+    
+}

@@ -36,7 +36,7 @@ public class {{ wrapperClassName }} {
             return null;
         }
         {% else %}
-        if (CollUtil.isNotEmpty({{ originalVariableName }}.get{% if attribute.name == 'class' %}Class1{% else %}{{ attribute.name[0]|upper + attribute.name[1:] }}{% endif %}())) {
+        if ({{ originalVariableName }}.get{% if attribute.name == 'class' %}Class1{% else %}{{ attribute.name[0]|upper + attribute.name[1:] }}{% endif %}()!=null) {
             {% if 'Wrapper' in attribute.type %}
             return new {{ attribute.type }}({{ originalVariableName }}.get{% if attribute.name == 'class' %}Class1{% else %}{{ attribute.name[0]|upper + attribute.name[1:] }}{% endif %}());
             {% else %}
@@ -57,7 +57,7 @@ public class {{ wrapperClassName }} {
         java.lang.String type = {{ originalVariableName }}.getDest().toString().replace("_", "-");
         SchemaController schemaController = (SchemaController) RestrictDTO.controllerMap.get("schemaController");
         java.lang.String className = schemaController.convertClassName(type);
-        Iproject currentProject = (Iproject) ApplicationContextUtil.applicationContext.get("currentProject");
+        IProject currentProject = (IProject) ApplicationContextUtil.applicationContext.get("currentProject");
         Object queryObject = schemaController.queryObject(currentProject.getName(), path, type);
         java.lang.String wrapperClassName = "{{package_name}}" + className + "Wrapper";
         Class<?> wrapperClass = Class.forName(wrapperClassName);

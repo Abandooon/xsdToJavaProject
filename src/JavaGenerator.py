@@ -70,18 +70,20 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
         all_classes_info = []
 
         for complexType in complexTypes:
-            javaCode = complexTypeClassTemplate.render(
-                packageName=package_name,
-                className=to_pascal_case(complexType['name']),
-                rootElementName=complexType['name'],
-                extends=complexType['extends'],
-                attributes=complexType['attributes'],  # 传递属性列表
-                innerClasses=complexType.get('innerClasses', [])  # 直接传递内部类列表
-
-            )
+            # javaCode = complexTypeClassTemplate.render(
+            #     packageName=package_name,
+            #     className=to_pascal_case(complexType['name']),
+            #     rootElementName=complexType['name'],
+            #     extends=complexType['extends'],
+            #     attributes=complexType['attributes'],  # 传递属性列表
+            #     innerClasses=complexType.get('innerClasses', [])  # 直接传递内部类列表
+            #
+            # )
             # ---------模版测试-------
             if(complexType['name'] == 'BSW-IMPLEMENTATION'):
                 print({complexType['name']})
+                for attr in complexType['attributes']:
+                    print(attr['name'])
 
     #         #定义目标输出目录，添加 'orimodel' 子目录
     #         output_subdir = os.path.join(output_dir, 'orimodel')

@@ -96,6 +96,8 @@ def process_complex_type(complexType, root, element_wrapper, groups, attributeGr
             for attr in attributes:
                 if '@XmlElement' in attr['annotation']:
                     element_name = attr['annotation'].split('name="')[1].split('"')[0]
+                    #---------------------打印XmlElementRef(name="{}")内容和所属complexType，用于生成ObjectWrapper，后续改为收集起来传出去，也用模版生成---------------------
+                    print(f"Element name: {element_name}, ComplexType: {name}")
                     element_refs.append(
                         '@XmlElementRef(name="{}", namespace="http://autosar.org/schema/r4.0", type=JAXBElement.class, required=false)'.format(
                             element_name))

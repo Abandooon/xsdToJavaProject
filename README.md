@@ -1,4 +1,4 @@
-10.17 还要生成object文件（中间的函数可以不要，但是@xmlelementref引到的要要），getter方法集
+10.17 还要生成object文件（中间的函数可以不要，但是@xmlelementref引到的要---------在生成@xmlelementref时把注解、当前类传出来），getter方法集
 
 xsd生成xml模版
 以bew-implementation

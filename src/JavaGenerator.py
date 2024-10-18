@@ -13,6 +13,7 @@ from src.XsdParser.ExtractGroup import extractGroup
 from src.XsdParser.ExtractSimpleType import extractSimpleType
 from src.XsdParser.Utils import to_pascal_case
 from src.XsdParser.Expansion.InnerInnerExtractor import extract_internals_classes, all_class_info_list
+from src.XsdParser.generateObjFactory import generate_object_factory
 
 
 def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extract_inner_class):
@@ -28,7 +29,7 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
         complexTypeClassTemplate = env.get_template('ComplexTypeClassTemplate.j2')  # 模板不带有内部类
 
     simpleTypeClassTemplate = env.get_template('SimpleTypeClassTemplate.j2')
-
+    objectFactoryTemplate = env.get_template('ObjectFactoryTemplate.j2')
     # 解析XSD文件
     xsdFile = os.path.join(input_dir, 'test.xsd')  # 指定XSD文件路径
     tree = etree.parse(xsdFile)  # 解析XSD文件为树结构
@@ -37,7 +38,7 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
     # 提取信息
     groups = extractGroup(root, element_wrapper)
     attributeGroups = extractAttributeGroup(root)
-    complexTypes = extractComplexType(root, element_wrapper, groups, attributeGroups)  # 提取复杂类型信息，传入提取好的group中的element
+    complexTypes,element_complex_type_mappings = extractComplexType(root, element_wrapper, groups, attributeGroups)  # 提取复杂类型信息，传入提取好的group中的element
     simpleTypes = extractSimpleType(root)  # 提取简单类型信息
     print(f"提取了 {len(complexTypes)} 个复杂类型")
 
@@ -94,6 +95,9 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
                 'attributes': complexType['attributes']
             }
             all_classes_info.append(class_info)
+
+    #生成objectfactory
+    generate_object_factory(output_dir, package_name, element_complex_type_mappings,objectFactoryTemplate)
 
     end_time = time.time()  # 记录结束时间
     print(f"Java类生成总耗时: {end_time - start_time:.2f}秒")  # 打印耗时

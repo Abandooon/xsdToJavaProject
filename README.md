@@ -1,3 +1,4 @@
+10.18 obj文件还要知道name对应的type，同一个name可能对应不同的type，到mixcontent里面匹配
 10.17 还要生成object文件（中间的函数可以不要，但是@xmlelementref引到的要---------在生成@xmlelementref时把注解、当前类传出来），getter方法集
 
 xsd生成xml模版

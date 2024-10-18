@@ -11,6 +11,8 @@ def process_complex_type(complexType, root, element_wrapper, groups, attributeGr
     attributes = []  # 初始化列表，用于存储复杂类型的属性
     extends = None
     inner_classes = []
+    # 全局列表用于存储 Element 和 ComplexType 映射信息
+    element_complex_type_mappings = []
 
     # 处理扩展simpleContent
     simpleContent = complexType.find("./{http://www.w3.org/2001/XMLSchema}simpleContent")
@@ -97,7 +99,15 @@ def process_complex_type(complexType, root, element_wrapper, groups, attributeGr
                 if '@XmlElement' in attr['annotation']:
                     element_name = attr['annotation'].split('name="')[1].split('"')[0]
                     #---------------------打印XmlElementRef(name="{}")内容和所属complexType，用于生成ObjectWrapper，后续改为收集起来传出去，也用模版生成---------------------
+                    # 收集 Element 和 ComplexType 的映射信息
+                    element_complex_type_mappings.append({
+                        'element_name': element_name,
+                        'complex_type': name  # ComplexType 的名称
+                    })
+
+                    # 保留调试信息的打印
                     print(f"Element name: {element_name}, ComplexType: {name}")
+
                     element_refs.append(
                         '@XmlElementRef(name="{}", namespace="http://autosar.org/schema/r4.0", type=JAXBElement.class, required=false)'.format(
                             element_name))
@@ -113,12 +123,13 @@ def process_complex_type(complexType, root, element_wrapper, groups, attributeGr
         'name': name,
         'attributes': attributes,
         'innerClasses': inner_classes,  # 存储所有内部类信息
-        'extends': extends
+        'extends': extends,
+        'objFactory': element_complex_type_mappings  # Element 和 ComplexType 映射信息
     }
 
 def extractComplexType(root, element_wrapper, groups, attributeGroups):
     complexTypes = []  # 初始化一个列表，用于存储复杂类型的信息
-
+    element_complex_type_mappings=[]
     # 使用 ThreadPoolExecutor 并行处理 complexType
     with ThreadPoolExecutor(max_workers=8) as executor:
         futures = [executor.submit(process_complex_type, complexType, root, element_wrapper, groups, attributeGroups)
@@ -128,6 +139,7 @@ def extractComplexType(root, element_wrapper, groups, attributeGroups):
             result = future.result()
             if result:  # 仅当返回结果非空时添加
                 complexTypes.append(result)
+                element_complex_type_mappings.extend(result['objFactory'])
 
-    return complexTypes  # 返回解析后的复杂类型列表
+    return complexTypes, element_complex_type_mappings  # 返回解析后的复杂类型列表
 

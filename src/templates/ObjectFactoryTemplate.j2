@@ -1,0 +1,24 @@
+package {{ packageName }};
+
+import javax.xml.bind.JAXBElement;
+import javax.xml.namespace.QName;
+
+@XmlRegistry
+@XmlRootElement(name = "OBJECT-FACTORY")
+public class ObjectFactory {
+
+    {% for mapping in mappings %}
+    private static final QName _{{ mapping.element_name }}{{ mapping.complex_type }}_QNAME = NEW QName("http://autosar.org/schema/r4.0", "{{ mapping.element_name }}");
+    {% endfor %}
+
+    public ObjectFactory() {
+	}
+
+    {% for mapping in mappings %}
+    @XmlElementDecl(name = "{{ mapping.element_name }}", namespace = "http://autosar.org/schema/r4.0")
+    public JAXBElement<{{ mapping.complex_type }}> create{{ mapping.complex_type }}({{ mapping.complex_type }} value) {
+        return new JAXBElement<>(new QName("http://autosar.org/schema/r4.0", "{{ mapping.element_name }}"), {{ mapping.complex_type }}.class, value);
+    }
+    {% endfor %}
+
+}

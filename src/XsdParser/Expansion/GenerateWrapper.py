@@ -84,7 +84,7 @@ def generate_wrapper_classes(input_dir, complexTypeClassesInfo, output_dir, wrap
                     # if anno and 'name=' in anno:
                     #     names = re.findall(r'name="([^"]+)"', anno)  # 匹配所有 'name' 值
                     #     for annotation_name in names:
-                    #         #todo-------这里不对，应该是根据name在xsd中找Type，然后作为返回值类型annotation_pascal_case
+                    #         #todo-------这里不对，应该是根据name在xsd中找Type，然后作为返回值类型annotation_pascal_case--------可以直接在TypeMapping里做类型映射
                     #         annotation_pascal_case = to_pascal_case(annotation_name)
                     #
                     #         # 将生成 getter 方法所需的信息传递给模板

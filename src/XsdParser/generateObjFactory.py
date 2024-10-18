@@ -1,5 +1,13 @@
 import os
+
+from src.XsdParser.TypeMapping import mapXsdTypeToJava
+
+
 def generate_object_factory(output_dir, package_name, mappings,objectFactoryTemplate):
+    for map in mappings:
+        map['element_type']=mapXsdTypeToJava(map['element_name'], context='mixed')
+        if map['complex_type']=='LParagraph' and map['element_type']=='FT':
+            map['complex_type']=map['element_type'].replace("Overview")
 
     javaCode = objectFactoryTemplate.render(
         packageName=package_name,
@@ -15,4 +23,4 @@ def generate_object_factory(output_dir, package_name, mappings,objectFactoryTemp
     with open(outputPath, 'w', encoding='utf-8') as file:
         file.write(javaCode)
 
-    print(f"ObjectFactory.java 已生成在 {outputPath}")
+

@@ -102,7 +102,8 @@ def process_complex_type(complexType, root, element_wrapper, groups, attributeGr
                     # 收集 Element 和 ComplexType 的映射信息
                     element_complex_type_mappings.append({
                         'element_name': element_name,
-                        'complex_type': name  # ComplexType 的名称
+                        'element_type':'',
+                        'complex_type': to_pascal_case(name)  # ComplexType 的名称
                     })
 
                     # 保留调试信息的打印

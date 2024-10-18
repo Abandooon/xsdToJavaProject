@@ -30,17 +30,24 @@ def mapXsdTypeToJava(xsdType, context='default'):
             "MIME-TYPE-STRING--SIMPLE": "java.lang.String",
         },
         'group': {
-            # Group里面是element中的type=“”，应该都是解析为类的，再检查一遍有没有只含simple的----》没有只含simple的，注掉试试
-            # "DATE--SIMPLE": "java.lang.String",
-            # "TABLE-SEPARATOR-STRING--SIMPLE": "java.lang.String",
-            # "PRIMITIVE-IDENTIFIER--SIMPLE": "java.lang.String",
-            # "NMTOKENS-STRING--SIMPLE": "java.lang.String",
-            # "VIEW-TOKENS--SIMPLE": "java.lang.String",
-            # "NMTOKEN-STRING--SIMPLE": "java.lang.String",
-            # "IDENTIFIER--SIMPLE": "java.lang.String",
-            # "POSITIVE-INTEGER--SIMPLE": "java.lang.String",
-            # "INTEGER--SIMPLE": "java.lang.String",
-            # "MIME-TYPE-STRING--SIMPLE": "java.lang.String",
+
+        },
+        'mixed':{
+            "FT": "LOverviewParagraph",
+            #在外面判断所属类，不是则replace overview
+            # "FT": "LParagraph",
+            "TRACE-REF": "TraceRef",
+            "IE": "IndexEntry",
+            "STD": "Std",
+            "XDOC": "Xdoc",
+            "XFILE": "Xfile",
+            "SUP": "Supscript",
+            "SUB": "Supscript",
+            "TT": "Tt",
+            "E": "EmphasisText",
+            "XREF": "Xref",
+            "BR": "Br",
+            "XREF-TARGET": "XrefTarget",
         }
     }
 

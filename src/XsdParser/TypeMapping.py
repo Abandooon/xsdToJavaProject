@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
-
+#--------------------适用于autosar4.2.2------------------------
 def mapXsdTypeToJava(xsdType, context='default'):
     xsdToJavaTypeMap = {
         'base_type': {
@@ -48,6 +48,7 @@ def mapXsdTypeToJava(xsdType, context='default'):
             "XREF": "Xref",
             "BR": "Br",
             "XREF-TARGET": "XrefTarget",
+            "VERBATIM": "MultiLanguageVerbatim",
         }
     }
 

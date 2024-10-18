@@ -103,11 +103,9 @@ def process_complex_type(complexType, root, element_wrapper, groups, attributeGr
                     element_complex_type_mappings.append({
                         'element_name': element_name,
                         'element_type':'',
-                        'complex_type': to_pascal_case(name)  # ComplexType 的名称
+                        'complex_type': to_pascal_case(name),  # ComplexType 的名称
+                        'element_name_pascal':to_pascal_case(element_name)
                     })
-
-                    # 保留调试信息的打印
-                    print(f"Element name: {element_name}, ComplexType: {name}")
 
                     element_refs.append(
                         '@XmlElementRef(name="{}", namespace="http://autosar.org/schema/r4.0", type=JAXBElement.class, required=false)'.format(
@@ -127,20 +125,34 @@ def process_complex_type(complexType, root, element_wrapper, groups, attributeGr
         'extends': extends,
         'objFactory': element_complex_type_mappings  # Element 和 ComplexType 映射信息
     }
+#---------------多线程，可能由于异步导致提取内部类名不同----------------------
+# def extractComplexType(root, element_wrapper, groups, attributeGroups):
+#     complexTypes = []  # 初始化一个列表，用于存储复杂类型的信息
+#     element_complex_type_mappings=[]
+#     # 使用 ThreadPoolExecutor 并行处理 complexType
+#     with ThreadPoolExecutor(max_workers=8) as executor:
+#         futures = [executor.submit(process_complex_type, complexType, root, element_wrapper, groups, attributeGroups)
+#                    for complexType in root.findall(".//{http://www.w3.org/2001/XMLSchema}complexType")]
+#
+#         for future in as_completed(futures):
+#             result = future.result()
+#             if result:  # 仅当返回结果非空时添加
+#                 complexTypes.append(result)
+#                 element_complex_type_mappings.extend(result['objFactory'])
+#
+#     return complexTypes, element_complex_type_mappings  # 返回解析后的复杂类型列表
 
+#--------------单线程遍历，每次生成相同------------------------
 def extractComplexType(root, element_wrapper, groups, attributeGroups):
     complexTypes = []  # 初始化一个列表，用于存储复杂类型的信息
-    element_complex_type_mappings=[]
-    # 使用 ThreadPoolExecutor 并行处理 complexType
-    with ThreadPoolExecutor(max_workers=8) as executor:
-        futures = [executor.submit(process_complex_type, complexType, root, element_wrapper, groups, attributeGroups)
-                   for complexType in root.findall(".//{http://www.w3.org/2001/XMLSchema}complexType")]
+    element_complex_type_mappings = []  # 初始化一个列表，用于存储 Element 和 ComplexType 的映射信息
 
-        for future in as_completed(futures):
-            result = future.result()
-            if result:  # 仅当返回结果非空时添加
-                complexTypes.append(result)
-                element_complex_type_mappings.extend(result['objFactory'])
+    # 遍历所有 complexType 节点
+    for complexType in root.findall(".//{http://www.w3.org/2001/XMLSchema}complexType"):
+        result = process_complex_type(complexType, root, element_wrapper, groups, attributeGroups)
 
-    return complexTypes, element_complex_type_mappings  # 返回解析后的复杂类型列表
+        if result:  # 仅当返回结果非空时添加
+            complexTypes.append(result)
+            element_complex_type_mappings.extend(result['objFactory'])  # 收集 Element 和 ComplexType 的映射信息
 
+    return complexTypes, element_complex_type_mappings  # 返回解析后的复杂类型和映射信息列表

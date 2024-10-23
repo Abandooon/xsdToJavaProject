@@ -35,6 +35,14 @@
     </xsd:sequence>
   </xsd:group>
   <xsd:complexType name="IDENTIFIER">
+    <xsd:annotation>
+         <xsd:documentation>This represents a String in which white-space must be normalized before processing. For example: in order to compare two Strings:
+
+* leading and trailing white-space needs to be removed
+* consecutive white-space (blank, cr, lf, tab) needs to be replaced by one blank.</xsd:documentation>
+         <xsd:appinfo source="tags">mmt.qualifiedName="String";xml.xsd.customType="STRING";xml.xsd.type="string"</xsd:appinfo>
+         <xsd:appinfo source="stereotypes">primitive</xsd:appinfo>
+    </xsd:annotation>
     <xsd:simpleContent>
       <xsd:extension base="AR:IDENTIFIER--SIMPLE">
         <xsd:attributeGroup ref="AR:AR-OBJECT"/>
@@ -61,6 +69,14 @@
   </xsd:group>
        <!-- complex type for class Identifiable::ShortNameFragment -->
   <xsd:complexType abstract="false" mixed="false" name="SHORT-NAME-FRAGMENT">
+    <xsd:annotation>
+         <xsd:documentation>This represents a String in which white-space must be normalized before processing. For example: in order to compare two Strings:
+
+* leading and trailing white-space needs to be removed
+* consecutive white-space (blank, cr, lf, tab) needs to be replaced by one blank.</xsd:documentation>
+         <xsd:appinfo source="tags">mmt.qualifiedName="String";xml.xsd.customType="STRING";xml.xsd.type="string"</xsd:appinfo>
+         <xsd:appinfo source="stereotypes">primitive</xsd:appinfo>
+    </xsd:annotation>
     <xsd:sequence>
       <xsd:group ref="AR:AR-OBJECT"/>
       <xsd:group ref="AR:SHORT-NAME-FRAGMENT"/>
@@ -74,6 +90,14 @@
   </xsd:group>
        <!-- complex type for class MultilanguageData::MultilanguageLongName -->
   <xsd:complexType abstract="false" mixed="false" name="MULTILANGUAGE-LONG-NAME">
+    <xsd:annotation>
+         <xsd:documentation>This represents a String in which white-space must be normalized before processing. For example: in order to compare two Strings:
+
+* leading and trailing white-space needs to be removed
+* consecutive white-space (blank, cr, lf, tab) needs to be replaced by one blank.</xsd:documentation>
+         <xsd:appinfo source="tags">mmt.qualifiedName="String";xml.xsd.customType="STRING";xml.xsd.type="string"</xsd:appinfo>
+         <xsd:appinfo source="stereotypes">primitive</xsd:appinfo>
+      </xsd:annotation>
     <xsd:sequence>
       <xsd:group ref="AR:AR-OBJECT"/>
       <xsd:group ref="AR:MULTILANGUAGE-LONG-NAME"/>
@@ -2098,6 +2122,14 @@
   </xsd:attributeGroup>
   <!-- complex type for class ListElements::List -->
   <xsd:complexType abstract="false" mixed="false" name="LIST">
+    <xsd:annotation>
+         <xsd:documentation>This represents a String in which white-space must be normalized before processing. For example: in order to compare two Strings:
+
+* leading and trailing white-space needs to be removed
+* consecutive white-space (blank, cr, lf, tab) needs to be replaced by one blank.</xsd:documentation>
+         <xsd:appinfo source="tags">mmt.qualifiedName="String";xml.xsd.customType="STRING";xml.xsd.type="string"</xsd:appinfo>
+         <xsd:appinfo source="stereotypes">primitive</xsd:appinfo>
+      </xsd:annotation>
     <xsd:sequence>
       <xsd:group ref="AR:AR-OBJECT"/>
       <xsd:group ref="AR:DOCUMENT-VIEW-SELECTABLE"/>

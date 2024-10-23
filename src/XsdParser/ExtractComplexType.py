@@ -13,6 +13,16 @@ def process_complex_type(complexType, root, element_wrapper, groups, attributeGr
     inner_classes = []
     # 全局列表用于存储 Element 和 ComplexType 映射信息
     element_complex_type_mappings = []
+    # **添加标记变量**，用于指示是否为primitive类型
+    is_primitive = False
+
+    # **处理 annotation 标签中的 appinfo 标签**
+    annotation = complexType.find("./{http://www.w3.org/2001/XMLSchema}annotation")
+    if annotation is not None:
+        for appinfo in annotation.findall("./{http://www.w3.org/2001/XMLSchema}appinfo"):
+            source = appinfo.get('source')
+            if source == "stereotypes" and ("primitive" in appinfo.text or "enumation" in appinfo.text):
+                is_primitive = True  # 设置标记为 primitive 类型
 
     # 处理扩展simpleContent
     simpleContent = complexType.find("./{http://www.w3.org/2001/XMLSchema}simpleContent")
@@ -123,7 +133,8 @@ def process_complex_type(complexType, root, element_wrapper, groups, attributeGr
         'attributes': attributes,
         'innerClasses': inner_classes,  # 存储所有内部类信息
         'extends': extends,
-        'objFactory': element_complex_type_mappings  # Element 和 ComplexType 映射信息
+        'objFactory': element_complex_type_mappings,  # Element 和 ComplexType 映射信息
+        'isPrimitive': is_primitive
     }
 #---------------多线程，可能由于异步导致提取内部类名不同----------------------
 # def extractComplexType(root, element_wrapper, groups, attributeGroups):

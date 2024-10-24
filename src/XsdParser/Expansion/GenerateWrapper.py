@@ -31,6 +31,7 @@ def generate_wrapper_classes(input_dir, complexTypeClassesInfo, output_dir, wrap
         additional_api_methods = []  # 保存需要生成的 API 方法信息
         has_arraylist_serializable = False  # 标记是否存在 ArrayList<Serializable> 类型
         has_ref_object = False  # 标记是否存在 refObject 类型
+        isPrimitive = class_info['isPrimitive']
 
         # 确定每个属性的返回值类型
         for attribute in class_info['attributes']:
@@ -127,7 +128,8 @@ def generate_wrapper_classes(input_dir, complexTypeClassesInfo, output_dir, wrap
             attributes=attributes,
             additionalApiMethods=additional_api_methods,
             hasArrayListSerializable=has_arraylist_serializable,
-            hasRefObject = has_ref_object
+            hasRefObject = has_ref_object,
+            isPrimitive = isPrimitive
         )
 
         # 确保输出目录存在

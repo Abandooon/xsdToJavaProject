@@ -25,7 +25,8 @@ def extract_internals_classes(complexType, output_dir, package_name, class_templ
             # 将主类信息添加到全局列表
         all_class_info_list.append({
             'name': to_pascal_case(complexType['name']),
-            'attributes': complexType['attributes']
+            'attributes': complexType['attributes'],
+            'isPrimitive': complexType['isPrimitive']
         })
         return
 
@@ -85,7 +86,8 @@ def extract_internals_classes(complexType, output_dir, package_name, class_templ
                 # 将内部类信息添加到全局列表
                 all_class_info_list.append({
                     'name': new_inner_class_name,
-                    'attributes': inner_class_attributes
+                    'attributes': inner_class_attributes,
+                    'isPrimitive': complexType['isPrimitive']
                 })
             else:
                 # 首次出现，生成类文件
@@ -109,7 +111,8 @@ def extract_internals_classes(complexType, output_dir, package_name, class_templ
                 # 将内部类信息添加到全局列表
                 all_class_info_list.append({
                     'name': inner_class_name,
-                    'attributes': inner_class_attributes
+                    'attributes': inner_class_attributes,
+                    'isPrimitive': complexType['isPrimitive']
                 })
         else:
             if rename_flag:
@@ -138,7 +141,8 @@ def extract_internals_classes(complexType, output_dir, package_name, class_templ
                 # 将嵌套内部类信息添加到全局列表
                 all_class_info_list.append({
                     'name': inner_inner_class['InnerClassName'],
-                    'attributes': inner_inner_class['InnerClassAttributes']
+                    'attributes': inner_inner_class['InnerClassAttributes'],
+                    'isPrimitive': complexType['isPrimitive']
                 })
 
     # 如果当前处理的是主类，生成主类的Java代码
@@ -158,7 +162,8 @@ def extract_internals_classes(complexType, output_dir, package_name, class_templ
             file.write(javaCode)
         all_class_info_list.append({
             'name': main_class_name,
-            'attributes': complexType['attributes']
+            'attributes': complexType['attributes'],
+            'isPrimitive': complexType['isPrimitive']
         })
 
 def update_parent_attributes(parent_class, old_inner_class_name, new_inner_class_name):

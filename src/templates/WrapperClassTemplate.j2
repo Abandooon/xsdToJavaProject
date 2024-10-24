@@ -14,14 +14,16 @@ package {{ packageName }};
      {% endif %}
 {% endfor %}
 public class {{ wrapperClassName }} {
-
-    {% if hasRefObject %}
-    {% endif %}
     private {{ originalClassName }} {{ originalVariableName }};
 
     public {{ wrapperClassName }}({{ originalClassName }} {{ originalVariableName }}) {
         this.{{ originalVariableName }} = {{ originalVariableName }};
     }
+    {% if isPrimitive %}
+    public static final boolean IS_PRIMITIVE = true;
+    {% else %}
+    public static final boolean IS_PRIMITIVE = false;
+    {% endif %}
 
    {% for attribute in attributes %}
     public {{ attribute.type }} get{% if attribute.name == 'class' %}Class1{% else %}{{ attribute.name[0]|upper + attribute.name[1:] }}{% endif %}() {
@@ -36,7 +38,7 @@ public class {{ wrapperClassName }} {
             return null;
         }
         {% else %}
-        if (CollUtil.isNotEmpty({{ originalVariableName }}.get{% if attribute.name == 'class' %}Class1{% else %}{{ attribute.name[0]|upper + attribute.name[1:] }}{% endif %}())) {
+        if ({{ originalVariableName }}.get{% if attribute.name == 'class' %}Class1{% else %}{{ attribute.name[0]|upper + attribute.name[1:] }}{% endif %}() != null) {
             {% if 'Wrapper' in attribute.type %}
             return new {{ attribute.type }}({{ originalVariableName }}.get{% if attribute.name == 'class' %}Class1{% else %}{{ attribute.name[0]|upper + attribute.name[1:] }}{% endif %}());
             {% else %}
@@ -52,6 +54,13 @@ public class {{ wrapperClassName }} {
 
 
     {% if hasRefObject %}
+    public java.lang.String getValue() throws BaseXException, ClassNotFoundException, JAXBException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        if ({{ originalVariableName }}.getValue() != null) {
+            return {{ originalVariableName }}.Value();
+        } else {
+            return null;
+        }
+    }
     public Object get{{ originalClassName }}Obj() throws BaseXException, ClassNotFoundException, JAXBException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException {
         java.lang.String path = {{ originalVariableName }}.getValue();
         java.lang.String type = {{ originalVariableName }}.getDest().toString().replace("_", "-");

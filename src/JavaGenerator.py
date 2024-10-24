@@ -92,7 +92,8 @@ def generateJavaClass(input_dir, output_dir, package_name, element_wrapper, extr
 
             class_info = {
                 'name': to_pascal_case(complexType['name']),
-                'attributes': complexType['attributes']
+                'attributes': complexType['attributes'],
+                'isPrimitive': complexType['isPrimitive']
             }
             all_classes_info.append(class_info)
 
